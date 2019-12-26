@@ -1,6 +1,7 @@
 # AuditoriasApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
+Before trying to up the server execute on command line npm update to download dependencies.
 
 ## Development server
 
