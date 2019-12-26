@@ -1,0 +1,21 @@
+<div class="container login-container">
+            <div class="row align-middle">
+                <div class="col-md-6 login-form-1 mx-auto" align="center">
+                    <h3>Login</h3>
+                    <form (ngSubmit) = "login()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="usuario.username" name="dni" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="usuario.password" name="password" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-group" routerLinkActive= 'active'>
+                            <a routerLink='/registro' class="ForgetPwd">Registrarse</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+</div>

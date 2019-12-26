@@ -1,0 +1,56 @@
+<h1>Asignación de empleado principal a empresa</h1>
+
+  <div class="form-group">
+    <label for="empleado">
+      Empleado
+    </label>
+    <form (ngSubmit) = "enviar()">
+      <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control">
+        <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name}}</option>
+      </select>
+      <label for="empresa">
+        Empresa
+      </label>
+      <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
+        <option *ngFor="let empresa of empresas" value="{{empresa.id}}">{{empresa.company_name}}</option>
+      </select>
+      <label for="periodo">
+        Comienzo periodo auditado
+      </label>
+      <input type="date" id="start" name="trip-start" /> <br />
+      <label for="periodo">
+        Fin periodo auditado
+      </label>
+      <input type="date" id="end" name="trip-end" />
+      <input type="submit" class="btnSubmit" value="Enviar" /> <br />
+    </form>
+  </div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Asignación de empleados a empresas</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de Empleados de la empresa {{usuario.companyName}}</h5>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre y Apellidos</th>
+          <th>USERNAME</th>
+          <th>EMAIL</th>
+          <th>PHONE</th>
+          <th>COMPANY_NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let empleado of empleados">
+          <td>{{empleado.id}}</td>
+          <td>{{empleado.name}}</td>
+          <td>{{empleado.username}}</td>
+          <td>{{empleado.email}}</td>
+          <td>{{empleado.phone}}</td>
+          <td>{{empleado.companyName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
