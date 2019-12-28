@@ -43,7 +43,7 @@ public class UsuarioRestController {
 	/* METODOS CORRESPONDIENTES AL PANEL DE PERFIL DEL USUARIO */
 	@PutMapping("/usuario/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario updateEmail(@RequestBody Usuario user,@PathVariable Long id) {
+	public Usuario update(@RequestBody Usuario user,@PathVariable Long id) {
 		usuarioMapper.update(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
 	}
@@ -60,13 +60,21 @@ public class UsuarioRestController {
 		usuarioMapper.insert(user);
 		
 		// Comprobamos si ya existe la empresa, si no, el primer usuario será el jefe
-		if (usuarioMapper.checkCompany(user.getCompanyName()).size() == 0) {
+		if (usuarioMapper.checkCompany(user.getName_company()).size() == 0) {
 			Long id = usuarioMapper.findByUsername(user.getUsername()).get(0).getId();
-			usuarioMapper.insertCompanyBoss(id, user.getCompanyName());
+			usuarioMapper.insertCompanyBoss(id, user.getName_company());
 		}
 		
 		//FALTARIA AÑADIR EL ROL
 		
 		return user;
+	}
+	
+	/* METODO CORRESPONDIENTE A LA GESTION DE USUARIOS, CONCRETAMENTE A LA ACEPTACIÓN POR PARTE DEL JEFE */
+	@PutMapping("/usuarioEnable/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Usuario enable(@RequestBody Usuario user,@PathVariable Long id) {
+		usuarioMapper.enableUser(user);
+		return usuarioMapper.findByUsername(user.getUsername()).get(0);
 	}
 }

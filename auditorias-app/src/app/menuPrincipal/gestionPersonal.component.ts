@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../usuario/login/auth.service';
 import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
+import Swal from 'sweetalert2'
 
 import { GestionPersonalService } from './gestionPersonal.service';
+import { UsuarioService } from '../usuario/login/usuario.service'
 
 @Component({
   selector: 'app-perfil',
@@ -21,23 +23,46 @@ export class GestionPersonalComponent{
   seleccionUsuario:number;
   seleccionEmpresa:String;
 
-  constructor(private authService: AuthService, private gestionPersonalService:GestionPersonalService,private router: Router){ //Este metodo constructor inicializa de forma normal
+  constructor(private authService: AuthService, private gestionPersonalService:GestionPersonalService, private usuarioService:UsuarioService,private router: Router){ //Este metodo constructor inicializa de forma normal
     this.usuario= authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento
-    this.gestionPersonalService.getEmpleados(this.usuario).subscribe(
-      empleados =>{
-        this.empleados = empleados;
-      }
-    );
+    this.updateEmpleados();
     this.gestionPersonalService.getEmpresas().subscribe(
       empresas =>{
         this.empresas = empresas;
       }
     );
   }
+
+  updateEmpleados():void{
+    this.gestionPersonalService.getEmpleados(this.usuario).subscribe(
+      empleados =>{
+        this.empleados = empleados;
+      }
+    );
+  }
+
   enviar():void{
     console.log(this.seleccionUsuario);
+  }
+
+  isEnabled(empleado:Usuario):boolean{
+    if(empleado.enabled){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  aceptarPersona(empleado:Usuario):void{
+    this.usuarioService.enableUsuario(empleado).subscribe(
+      response => {
+        Swal.fire('Usuario Aceptado', `Ha aceptado al empleado con DNI ${empleado.username}`,'success');
+        this.updateEmpleados();
+      }
+    );
   }
 }

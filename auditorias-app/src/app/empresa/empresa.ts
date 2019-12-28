@@ -1,4 +1,5 @@
 export class Empresa {
-  company_name:String;
-  company_boss:number;
+  id_company:number;
+  name_company:String;
+  id_user_boss:number;
 }

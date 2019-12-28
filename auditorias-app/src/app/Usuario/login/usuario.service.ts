@@ -8,7 +8,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http'; //Necesitamos imp
 export class UsuarioService {
 
   private urlEndPoint : string = 'http://localhost:8080/api/usuario'
-  private urlUpdate : string = 'http://localhost:8080/api/usuario'
+  private urlEnable: string = 'http://localhost:8080/api/usuarioEnable'
 
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
@@ -25,5 +25,9 @@ export class UsuarioService {
 
   updateUsuario(usuario : Usuario) : Observable <Usuario> { //Lo primero es lo que recibe y lo segundo lo que retorna
     return this.http.put<Usuario>(this.urlEndPoint+"/"+usuario.id, usuario ,{headers: this.httpHeaders})
+  }
+
+  enableUsuario(usuario: Usuario): Observable <Usuario>{
+    return this.http.put<Usuario>(this.urlEnable+"/"+usuario.id, usuario ,{headers: this.httpHeaders})
   }
 }

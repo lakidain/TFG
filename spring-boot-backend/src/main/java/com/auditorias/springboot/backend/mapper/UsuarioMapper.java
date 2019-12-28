@@ -34,4 +34,7 @@ public interface UsuarioMapper {
 	
 	@Update("update asi_users set email_user=#{email},phone_user=#{phone} where id=#{id}")
 	void update(Usuario user);
+	
+	@Update("update asi_users set enabled=true where id=#{id}")
+	void enableUser(Usuario user);
 }

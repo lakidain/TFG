@@ -15,7 +15,7 @@ export class GestionPersonalService {
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 
   getEmpleados(usuario:Usuario): Observable <Usuario[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
-    return this.http.get<Usuario[]>(this.urlEndPointEmpleados+"/"+usuario.companyName); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
+    return this.http.get<Usuario[]>(this.urlEndPointEmpleados+"/"+usuario.name_company); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
   }
   getEmpresas(): Observable <Empresa[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
     return this.http.get<Empresa[]>(this.urlEndPointEmpresas); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos

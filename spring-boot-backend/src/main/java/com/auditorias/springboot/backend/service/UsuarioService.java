@@ -37,7 +37,7 @@ public class UsuarioService implements UserDetailsService{
 		
 		List<GrantedAuthority> authorities = usuarioMapper.findRole(username)
 				.stream()
-				.map(role -> new SimpleGrantedAuthority(role.getNombre()))
+				.map(role -> new SimpleGrantedAuthority(role.getName()))
 				.peek(authority -> logger.info("Role: " + authority.getAuthority()))
 				.collect(Collectors.toList());
 		

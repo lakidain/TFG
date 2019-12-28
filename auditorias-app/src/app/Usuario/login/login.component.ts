@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/menu']);
       }, err => {
         if(err.status==400 || err.status==401){
-          Swal.fire('Error al logearse', 'Pruebe a volver a introducir sus credenciales', 'error');
+          Swal.fire('Error al logearse', 'Pruebe a volver a introducir sus credenciales o espere a ser autentificado por su jefe', 'error');
         }
       }
     )

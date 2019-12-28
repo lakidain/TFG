@@ -1,20 +1,33 @@
 package com.auditorias.springboot.backend.model;
 
 public class Empresa {
-	
-	private String company_name;
-	private Long company_boss;
-	
-	public String getCompany_name() {
-		return company_name;
+
+	private int id_company;
+	private String name_company;
+	private Long id_user_boss;
+
+	public int getId_company() {
+		return id_company;
 	}
-	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
+
+	public void setId_company(int id_company) {
+		this.id_company = id_company;
 	}
-	public Long getCompany_boss() {
-		return company_boss;
+
+	public String getName_company() {
+		return name_company;
 	}
-	public void setCompany_boss(Long company_boss) {
-		this.company_boss = company_boss;
+
+	public void setName_company(String name_company) {
+		this.name_company = name_company;
 	}
+
+	public Long getId_user_boss() {
+		return id_user_boss;
+	}
+
+	public void setId_user_boss(Long id_user_boss) {
+		this.id_user_boss = id_user_boss;
+	}
+
 }

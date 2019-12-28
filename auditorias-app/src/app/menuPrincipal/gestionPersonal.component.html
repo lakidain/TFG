@@ -6,13 +6,13 @@
     </label>
     <form (ngSubmit) = "enviar()">
       <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control">
-        <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name}}</option>
+        <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name_user}}</option>
       </select>
       <label for="empresa">
         Empresa
       </label>
       <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
-        <option *ngFor="let empresa of empresas" value="{{empresa.id}}">{{empresa.company_name}}</option>
+        <option *ngFor="let empresa of empresas" value="{{empresa.id}}">{{empresa.name_company}}</option>
       </select>
       <label for="periodo">
         Comienzo periodo auditado
@@ -38,17 +38,19 @@
           <th>USERNAME</th>
           <th>EMAIL</th>
           <th>PHONE</th>
-          <th>COMPANY_NAME</th>
+          <th>COMPANY NAME</th>
+          <th>Dato de Alta</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let empleado of empleados">
           <td>{{empleado.id}}</td>
-          <td>{{empleado.name}}</td>
+          <td>{{empleado.name_user}}</td>
           <td>{{empleado.username}}</td>
-          <td>{{empleado.email}}</td>
-          <td>{{empleado.phone}}</td>
-          <td>{{empleado.companyName}}</td>
+          <td>{{empleado.email_user}}</td>
+          <td>{{empleado.phone_user}}</td>
+          <td>{{empleado.name_company}}</td>
+          <td><form (ngSubmit) = "aceptarPersona(empleado)"><div *ngIf="!isEnabled(empleado)" class="form-group"><input type="submit" class="btn btn-success" value="Aceptar" /></div><div *ngIf="isEnabled(empleado)" class="form-group">✓</div></form></td>
         </tr>
       </tbody>
     </table>
