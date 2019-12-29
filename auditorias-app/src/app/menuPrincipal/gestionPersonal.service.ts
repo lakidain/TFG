@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
+import { Audit } from '../audit/audit';
 import { AuditType } from '../audit/auditType';
 
 import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
@@ -13,6 +14,9 @@ export class GestionPersonalService {
   private urlEndPointEmpleados : string = 'http://localhost:8080/api/empleados';
   private urlEndPointEmpresas : string = 'http://localhost:8080/api/empresas';
   private urlEndPointAuditTypes: string = 'http://localhost:8080/api/auditTypes';
+  private urlEndPointAudit: string = "http://localhost:8080/api/audit";
+
+  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 
@@ -27,5 +31,10 @@ export class GestionPersonalService {
   /* Metodo que devuelve el tipo de auditorias existentes*/
   getAuditTypes(): Observable<AuditType[]>{
     return this.http.get<AuditType[]>(this.urlEndPointAuditTypes);
+  }
+
+  /* Método para la creación de una auditoría */
+  setAudit(audit:Audit):Observable<any>{
+    return this.http.post<any>(this.urlEndPointAudit, audit, {headers: this.httpHeaders});
   }
 }

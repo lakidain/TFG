@@ -7,7 +7,7 @@ public class Audit {
 	private int id_audit;
 	private int id_user_manager;
 	private int id_company;
-	private int id_audit_company;
+	private int id_audit_type;
 	private Date date_start_audit;
 	private Date date_end_audit;
 	
@@ -29,11 +29,12 @@ public class Audit {
 	public void setId_company(int id_company) {
 		this.id_company = id_company;
 	}
-	public int getId_audit_company() {
-		return id_audit_company;
+	
+	public int getId_audit_type() {
+		return id_audit_type;
 	}
-	public void setId_audit_company(int id_audit_company) {
-		this.id_audit_company = id_audit_company;
+	public void setId_audit_type(int id_audit_type) {
+		this.id_audit_type = id_audit_type;
 	}
 	public Date getDate_start_audit() {
 		return date_start_audit;

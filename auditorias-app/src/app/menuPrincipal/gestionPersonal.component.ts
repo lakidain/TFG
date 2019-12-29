@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../usuario/login/auth.service';
 import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
+import { Audit } from '../audit/audit';
 import { AuditType } from '../audit/auditType';
 import Swal from 'sweetalert2'
 
@@ -21,9 +22,15 @@ export class GestionPersonalComponent{
   empleados:Usuario[];
   empresas:Empresa[];
   tipoAuditorias:AuditType[];
+  audit: Audit;
   usuario:Usuario;
-  seleccionUsuario:number;
-  seleccionEmpresa:String;
+
+  /* Atributos de seleccion del formulario */
+  seleccionUsuario: number;
+  seleccionEmpresa: number;
+  seleccionTipoAuditoria: number;
+  seleccionFechaInicio: Date;
+  seleccionFechaFin: Date;
 
   constructor(private authService: AuthService, private gestionPersonalService:GestionPersonalService, private usuarioService:UsuarioService,private router: Router){ //Este metodo constructor inicializa de forma normal
     this.usuario= authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
@@ -52,7 +59,26 @@ export class GestionPersonalComponent{
   }
 
   enviar():void{
-    console.log(this.seleccionUsuario);
+    this.audit = new Audit();
+    this.audit.id_user_manager=this.seleccionUsuario;
+    this.audit.id_company=this.seleccionEmpresa;
+    this.audit.id_audit_type=this.seleccionTipoAuditoria;
+    this.audit.date_start_audit=this.seleccionFechaInicio;
+    this.audit.date_end_audit=this.seleccionFechaFin;
+
+    this.gestionPersonalService.setAudit(this.audit).subscribe( response => {
+      Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
+      this.router.navigate(['/menu']);
+    }, err => {
+      Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
+    }
+    )
+
+    /*console.log(this.seleccionUsuario);
+    console.log(this.seleccionEmpresa);
+    console.log(this.seleccionTipoAuditoria);
+    console.log(this.seleccionFechaInicio);
+    console.log(this.seleccionFechaFin);*/
   }
 
   isEnabled(empleado:Usuario):boolean{
