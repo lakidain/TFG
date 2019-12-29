@@ -5,14 +5,20 @@
       Empleado
     </label>
     <form (ngSubmit) = "enviar()">
-      <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control">
+      <select id="empleado" name="empleado" [(ngModel)]="empleado" class="form-control"> <!-- Antes en ngModel seleccionUsuario-->
         <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name_user}}</option>
       </select>
       <label for="empresa">
         Empresa
       </label>
-      <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
+      <select id="empresa" name="empresa" [(ngModel)]="empresa" class="form-control">
         <option *ngFor="let empresa of empresas" value="{{empresa.id}}">{{empresa.name_company}}</option>
+      </select>
+      <label for="auditType">
+        Tipo de Auditoría
+      </label>
+      <select id="auditType" name="auditType" [(ngModel)]="auditType" class="form-control">
+        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id}}">{{auditType.name_audit_type}}</option>
       </select>
       <label for="periodo">
         Comienzo periodo auditado

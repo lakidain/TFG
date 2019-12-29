@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../usuario/login/auth.service';
 import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
+import { AuditType } from '../audit/auditType';
 import Swal from 'sweetalert2'
 
 import { GestionPersonalService } from './gestionPersonal.service';
-import { UsuarioService } from '../usuario/login/usuario.service'
+import { UsuarioService } from '../usuario/login/usuario.service';
 
 @Component({
   selector: 'app-perfil',
@@ -19,6 +20,7 @@ export class GestionPersonalComponent{
 
   empleados:Usuario[];
   empresas:Empresa[];
+  tipoAuditorias:AuditType[];
   usuario:Usuario;
   seleccionUsuario:number;
   seleccionEmpresa:String;
@@ -32,6 +34,11 @@ export class GestionPersonalComponent{
     this.gestionPersonalService.getEmpresas().subscribe(
       empresas =>{
         this.empresas = empresas;
+      }
+    );
+    this.gestionPersonalService.getAuditTypes().subscribe(
+      types=>{
+        this.tipoAuditorias=types;
       }
     );
   }

@@ -13,7 +13,7 @@ import com.auditorias.springboot.backend.model.Auditor;
 @MappedTypes(Auditor.class)
 @MapperScan({"com.auditorias.springboot.backend.mapper"})
 @SpringBootApplication
-public class SpringBootBackendApplication implements CommandLineRunner{
+public class SpringBootBackendApplication{
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -21,15 +21,4 @@ public class SpringBootBackendApplication implements CommandLineRunner{
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootBackendApplication.class, args);
 	}
-	
-	@Override
-	public void run(String ... args) throws Exception{
-		String password="12345";
-		
-		for(int i=0; i < 4 ; i++) {
-			String passwordBcrypt = passwordEncoder.encode(password);
-			System.out.println(passwordBcrypt);
-		}
-	}
-
 }
