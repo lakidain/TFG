@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../usuario/login/auth.service';
 import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
 import { Audit } from '../audit/audit';
@@ -9,6 +8,7 @@ import Swal from 'sweetalert2'
 
 import { GestionPersonalService } from './gestionPersonal.service';
 import { UsuarioService } from '../usuario/login/usuario.service';
+import { AuthService } from '../usuario/login/auth.service';
 
 @Component({
   selector: 'app-perfil',
@@ -66,7 +66,7 @@ export class GestionPersonalComponent{
     this.audit.date_start_audit=this.seleccionFechaInicio;
     this.audit.date_end_audit=this.seleccionFechaFin;
 
-    this.gestionPersonalService.setAudit(this.audit).subscribe( response => {
+    /*this.gestionPersonalService.setAudit(this.audit).subscribe( response => {
       if(response){
         Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
         this.router.navigate(['/menu']);
@@ -74,8 +74,18 @@ export class GestionPersonalComponent{
         Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
         }
       }
-    )
-  }
+    )*/
+
+    this.gestionPersonalService.setAudit(this.audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+          Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
+          this.router.navigate(['/menu']);
+          }, err => {
+          if(err.status==400 || err.status==401){
+            Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
+          }
+        }
+      )
+    }
 
   isEnabled(empleado:Usuario):boolean{
     if(empleado.enabled){

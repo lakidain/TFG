@@ -33,37 +33,46 @@ public class UsuarioRestController {
 	public UsuarioRestController(UsuarioMapper usuarioMapper) {
 		this.usuarioMapper = usuarioMapper;
 	}
-	
-	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS*/
-	@GetMapping("/empleados/{companyName}") //Para generar el endpoint
-	public List <Usuario> getAll(@PathVariable String companyName) {	
+
+	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS */
+	@GetMapping("/empleados/{companyName}") // Para generar el endpoint
+	public List<Usuario> getAll(@PathVariable String companyName) {
 		return usuarioMapper.findAllEmpleados(companyName);
 	}
-	
+
 	/* METODOS CORRESPONDIENTES AL PANEL DE PERFIL DEL USUARIO */
 	/* Update phone and email */
 	@PutMapping("/usuario/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario update(@RequestBody Usuario user,@PathVariable Long id) {
+	public Usuario update(@RequestBody Usuario user, @PathVariable Long id) {
 		usuarioMapper.update(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
 	}
-	
+
 	/* Password change request method */
 	@PutMapping("/usuarioPassword/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean updatePassword(@RequestBody DtoPassword dtoPassword,@PathVariable Long id) {
-		/* The method matches is used to compare the equality of both passwords*/
-		if(passwordEncoder.matches(dtoPassword.getOldPassword(), usuarioMapper.getOldPassword(id).get(0).getPassword())) {
+	public boolean updatePassword(@RequestBody DtoPassword dtoPassword, @PathVariable Long id) {
+		/* The method matches is used to compare the equality of both passwords */
+		if (passwordEncoder.matches(dtoPassword.getOldPassword(),
+				usuarioMapper.getOldPassword(id).get(0).getPassword())) {
 			usuarioMapper.updatePassword(passwordEncoder.encode(dtoPassword.getNewPassword()), id);
 			return true;
-		} else{
+		} else {
 			return false;
 		}
 	}
 
+	/* Company change request method */
+	@PutMapping("/usuarioCompany/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean updatePassword(@RequestBody String name_company, @PathVariable Long id) {
+		usuarioMapper.updateCompany(name_company, id);
+		return true;
+	}
+
 	/* FIN */
-	
+
 	/* METODO CORRESPONDIENTE A LA CREACION DE USUARIO */
 	@PostMapping("/usuario")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -72,22 +81,25 @@ public class UsuarioRestController {
 		user.setPassword(passwordBcrypt); // Encriptamos la contraseña
 
 		usuarioMapper.insert(user);
-		
+
 		// Comprobamos si ya existe la empresa, si no, el primer usuario será el jefe
 		if (usuarioMapper.checkCompany(user.getName_company()).size() == 0) {
 			Long id = usuarioMapper.findByUsername(user.getUsername()).get(0).getId();
 			usuarioMapper.insertCompanyBoss(id, user.getName_company());
 		}
-		
-		//FALTARIA AÑADIR EL ROL
-		
+
+		// FALTARIA AÑADIR EL ROL
+
 		return user;
 	}
-	
-	/* METODO CORRESPONDIENTE A LA GESTION DE USUARIOS, CONCRETAMENTE A LA ACEPTACIÓN POR PARTE DEL JEFE */
+
+	/*
+	 * METODO CORRESPONDIENTE A LA GESTION DE USUARIOS, CONCRETAMENTE A LA
+	 * ACEPTACIÓN POR PARTE DEL JEFE
+	 */
 	@PutMapping("/usuarioEnable/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario enable(@RequestBody Usuario user,@PathVariable Long id) {
+	public Usuario enable(@RequestBody Usuario user, @PathVariable Long id) {
 		usuarioMapper.enableUser(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
 	}

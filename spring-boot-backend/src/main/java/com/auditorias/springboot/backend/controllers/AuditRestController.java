@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auditorias.springboot.backend.mapper.AuditMapper;
 import com.auditorias.springboot.backend.model.Audit;
 import com.auditorias.springboot.backend.model.Audit_Type;
-import com.auditorias.springboot.backend.model.Auditor;
 
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se

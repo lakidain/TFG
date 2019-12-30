@@ -6,6 +6,7 @@
 <p>Company: {{usuario.name_company}}</p>
 <h2>Seleccione el campo que desea modificar</h2>
 <!-- FORM CAMBIO DE EMAIL-->
+<p>Modificar correo electrónico/teléfono</p>
 <form (ngSubmit) = "updateUsuario()">
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" />
@@ -20,6 +21,8 @@
     </div>
 </form>
 
+<p>Cambio de password:</p>
+
 <form (ngSubmit) = "updatePassword()">
   <div>
       <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />
@@ -31,4 +34,13 @@
   <div class="form-group">
       <input type="submit" class="btnSubmit" value="Cambiar Password" />
   </div>
+</form>
+
+<p>Cambio de empresa:</p>
+
+<form (ngSubmit) = "updateCompany()">
+  <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
+    <option *ngFor="let empresa of empresas" value="{{empresa.name_company}}">{{empresa.name_company}}</option>
+  </select> <br />
+  <input type="submit" class="btnSubmit" value="Cambio de empresa" />
 </form>

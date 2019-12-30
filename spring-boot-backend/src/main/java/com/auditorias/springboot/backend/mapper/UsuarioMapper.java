@@ -41,6 +41,9 @@ public interface UsuarioMapper {
 	@Update("update asi_users set password=#{password} where id=#{id}")
 	void updatePassword(String password, Long id);
 	
+	@Update("update asi_users set name_company=#{name_company},enabled=0 where id=#{id}")
+	void updateCompany(String name_company, Long id);
+	
 	@Update("update asi_users set enabled=true where id=#{id}")
 	void enableUser(Usuario user);
 }

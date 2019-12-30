@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from './usuario';
 import { DtoPassword } from '../../dto/dtoPassword';
+import { Empresa } from '../../empresa/empresa';
 import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient,HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
@@ -11,6 +12,7 @@ export class UsuarioService {
   private urlEndPoint : string = 'http://localhost:8080/api/usuario'
   private urlEndPointEnable: string = 'http://localhost:8080/api/usuarioEnable'
   private urlEndPointChangePassword: string = 'http://localhost:8080/api/usuarioPassword';
+  private urlEndPointChangeCompany: string = 'http://localhost:8080/api/usuarioCompany';
 
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
@@ -35,5 +37,9 @@ export class UsuarioService {
 
   updatePassword(usuario: Usuario, dtoPassword: DtoPassword): Observable <any>{
     return this.http.put<any>(this.urlEndPointChangePassword+"/"+usuario.id, dtoPassword ,{headers: this.httpHeaders})
+  }
+
+  updateCompany(usuario: Usuario, name_company: string): Observable <any>{
+    return this.http.put<any>(this.urlEndPointChangeCompany+"/"+usuario.id, name_company ,{headers: this.httpHeaders})
   }
 }
