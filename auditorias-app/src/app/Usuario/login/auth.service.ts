@@ -45,7 +45,6 @@ export class AuthService{
     params.set('grant_type','password');
     params.set('username', usuario.username);
     params.set('password',usuario.password);
-    console.log(params.toString());
     return this.http.post<any>(urlEndPoint, params.toString(), {headers: httpHeaders});
   }
 
@@ -55,7 +54,7 @@ export class AuthService{
       this._usuario.id = payload.id;
       this._usuario.name_user = payload.name;
       this._usuario.username = payload.user_name;
-      this._usuario.email_user = payload.email;
+      this._usuario.email_user = payload.emaile;
       this._usuario.phone_user = payload.phone;
       this._usuario.name_company = payload.companyName;
       this.usuario.roles = payload.authorities;

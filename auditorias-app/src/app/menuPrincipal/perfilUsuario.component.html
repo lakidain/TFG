@@ -8,42 +8,27 @@
 <!-- FORM CAMBIO DE EMAIL-->
 <form (ngSubmit) = "updateUsuario()">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email" name="email" />
+        <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" />
     </div>
     <br />
     <div>
-        <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone" name="phone" />
+        <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" />
     </div>
     <br />
     <div class="form-group">
         <input type="submit" class="btnSubmit" value="Actualizar Campos" />
     </div>
 </form>
-<!--
-<form (ngSubmit) = "updatePassword()">
-    <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="email" />
-    </div>
-    <div>
-        <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="phone" />
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btnSubmit" value="Actualizar Campos" />
-    </div>
-</form>
-<!-- FORM CAMBIO DE PASSWORD
-<form (ngSubmit) = "login()">
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="usuario.username" name="dni" />
-    </div>
-    <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="usuario.password" name="password" />
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btnSubmit" value="Login" />
-    </div>
-    <div class="form-group" routerLinkActive= 'active'>
-        <a routerLink='/registro' class="ForgetPwd">Registrarse</a>
-    </div>
 
-</form> -->
+<form (ngSubmit) = "updatePassword()">
+  <div>
+      <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />
+  </div>
+  <br />
+  <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" />
+  </div>
+  <div class="form-group">
+      <input type="submit" class="btnSubmit" value="Cambiar Password" />
+  </div>
+</form>

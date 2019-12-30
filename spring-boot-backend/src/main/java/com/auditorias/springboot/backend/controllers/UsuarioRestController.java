@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auditorias.springboot.backend.dto.DtoPassword;
 import com.auditorias.springboot.backend.mapper.UsuarioMapper;
-import com.auditorias.springboot.backend.model.Auditor;
 import com.auditorias.springboot.backend.model.Usuario;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
@@ -41,11 +41,25 @@ public class UsuarioRestController {
 	}
 	
 	/* METODOS CORRESPONDIENTES AL PANEL DE PERFIL DEL USUARIO */
+	/* Update phone and email */
 	@PutMapping("/usuario/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario update(@RequestBody Usuario user,@PathVariable Long id) {
 		usuarioMapper.update(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
+	}
+	
+	/* Password change request method */
+	@PutMapping("/usuarioPassword/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean updatePassword(@RequestBody DtoPassword dtoPassword,@PathVariable Long id) {
+		/* The method matches is used to compare the equality of both passwords*/
+		if(passwordEncoder.matches(dtoPassword.getOldPassword(), usuarioMapper.getOldPassword(id).get(0).getPassword())) {
+			usuarioMapper.updatePassword(passwordEncoder.encode(dtoPassword.getNewPassword()), id);
+			return true;
+		} else{
+			return false;
+		}
 	}
 
 	/* FIN */

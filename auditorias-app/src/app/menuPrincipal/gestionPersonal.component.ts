@@ -67,18 +67,14 @@ export class GestionPersonalComponent{
     this.audit.date_end_audit=this.seleccionFechaFin;
 
     this.gestionPersonalService.setAudit(this.audit).subscribe( response => {
-      Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
-      this.router.navigate(['/menu']);
-    }, err => {
-      Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
-    }
+      if(response){
+        Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
+        this.router.navigate(['/menu']);
+      } else{
+        Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
+        }
+      }
     )
-
-    /*console.log(this.seleccionUsuario);
-    console.log(this.seleccionEmpresa);
-    console.log(this.seleccionTipoAuditoria);
-    console.log(this.seleccionFechaInicio);
-    console.log(this.seleccionFechaFin);*/
   }
 
   isEnabled(empleado:Usuario):boolean{
