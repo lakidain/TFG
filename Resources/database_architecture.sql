@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2019 a las 15:46:48
+-- Tiempo de generación: 31-12-2019 a las 02:28:39
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -33,7 +33,8 @@ USE `db_springboot_backend`;
 CREATE TABLE `asi_audit` (
   `id_audit` int(11) NOT NULL,
   `id_user_manager` int(11) NOT NULL,
-  `id_company` int(11) NOT NULL,
+  `id_company_auditing` int(11) NOT NULL,
+  `id_company_audited` int(11) NOT NULL,
   `id_audit_type` int(11) NOT NULL,
   `date_start_audit` date NOT NULL,
   `date_end_audit` date NOT NULL
@@ -43,8 +44,10 @@ CREATE TABLE `asi_audit` (
 -- Volcado de datos para la tabla `asi_audit`
 --
 
-INSERT INTO `asi_audit` (`id_audit`, `id_user_manager`, `id_company`, `id_audit_type`, `date_start_audit`, `date_end_audit`) VALUES
-(1, 7, 1, 1, '2019-12-30', '2020-01-01');
+INSERT INTO `asi_audit` (`id_audit`, `id_user_manager`, `id_company_auditing`, `id_company_audited`, `id_audit_type`, `date_start_audit`, `date_end_audit`) VALUES
+(1, 7, 1, 0, 1, '2019-12-30', '2020-01-01'),
+(2, 21, 2, 1, 1, '2019-12-24', '2019-12-25'),
+(3, 6, 2, 8, 1, '2019-12-30', '2020-01-01');
 
 -- --------------------------------------------------------
 
@@ -106,7 +109,8 @@ CREATE TABLE `asi_companies` (
 
 INSERT INTO `asi_companies` (`id_company`, `name_company`, `id_user_boss`) VALUES
 (1, 'Accenture', 4),
-(2, 'Link', 7);
+(2, 'Link', 7),
+(8, 'Emergia', 19);
 
 -- --------------------------------------------------------
 
@@ -141,7 +145,7 @@ CREATE TABLE `asi_users` (
   `password` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `email_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `phone_user` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `name_company` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `id_company` int(30) NOT NULL,
   `enabled` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -149,13 +153,15 @@ CREATE TABLE `asi_users` (
 -- Volcado de datos para la tabla `asi_users`
 --
 
-INSERT INTO `asi_users` (`id`, `username`, `name_user`, `password`, `email_user`, `phone_user`, `name_company`, `enabled`) VALUES
-(1, '12648712Y', 'Ander Liked di Arraba', '$2a$10$.UhtWEAgWKdk1bUvax91nOWOwPO/w0IzlGTuhIhGtazKrjohzSkQu', 'anderlakidain@gmail.com', '682736485', 'Ayesa', 1),
-(2, '746563A', 'Pepe Yufera', '$2a$10$GQQC/mtwC7x8D/ifCxvCsO/fqS.g1o5OxhyAPHgviqbSOZijOoJGu', 'andlwkee@gmail.com', '746564732', 'Emergia', 1),
-(4, '75648364R', 'Manolo', '$2a$10$HII7nIhdEZwIDK.FtPlizOLPB8tmGWV8ROFL3mKKL55Fw1e9APV2K', 'loc@gmail.com', '786547385', 'Accenture', 1),
-(6, '6475738E', 'Pablo', '$2a$10$HJSv9bpuKug/rBAFDfyFSezbVtRfLgdKpr2YtMBI8zE3SyQQaK/qq', 'pl@gmail.com', '784374', 'Accenture', 1),
-(7, '182736O', 'Pepe', '$2a$10$mBbW7zWs4OSoUkR908XhPe0.gUiEeWG/HerPxcnG2b1xedpa7pe8W', 'loco@hotmail.com', '8928392', 'Link', 1),
-(8, '29832983E', 'lskdslkdslk', '$2a$10$1vbrcSrBYSW3SkiV6biv2.onf9OL0OfEBc7RHEyvMNRTywkwbnpwq', 'epoper@gmail.com', '9829323', 'Link', 1);
+INSERT INTO `asi_users` (`id`, `username`, `name_user`, `password`, `email_user`, `phone_user`, `id_company`, `enabled`) VALUES
+(1, '12648712Y', 'Ander Liked di Arraba', '$2a$10$.UhtWEAgWKdk1bUvax91nOWOwPO/w0IzlGTuhIhGtazKrjohzSkQu', 'anderlakidain@gmail.com', '682736485', 1, 1),
+(2, '746563A', 'Pepe Yufera', '$2a$10$GQQC/mtwC7x8D/ifCxvCsO/fqS.g1o5OxhyAPHgviqbSOZijOoJGu', 'andlwkee@gmail.com', '746564732', 1, 1),
+(4, '75648364R', 'Manolo', '$2a$10$HII7nIhdEZwIDK.FtPlizOLPB8tmGWV8ROFL3mKKL55Fw1e9APV2K', 'loc@gmail.com', '786547385', 1, 1),
+(6, '6475738E', 'Pablo', '$2a$10$HJSv9bpuKug/rBAFDfyFSezbVtRfLgdKpr2YtMBI8zE3SyQQaK/qq', 'pl@gmail.com', '784374', 2, 1),
+(7, '182736O', 'Pepe', '$2a$10$K2JigM3yrrltTxVNOpqwXOFiQEZsbHFRVC6qGjyGQ0N2ZDNC1rBmy', 'locos@hotmail.com', '8928392', 2, 1),
+(8, '29832983E', 'lskdslkdslk', '$2a$10$1vbrcSrBYSW3SkiV6biv2.onf9OL0OfEBc7RHEyvMNRTywkwbnpwq', 'epoper@gmail.com', '9829323', 2, 1),
+(19, 'qwerty', 'qwerty', '$2a$10$.J05.cp6UmATmY1mVlaD0uRIcmVYi4VWN/5AeL.3EQ8m4ddJAHqV6', 'locos@hotmail.com', '8928392', 8, 1),
+(21, 'papo', 'qwerty', '$2a$10$FToyjeCZC4uMNYfPl3mM8O519gEpYuEi2kQFLb0WIdwqFdk9dhyJi', 'erer', '72', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +241,7 @@ ALTER TABLE `asi_users_rols`
 -- AUTO_INCREMENT de la tabla `asi_audit`
 --
 ALTER TABLE `asi_audit`
-  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_auditors`
@@ -253,7 +259,7 @@ ALTER TABLE `asi_audit_type`
 -- AUTO_INCREMENT de la tabla `asi_companies`
 --
 ALTER TABLE `asi_companies`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_rols`
@@ -265,7 +271,7 @@ ALTER TABLE `asi_rols`
 -- AUTO_INCREMENT de la tabla `asi_users`
 --
 ALTER TABLE `asi_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_users_rols`
