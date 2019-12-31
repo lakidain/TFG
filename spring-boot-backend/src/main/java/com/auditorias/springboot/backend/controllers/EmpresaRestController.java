@@ -27,4 +27,8 @@ public class EmpresaRestController {
 	public List<Empresa> getAll() {
 		return empresaMapper.findAll();
 	}
+
+	public List<Empresa> getId(String nameCompany) {
+		return empresaMapper.findAll();
+	}
 }

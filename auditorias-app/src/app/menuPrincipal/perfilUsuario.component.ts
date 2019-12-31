@@ -27,7 +27,7 @@ export class PerfilUsuarioComponent{
   oldPassword: string;
 
   /* Parameter for the company change */
-  seleccionEmpresa: string;
+  seleccionEmpresa: number;
 
   constructor(private authService: AuthService, private gestionPersonalService:GestionPersonalService,private usuarioService:UsuarioService, private router: Router){ //Este metodo constructor inicializa de forma normal
     this.usuario= authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas

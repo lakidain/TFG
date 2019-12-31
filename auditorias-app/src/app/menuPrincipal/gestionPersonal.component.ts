@@ -61,7 +61,8 @@ export class GestionPersonalComponent{
   enviar():void{
     this.audit = new Audit();
     this.audit.id_user_manager=this.seleccionUsuario;
-    this.audit.id_company=this.seleccionEmpresa;
+    this.audit.id_company_auditing=this.usuario.id_company;
+    this.audit.id_company_audited=this.seleccionEmpresa;
     this.audit.id_audit_type=this.seleccionTipoAuditoria;
     this.audit.date_start_audit=this.seleccionFechaInicio;
     this.audit.date_end_audit=this.seleccionFechaFin;

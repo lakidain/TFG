@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auditorias.springboot.backend.dto.DtoPassword;
+import com.auditorias.springboot.backend.dto.DtoRegistro;
+import com.auditorias.springboot.backend.mapper.EmpresaMapper;
 import com.auditorias.springboot.backend.mapper.UsuarioMapper;
 import com.auditorias.springboot.backend.model.Usuario;
 
@@ -26,18 +28,20 @@ import com.auditorias.springboot.backend.model.Usuario;
 @RequestMapping("/api") // Aqui nos generara la url
 public class UsuarioRestController {
 	private UsuarioMapper usuarioMapper;
+	private EmpresaMapper companyMapper;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	public UsuarioRestController(UsuarioMapper usuarioMapper) {
+	public UsuarioRestController(UsuarioMapper usuarioMapper, EmpresaMapper companyMapper) {
 		this.usuarioMapper = usuarioMapper;
+		this.companyMapper = companyMapper;
 	}
 
 	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS */
-	@GetMapping("/empleados/{companyName}") // Para generar el endpoint
-	public List<Usuario> getAll(@PathVariable String companyName) {
-		return usuarioMapper.findAllEmpleados(companyName);
+	@GetMapping("/empleados/{id_company}") // Para generar el endpoint
+	public List<Usuario> getAll(@PathVariable Long id_company) {
+		return usuarioMapper.findAllEmpleados(id_company);
 	}
 
 	/* METODOS CORRESPONDIENTES AL PANEL DE PERFIL DEL USUARIO */
@@ -66,8 +70,8 @@ public class UsuarioRestController {
 	/* Company change request method */
 	@PutMapping("/usuarioCompany/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean updatePassword(@RequestBody String name_company, @PathVariable Long id) {
-		usuarioMapper.updateCompany(name_company, id);
+	public boolean updateCompany(@RequestBody Long id_company, @PathVariable Long id) {
+		usuarioMapper.updateCompany(id_company, id, false);
 		return true;
 	}
 
@@ -76,21 +80,36 @@ public class UsuarioRestController {
 	/* METODO CORRESPONDIENTE A LA CREACION DE USUARIO */
 	@PostMapping("/usuario")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario create(@RequestBody Usuario user) { // Como viene en formato JSON es necesario convertirlo
-		String passwordBcrypt = passwordEncoder.encode(user.getPassword());
-		user.setPassword(passwordBcrypt); // Encriptamos la contraseña
+	public boolean create(@RequestBody DtoRegistro dtoRegistro) { // Como viene en formato JSON es necesario convertirlo
+		Usuario usuario = new Usuario();
+		usuario.setUsername(dtoRegistro.getUsername());
+		usuario.setName_user(dtoRegistro.getName_user());
+		usuario.setEmail_user(dtoRegistro.getEmail_user());
+		usuario.setPhone_user(dtoRegistro.getPhone_user());
 
-		usuarioMapper.insert(user);
+		String passwordBcrypt = passwordEncoder.encode(dtoRegistro.getPassword());
+		usuario.setPassword(passwordBcrypt); // Encriptamos la contraseña
 
-		// Comprobamos si ya existe la empresa, si no, el primer usuario será el jefe
-		if (usuarioMapper.checkCompany(user.getName_company()).size() == 0) {
-			Long id = usuarioMapper.findByUsername(user.getUsername()).get(0).getId();
-			usuarioMapper.insertCompanyBoss(id, user.getName_company());
+		usuarioMapper.insert(usuario);
+		Long id = usuarioMapper.findByUsername(dtoRegistro.getUsername()).get(0).getId(); // If we need to enable the
+																							// user being the boss we
+																							// need the id
+		usuario.setId(id);
+
+		// Check if the company already exists, if not, we create it and the first
+		// person is the boss
+		if (usuarioMapper.checkCompany(dtoRegistro.getName_company()).size() == 0) {
+			usuarioMapper.enableUser(usuario);
+			companyMapper.insertCompanyBoss(id, dtoRegistro.getName_company());
+			Long id_company = companyMapper.getId(dtoRegistro.getName_company()).get(0).getId_company();
+			usuarioMapper.updateCompany(id_company, id, true);
+		} else {
+			Long id_company = companyMapper.getId(dtoRegistro.getName_company()).get(0).getId_company();
+			usuarioMapper.updateCompany(id_company, id, false);
 		}
 
 		// FALTARIA AÑADIR EL ROL
-
-		return user;
+		return true;
 	}
 
 	/*

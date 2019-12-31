@@ -22,14 +22,15 @@ export class GestionPersonalService {
 
   /* Dada la empresa del empleado actual devuelve los empleados que trabajan en esta */
   getEmpleados(usuario:Usuario): Observable <Usuario[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
-    return this.http.get<Usuario[]>(this.urlEndPointEmpleados+"/"+usuario.name_company); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
+    return this.http.get<Usuario[]>(this.urlEndPointEmpleados+"/"+usuario.id_company); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
   }
+
   /* Metodo que devuelve las empresas posibles para auditar*/
   getEmpresas(): Observable <Empresa[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
     return this.http.get<Empresa[]>(this.urlEndPointEmpresas); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
   }
   /* Metodo que devuelve el tipo de auditorias existentes*/
-  getAuditTypes(): Observable<AuditType[]>{
+  getAuditTypes(): Observable <AuditType[]>{
     return this.http.get<AuditType[]>(this.urlEndPointAuditTypes);
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from './usuario';
 import { DtoPassword } from '../../dto/dtoPassword';
-import { Empresa } from '../../empresa/empresa';
+import { DtoRegistro } from '../../dto/dtoRegistro';
 import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient,HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
@@ -23,8 +23,8 @@ export class UsuarioService {
     //map(response => response as Cliente[])
   }
 
-  create(usuario : Usuario) : Observable <Usuario> { //Lo primero es lo que recibe y lo segundo lo que retorna
-    return this.http.post<Usuario>(this.urlEndPoint, usuario, {headers: this.httpHeaders})
+  create(dtoRegistro : DtoRegistro) : Observable <any> { //Lo primero es lo que recibe y lo segundo lo que retorna
+    return this.http.post<any>(this.urlEndPoint, dtoRegistro, {headers: this.httpHeaders})
   }
 
   updateUsuario(usuario : Usuario) : Observable <Usuario> { //Lo primero es lo que recibe y lo segundo lo que retorna
@@ -39,7 +39,7 @@ export class UsuarioService {
     return this.http.put<any>(this.urlEndPointChangePassword+"/"+usuario.id, dtoPassword ,{headers: this.httpHeaders})
   }
 
-  updateCompany(usuario: Usuario, name_company: string): Observable <any>{
-    return this.http.put<any>(this.urlEndPointChangeCompany+"/"+usuario.id, name_company ,{headers: this.httpHeaders})
+  updateCompany(usuario: Usuario, id_company: number): Observable <any>{
+    return this.http.put<any>(this.urlEndPointChangeCompany+"/"+usuario.id, id_company ,{headers: this.httpHeaders})
   }
 }

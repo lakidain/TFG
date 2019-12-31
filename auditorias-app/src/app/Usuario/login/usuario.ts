@@ -5,7 +5,7 @@ export class Usuario {
   email_user: string;
   phone_user: string;
   password: string;
-  name_company: string;
+  id_company: number;
   roles:string[]=[];  //Por defecto no tiene roles
   enabled:boolean;
 }

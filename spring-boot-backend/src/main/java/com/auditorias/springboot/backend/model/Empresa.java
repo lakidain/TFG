@@ -2,15 +2,15 @@ package com.auditorias.springboot.backend.model;
 
 public class Empresa {
 
-	private int id_company;
+	private Long id_company;
 	private String name_company;
 	private Long id_user_boss;
 
-	public int getId_company() {
+	public Long getId_company() {
 		return id_company;
 	}
 
-	public void setId_company(int id_company) {
+	public void setId_company(Long id_company) {
 		this.id_company = id_company;
 	}
 

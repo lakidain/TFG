@@ -40,7 +40,7 @@
 
 <form (ngSubmit) = "updateCompany()">
   <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
-    <option *ngFor="let empresa of empresas" value="{{empresa.name_company}}">{{empresa.name_company}}</option>
+    <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
   </select> <br />
   <input type="submit" class="btnSubmit" value="Cambio de empresa" />
 </form>

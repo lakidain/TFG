@@ -4,22 +4,22 @@
                     <h3>Registro</h3>
                     <form (ngSubmit) = "create()">
                       <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="usuario.name" name="name" />
+                          <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="dtoRegistro.name_user" name="name_user" />
                       </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="usuario.username" name="username" />
+                            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" />
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="usuario.email" name="email" />
+                            <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="usuario.phone" name="phone" />
+                            <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="usuario.password" name="password" />
+                            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="dtoRegistro.password" name="password" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Nombre Empresa" [(ngModel)]="usuario.companyName" name="companyName" />
+                            <input type="text" class="form-control" placeholder="Nombre Empresa" [(ngModel)]="dtoRegistro.name_company" name="name_company" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btnSubmit" value="Crear" />
