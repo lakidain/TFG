@@ -15,7 +15,7 @@ public interface AuditMapper {
 	/*
 	 * Select all audit types available
 	 */
-	@Select("select * from asi_audit_type")
+	@Select("select * from asi_audit_types")
 	List<Audit_Type> findAuditTypes();
 	
 	/*

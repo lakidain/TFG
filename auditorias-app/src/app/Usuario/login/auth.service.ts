@@ -54,7 +54,7 @@ export class AuthService{
       this._usuario.id = payload.id;
       this._usuario.name_user = payload.name;
       this._usuario.username = payload.user_name;
-      this._usuario.email_user = payload.emaile;
+      this._usuario.email_user = payload.email;
       this._usuario.phone_user = payload.phone;
       this._usuario.id_company = payload.companyId;
       this.usuario.roles = payload.authorities;

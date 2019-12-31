@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 //Cuando creas un componente es necesario importarlo aqui
 import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menuPrincipal/menu.component';
+import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.component';
 import { GestionPersonalComponent } from './menuPrincipal/gestionPersonal.component';
 import { PerfilUsuarioComponent } from './menuPrincipal/perfilUsuario.component';
 import { LoginComponent } from './usuario/login/login.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'index', component: IndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'menu', component: MenuComponent},
+  {path: 'gestionPreguntas', component: GestionPreguntas},
   {path: 'gestionPersonal', component: GestionPersonalComponent},
   {path: 'perfil', component: PerfilUsuarioComponent},
   {path: 'registro', component: RegistroComponent},
@@ -42,6 +44,7 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     MenuComponent,
+    GestionPreguntas,
     GestionPersonalComponent,
     PerfilUsuarioComponent,
   ],
