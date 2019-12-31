@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-12-2019 a las 02:28:39
+-- Tiempo de generación: 31-12-2019 a las 21:51:04
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -47,7 +47,8 @@ CREATE TABLE `asi_audit` (
 INSERT INTO `asi_audit` (`id_audit`, `id_user_manager`, `id_company_auditing`, `id_company_audited`, `id_audit_type`, `date_start_audit`, `date_end_audit`) VALUES
 (1, 7, 1, 0, 1, '2019-12-30', '2020-01-01'),
 (2, 21, 2, 1, 1, '2019-12-24', '2019-12-25'),
-(3, 6, 2, 8, 1, '2019-12-30', '2020-01-01');
+(3, 6, 2, 8, 1, '2019-12-30', '2020-01-01'),
+(4, 6, 2, 8, 1, '2019-12-30', '2019-12-31');
 
 -- --------------------------------------------------------
 
@@ -76,20 +77,90 @@ INSERT INTO `asi_auditors` (`id_auditor`, `name_auditor`, `dni_auditor`, `email_
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `asi_audit_type`
+-- Estructura de tabla para la tabla `asi_audit_answers`
 --
 
-CREATE TABLE `asi_audit_type` (
+CREATE TABLE `asi_audit_answers` (
+  `id_audit_answer` int(11) NOT NULL,
+  `answer_audit_answer` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_assets`
+--
+
+CREATE TABLE `asi_audit_assets` (
+  `id_audit_asset` int(11) NOT NULL,
+  `name_audit_asset` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_assets_questions`
+--
+
+CREATE TABLE `asi_audit_assets_questions` (
+  `id_audit_asset_question` int(11) NOT NULL,
+  `id_asset` int(11) NOT NULL,
+  `id_question` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_questions`
+--
+
+CREATE TABLE `asi_audit_questions` (
+  `id_audit_question` int(11) NOT NULL,
+  `question` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_questions_answers`
+--
+
+CREATE TABLE `asi_audit_questions_answers` (
+  `id_audit_question_answer` int(11) NOT NULL,
+  `id_audit_question` int(11) NOT NULL,
+  `id_audit_answer` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_types`
+--
+
+CREATE TABLE `asi_audit_types` (
   `id_audit_type` int(11) NOT NULL,
   `name_audit_type` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `asi_audit_type`
+-- Volcado de datos para la tabla `asi_audit_types`
 --
 
-INSERT INTO `asi_audit_type` (`id_audit_type`, `name_audit_type`) VALUES
+INSERT INTO `asi_audit_types` (`id_audit_type`, `name_audit_type`) VALUES
 (1, 'Informática');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_types_assets`
+--
+
+CREATE TABLE `asi_audit_types_assets` (
+  `id_audit_type_asset` int(11) NOT NULL,
+  `id_audit_type` int(11) NOT NULL,
+  `id_audit_asset` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -201,11 +272,41 @@ ALTER TABLE `asi_auditors`
   ADD UNIQUE KEY `dni_auditor` (`dni_auditor`);
 
 --
--- Indices de la tabla `asi_audit_type`
+-- Indices de la tabla `asi_audit_assets`
 --
-ALTER TABLE `asi_audit_type`
+ALTER TABLE `asi_audit_assets`
+  ADD PRIMARY KEY (`id_audit_asset`);
+
+--
+-- Indices de la tabla `asi_audit_assets_questions`
+--
+ALTER TABLE `asi_audit_assets_questions`
+  ADD PRIMARY KEY (`id_audit_asset_question`);
+
+--
+-- Indices de la tabla `asi_audit_questions`
+--
+ALTER TABLE `asi_audit_questions`
+  ADD PRIMARY KEY (`id_audit_question`);
+
+--
+-- Indices de la tabla `asi_audit_questions_answers`
+--
+ALTER TABLE `asi_audit_questions_answers`
+  ADD PRIMARY KEY (`id_audit_question_answer`);
+
+--
+-- Indices de la tabla `asi_audit_types`
+--
+ALTER TABLE `asi_audit_types`
   ADD PRIMARY KEY (`id_audit_type`),
   ADD UNIQUE KEY `name_audit_type` (`name_audit_type`);
+
+--
+-- Indices de la tabla `asi_audit_types_assets`
+--
+ALTER TABLE `asi_audit_types_assets`
+  ADD PRIMARY KEY (`id_audit_type_asset`);
 
 --
 -- Indices de la tabla `asi_companies`
@@ -241,7 +342,7 @@ ALTER TABLE `asi_users_rols`
 -- AUTO_INCREMENT de la tabla `asi_audit`
 --
 ALTER TABLE `asi_audit`
-  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_auditors`
@@ -250,10 +351,40 @@ ALTER TABLE `asi_auditors`
   MODIFY `id_auditor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `asi_audit_type`
+-- AUTO_INCREMENT de la tabla `asi_audit_assets`
 --
-ALTER TABLE `asi_audit_type`
+ALTER TABLE `asi_audit_assets`
+  MODIFY `id_audit_asset` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_assets_questions`
+--
+ALTER TABLE `asi_audit_assets_questions`
+  MODIFY `id_audit_asset_question` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_questions`
+--
+ALTER TABLE `asi_audit_questions`
+  MODIFY `id_audit_question` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_questions_answers`
+--
+ALTER TABLE `asi_audit_questions_answers`
+  MODIFY `id_audit_question_answer` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_types`
+--
+ALTER TABLE `asi_audit_types`
   MODIFY `id_audit_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_types_assets`
+--
+ALTER TABLE `asi_audit_types_assets`
+  MODIFY `id_audit_type_asset` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_companies`
