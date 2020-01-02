@@ -29,6 +29,7 @@ export class GestionPersonalService {
   getEmpresas(): Observable <Empresa[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
     return this.http.get<Empresa[]>(this.urlEndPointEmpresas); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
   }
+  
   /* Metodo que devuelve el tipo de auditorias existentes*/
   getAuditTypes(): Observable <AuditType[]>{
     return this.http.get<AuditType[]>(this.urlEndPointAuditTypes);

@@ -23,6 +23,7 @@ import {FooterComponent} from './footer/footer.component';
 /* DECLARACION DE SERVICIOS*/
 import { UsuarioService } from './usuario/login/usuario.service';
 import { GestionPersonalService } from './menuPrincipal/gestionPersonal.service';
+import { GestionPreguntasService } from './audit/gestionActivos/gestionPreguntas.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/index', pathMatch: 'full'}, //Esta sera nuestra pagina principal
@@ -54,7 +55,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes), //Aqui le metemos el arreglo que creamos arriba que mapeaba
     FormsModule,
   ],
-  providers: [UsuarioService,GestionPersonalService], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
+  providers: [UsuarioService,GestionPersonalService, GestionPreguntasService], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
   bootstrap: [AppComponent]
 })
 export class AppModule { }

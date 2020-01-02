@@ -1,32 +1,41 @@
 <h1> Gestion de Preguntas </h1>
+<!-- AUDIT TYPE CREATION-->
 <h2> Tipo de Auditoría </h2>
-<form (ngSubmit) = "TypeSend()">
-  <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="newAuditName" name="newAuditName" /> <br />
+<form (ngSubmit) = "typeSend()">
+  <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
   <input type="submit" class="btnSubmit" value="Enviar" /> <br />
 </form>
+<!-- ASSETS CREATION -->
 <h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
-<form >
   <label>
     <p>Seleccione el tipo de Auditoría</p>
   </label>
-  <select id="auditType" name="auditType" [(ngModel)]="seleccionTipoAuditoria" class="form-control">
+<form (ngSubmit) = "assetSend()">
+  <select id="auditType" name="auditType" [(ngModel)]="auditType.id_audit_type" class="form-control">
     <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
   </select> <br />
   <label>
     <p> Asociar el Activo </p>
   </label>
-  <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="newAssetName" name="newAssetName" /> <br />
+  <select id="auditAsset" name="auditAsset" [(ngModel)]="auditAsset.id_audit_type" class="form-control">
+    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditType.name_audit_asset}}</option>
+  </select>
+   <br /> <p>O crea uno nuevo </p>
+   <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="auditAsset.name_audit_asset" name="name_audit_asset" /> <br />
   <input type="submit" class="btnSubmit" value="Enviar" /> <br />
 </form >
+<!-- QUESTION AND ANSWER CREATION-->
 <h2> Gestión de Preguntas </h2>
-<p> Tenga en cuenta que una pregunta tendrá asociada cuatro respuestas, las cuales se evaluarán de la siguiente forma: 10 - 6 - 3 - 0 respectivamente </p>
+<p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
 <form >
+  <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
   <label>
     <p>Seleccione el Activo</p>
   </label>
   <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
     <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
   </select> <br />
+  <!-- QUESTION CREATION-->
   <label>
     <p> Asociar una pregunta</p>
   </label>
@@ -35,6 +44,7 @@
   <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
     <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
   </select> <br />
+  <!-- ANSWERS ASSOCIATED-->
   <label>
     <p> Respuesta 1</p>
   </label>
