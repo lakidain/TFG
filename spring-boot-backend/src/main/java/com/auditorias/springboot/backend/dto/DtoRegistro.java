@@ -1,7 +1,5 @@
 package com.auditorias.springboot.backend.dto;
 
-import com.auditorias.springboot.backend.model.Empresa;
-import com.auditorias.springboot.backend.model.Usuario;
 
 public class DtoRegistro {
 	

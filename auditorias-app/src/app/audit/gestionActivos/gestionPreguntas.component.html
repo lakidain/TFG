@@ -6,22 +6,23 @@
   <input type="submit" class="btnSubmit" value="Enviar" /> <br />
 </form>
 <!-- ASSETS CREATION -->
+<i class="fas fa-chalkboard-teacher"></i>
 <h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
   <label>
     <p>Seleccione el tipo de Auditoría</p>
   </label>
 <form (ngSubmit) = "assetSend()">
-  <select id="auditType" name="auditType" [(ngModel)]="auditType.id_audit_type" class="form-control">
+  <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control">
     <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
   </select> <br />
   <label>
     <p> Asociar el Activo </p>
   </label>
-  <select id="auditAsset" name="auditAsset" [(ngModel)]="auditAsset.id_audit_type" class="form-control">
-    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditType.name_audit_asset}}</option>
+  <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
   </select>
-   <br /> <p>O crea uno nuevo </p>
-   <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="auditAsset.name_audit_asset" name="name_audit_asset" /> <br />
+   <br /> <p>O crea uno nuevo (Si rellena este campo es el que se usaraº)</p>
+   <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
   <input type="submit" class="btnSubmit" value="Enviar" /> <br />
 </form >
 <!-- QUESTION AND ANSWER CREATION-->
@@ -32,8 +33,8 @@
   <label>
     <p>Seleccione el Activo</p>
   </label>
-  <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
-    <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+  <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_type}}">{{auditAsset.name_audit_asset}}</option>
   </select> <br />
   <!-- QUESTION CREATION-->
   <label>

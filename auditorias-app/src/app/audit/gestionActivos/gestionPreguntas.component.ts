@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
+import { DtoAssetCreation } from '../../dto/dtoAssetCreation';
 import { AuditType } from '../auditType';
 import { AuditAsset } from '../auditAsset';
 
@@ -18,6 +20,7 @@ export class GestionPreguntas{
 
   auditType: AuditType;
   auditAsset: AuditAsset;
+  dtoAssetCreation: DtoAssetCreation;
 
   tipoAuditorias:AuditType[];
   assetsToAudit: AuditAsset[];
@@ -25,6 +28,7 @@ export class GestionPreguntas{
   constructor(private gestionPersonalService:GestionPersonalService, private gestionPreguntasService:GestionPreguntasService){
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
+    this.dtoAssetCreation = new DtoAssetCreation();
   }
 
   ngOnInit(){
@@ -50,15 +54,31 @@ export class GestionPreguntas{
 
   /* Creation of Audit types */
   typeSend(){
-    console.log(this.auditType.name_audit_type);
+    this.gestionPreguntasService.createAuditType(this.auditType).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+          Swal.fire('Exito al crear el tipo de aditoria', 'El tipo de auditoria ha sido creado con exito', 'success');
+          this.updateAuditTypes();
+          }, err => {
+          if(err.status==400 || err.status==401 || err.status==500){
+            Swal.fire('Error al crear el tipo de auditoria', 'Vuelva a intentar crearla o compruebe que no existe', 'error');
+          }
+        }
+      );
   }
 
   /* Creation of Assets */
   assetSend(){
-    if(!this.auditAsset.name_audit_asset){  //If the text field it's not completed then we use the select
-      console.log(this.auditType.id_audit_type);
-    } else {
-      console.log(this.auditAsset.name_audit_asset);
+    console.log(this.dtoAssetCreation.id_audit_type);
+    if(!this.dtoAssetCreation.name_audit_asset){
+      this.dtoAssetCreation.name_audit_asset="";
     }
+    this.gestionPreguntasService.createAsset(this.dtoAssetCreation).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+            Swal.fire('Exito al crear el activo', 'El activo ha sido creado con exito', 'success');
+            this.updateAuditAssets();
+            }, err => {
+            if(err.status==400 || err.status==401 || err.status==500){
+              Swal.fire('Error al crear el tipo de activo', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
+            }
+          }
+        );
   }
 }
