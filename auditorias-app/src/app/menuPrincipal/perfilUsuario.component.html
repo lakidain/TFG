@@ -3,10 +3,10 @@
 <div class="container">
   <h2>Datos personales</h2>
   <div class="datosPersonales">
-    <p><b>Nombre:</b> {{usuario.name_user}}</p>
-    <p><b>DNI:</b> {{usuario.username}} </p>
-    <p><b>Email:</b> {{usuario.email_user}}</p>
-    <p><b>Phone:</b> {{usuario.phone_user}}</p>
+    <p><b><i class="fas fa-signature"></i> Nombre:</b> {{usuario.name_user}}</p>
+    <p><b><i class="fas fa-passport"></i> DNI:</b> {{usuario.username}} </p>
+    <p><b><i class="fas fa-envelope"></i> Email:</b> {{usuario.email_user}}</p>
+    <p><b><i class="fas fa-phone"></i> Phone:</b> {{usuario.phone_user}}</p>
   </div>
 </div>
 
@@ -19,9 +19,9 @@
   <h3>Modificar correo electrónico/teléfono</h3>
     <form (ngSubmit) = "updateUsuario()">
       <div class="form-group">
-        <label><b>E-mail</b></label>
+        <label><b><i class="fas fa-envelope"></i> E-mail</b></label>
         <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" /> <br />
-        <label><b>Phone</b></label>
+        <label><b><i class="fas fa-phone"></i> Phone</b></label>
         <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" /> <br />
         <input type="submit" class="btnSubmit btn-warning float-right" value="Actualizar Campos" /> <br />
       </div>
@@ -32,9 +32,9 @@
 
   <form (ngSubmit) = "updatePassword()">
     <div class="form-group">
-      <label><b>Password Antigua</b></label>
+      <label><b><i class="fas fa-unlock-alt"></i> Password Antigua</b></label>
       <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />  <br />
-      <label><b>Password Nueva</b></label>
+      <label><b><i class="fas fa-key"></i> Password Nueva</b></label>
       <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" />  <br />
       <input type="submit" class="btnSubmit btn-warning float-right" value="Cambiar Password" />  <br />
     </div>
@@ -45,6 +45,7 @@
   <h3>Cambio de empresa</h3>
 
   <form (ngSubmit) = "updateCompany()">
+    <label><b><i class="fas fa-building"></i> Company</b></label>
     <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
       <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
     </select> <br />
