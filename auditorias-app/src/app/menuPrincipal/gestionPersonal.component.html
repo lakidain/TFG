@@ -1,37 +1,50 @@
-<h1>Creación de Auditoría</h1>
-
+<h1>Panel de Gestión</h1>
+<div class="container">
+<h2>Creación de Auditoría</h2>
   <div class="form-group">
-    <label for="empleado">
-      Empleado
-    </label>
     <form (ngSubmit) = "enviar()">
-      <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control"> <!-- Antes en ngModel seleccionUsuario-->
-        <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name_user}}</option>
-      </select>
-      <label for="empresa">
-        Empresa
-      </label>
-      <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
-        <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
-      </select>
-      <label for="auditType">
-        Tipo de Auditoría
-      </label>
-      <select id="auditType" name="auditType" [(ngModel)]="seleccionTipoAuditoria" class="form-control">
-        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
-      </select>
-      <label for="periodo">
-        Comienzo periodo auditado
-      </label>
-      <input type="date" id="start" [(ngModel)]="seleccionFechaInicio" name="audit-start" /> <br />
-      <label for="periodo">
-        Fin periodo auditado
-      </label>
-      <input type="date" id="end" [(ngModel)]="seleccionFechaFin" name="audit-end" /> <br />
-      <input type="submit" class="btnSubmit" value="Enviar" /> <br />
+      <div class="form-row col-12">
+        <label class="formLabel" for="empleado">
+          <b>Empleado</b>
+        </label>
+        <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control"> <!-- Antes en ngModel seleccionUsuario-->
+          <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name_user}}</option>
+        </select>
+      </div> <br />
+      <div class="form-row col-12">
+        <label class="formLabel" for="empresa">
+          <b>Empresa</b>
+        </label>
+        <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
+          <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
+        </select>
+      </div> <br />
+      <div class="form-row col-12">
+        <label class="formLabel" for="auditType">
+          <b>Tipo de Auditoría</b>
+        </label>
+        <select id="auditType" name="auditType" [(ngModel)]="seleccionTipoAuditoria" class="form-control">
+          <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+        </select>
+      </div>  <br />
+      <div class="form-row col-12">
+        <label class="formLabel" for="periodo">
+          <b>Comienzo periodo auditado </b>
+        </label>
+        <input type="date" id="start" [(ngModel)]="seleccionFechaInicio" name="audit-start" />
+      </div> <br />
+      <div class="form-row col-12">
+        <label class="formLabel" for="periodo">
+          <b>Fin periodo auditado </b>
+        </label>
+        <input type="date" id="end" [(ngModel)]="seleccionFechaFin" name="audit-end" />
+      </div>
+      <input type="submit" class="btnSubmit btn-primary float-right" value="Crear" /> <br />
     </form>
   </div>
-<h1> Panel de empleados </h1>
+</div>
+<hr class="thin">
+<h2> Panel de empleados </h2>
 <div class="card border-primary mb-3">
   <div class="card-header">Asignación de empleados a empresas</div>
   <div class="card-body text-primary">
@@ -45,7 +58,7 @@
           <th>EMAIL</th>
           <th>PHONE</th>
           <th>COMPANY NAME</th>
-          <th>Dato de Alta</th>
+          <th>Dado de Alta</th>
         </tr>
       </thead>
       <tbody>

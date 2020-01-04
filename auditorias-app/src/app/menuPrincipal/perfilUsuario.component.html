@@ -1,45 +1,53 @@
-<h1>Perfil de Usuario</h1>
-<p>Nombre: {{usuario.name_user}}</p>
-<p>DNI: {{usuario.username}} </p>
-<p>Email: {{usuario.email_user}}</p>
-<p>Phone: {{usuario.phone_user}}</p>
-<h2>Seleccione el campo que desea modificar</h2>
-<!-- FORM CAMBIO DE EMAIL-->
-<p>Modificar correo electrónico/teléfono</p>
-<form (ngSubmit) = "updateUsuario()">
+<h1>Panel de Usuario</h1>
+
+<div class="container">
+  <h2>Datos personales</h2>
+  <div class="datosPersonales">
+    <p><b>Nombre:</b> {{usuario.name_user}}</p>
+    <p><b>DNI:</b> {{usuario.username}} </p>
+    <p><b>Email:</b> {{usuario.email_user}}</p>
+    <p><b>Phone:</b> {{usuario.phone_user}}</p>
+  </div>
+</div>
+
+<hr class="thin">
+
+<div class="container">
+  <h2> Modificar Datos Personales </h2> <br />
+  <!-- FORM CAMBIO DE EMAIL-->
+  <!-- Text input-->
+  <h3>Modificar correo electrónico/teléfono</h3>
+    <form (ngSubmit) = "updateUsuario()">
+      <div class="form-group">
+        <label><b>E-mail</b></label>
+        <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" /> <br />
+        <label><b>Phone</b></label>
+        <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" /> <br />
+        <input type="submit" class="btnSubmit btn-warning float-right" value="Actualizar Campos" /> <br />
+      </div>
+    </form>
+  <hr class="thin">
+
+  <h3>Cambio de password</h3>
+
+  <form (ngSubmit) = "updatePassword()">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" />
+      <label><b>Password Antigua</b></label>
+      <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />  <br />
+      <label><b>Password Nueva</b></label>
+      <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" />  <br />
+      <input type="submit" class="btnSubmit btn-warning float-right" value="Cambiar Password" />  <br />
     </div>
-    <br />
-    <div>
-        <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" />
-    </div>
-    <br />
-    <div class="form-group">
-        <input type="submit" class="btnSubmit" value="Actualizar Campos" />
-    </div>
-</form>
+  </form>
 
-<p>Cambio de password:</p>
+  <hr class="thin">
 
-<form (ngSubmit) = "updatePassword()">
-  <div>
-      <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />
-  </div>
-  <br />
-  <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" />
-  </div>
-  <div class="form-group">
-      <input type="submit" class="btnSubmit" value="Cambiar Password" />
-  </div>
-</form>
+  <h3>Cambio de empresa</h3>
 
-<p>Cambio de empresa:</p>
-
-<form (ngSubmit) = "updateCompany()">
-  <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
-    <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
-  </select> <br />
-  <input type="submit" class="btnSubmit" value="Cambio de empresa" />
-</form>
+  <form (ngSubmit) = "updateCompany()">
+    <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
+      <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
+    </select> <br />
+    <input type="submit" class="btnSubmit btn-warning float-right" value="Cambio de empresa" />  <br />
+  </form>
+</div>

@@ -1,4 +1,13 @@
 /*
+* Font Style for Cards
+*/
+.cardLetters{
+  text-align: center;
+  font-size: 500%;
+  font-weight:bold;
+}
+
+/*
  * Bootstrap classes
  */
 .row {

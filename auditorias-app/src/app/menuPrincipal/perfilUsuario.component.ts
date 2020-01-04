@@ -69,15 +69,17 @@ export class PerfilUsuarioComponent{
   }
 
   updateCompany():void{
-    this.usuarioService.updateCompany(this.usuario,this.seleccionEmpresa).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-        Swal.fire('Empresa actualizada','Empresa actualizada, espere a ser aceptado por su nuevo jefe para poder logearse','success');
-        this.authService.logout();
-        this.router.navigate(['/index']);
-      }, err => {
-        if(err.status==400 || err.status==401){
-          Swal.fire('Error al actualizar la empresa', 'Pruebe a volver a actualizarla', 'error');
-        }
-        }
-      )
+    if(confirm("Estas seguro de cambiar de compañia, tendrás que ser aceptado de nuevo por el jefe de tu nueva compañia y no podrás acceder al sistema hasta entonces")){
+      this.usuarioService.updateCompany(this.usuario,this.seleccionEmpresa).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+          Swal.fire('Empresa actualizada','Empresa actualizada, espere a ser aceptado por su nuevo jefe para poder logearse','success');
+          this.authService.logout();
+          this.router.navigate(['/index']);
+        }, err => {
+          if(err.status==400 || err.status==401){
+            Swal.fire('Error al actualizar la empresa', 'Pruebe a volver a actualizarla', 'error');
+          }
+          }
+        )
+    }
   }
 }
