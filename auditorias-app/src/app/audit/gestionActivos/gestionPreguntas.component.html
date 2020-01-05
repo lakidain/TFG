@@ -1,65 +1,74 @@
 <h1> Gestion de Preguntas </h1>
 <!-- AUDIT TYPE CREATION-->
-<h2> Tipo de Auditoría </h2>
-<form (ngSubmit) = "typeSend()">
-  <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
-  <input type="submit" class="btnSubmit" value="Enviar" /> <br />
-</form>
+<div class="container">
+  <h2> Tipo de Auditoría </h2>
+  <label><p><b>Introducir nuevo tipo de Auditoría</b></p></label>
+  <form (ngSubmit) = "typeSend()">
+    <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
+    <input type="submit" class="btnSubmit btn-primary float-right" value="Enviar" /> <br />
+  </form>
+</div>
+<hr class="thin">
 <!-- ASSETS CREATION -->
-<h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
-  <label>
-    <p>Seleccione el tipo de Auditoría</p>
-  </label>
-<form (ngSubmit) = "assetSend()">
-  <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control">
-    <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
-  </select> <br />
-  <label>
-    <p> Asociar el Activo </p>
-  </label>
-  <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
-  </select>
-   <br /> <p>O crea uno nuevo (Si rellena este campo es el que se usaraº)</p>
-   <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
-  <input type="submit" class="btnSubmit" value="Enviar" /> <br />
-</form >
+<div class="container">
+  <h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+    <label>
+      <p><b>Seleccione el tipo de Auditoría</b></p>
+    </label>
+  <form (ngSubmit) = "assetSend()">
+    <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control">
+      <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+    </select> <br />
+    <label>
+      <p><b>Asociar el Activo</b></p>
+    </label>
+    <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+      <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
+    </select>
+     <br /> <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
+     <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
+    <input type="submit" class="btnSubmit btn-primary float-right" value="Enviar" /> <br />
+  </form >
+</div>
+<hr class="thin">
 <!-- QUESTION AND ANSWER CREATION-->
-<h2> Gestión de Preguntas </h2>
-<p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
-<form >
-  <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
-  <label>
-    <p>Seleccione el Activo</p>
-  </label>
-  <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-    <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_type}}">{{auditAsset.name_audit_asset}}</option>
-  </select> <br />
-  <!-- QUESTION CREATION-->
-  <label>
-    <p> Asociar una pregunta</p>
-  </label>
-  <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="firstQuestion" name="firstQuestion" /> <br />
-  <p> O Seleccione una existente</p> <br />
-  <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
-    <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
-  </select> <br />
-  <!-- ANSWERS ASSOCIATED-->
-  <label>
-    <p> Respuesta 1</p>
-  </label>
-  <input type="text" class="form-control" placeholder="Respuesta 1" [(ngModel)]="firstAnswer" name="firstAnswer" /> <br />
-  <label>
-    <p> Respuesta 2</p>
-  </label>
-  <input type="text" class="form-control" placeholder="Respuesta 2" [(ngModel)]="secondAnswer" name="secondAnswer" /> <br />
-  <label>
-    <p> Respuesta 3</p>
-  </label>
-  <input type="text" class="form-control" placeholder="Respuesta 3" [(ngModel)]="thirdAnswer" name="thirdAnswer" /> <br />
-  <label>
-    <p> Respuesta 4</p>
-  </label>
-  <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" /> <br />
-  <input type="submit" class="btnSubmit" value="Enviar" /> <br />
-</form >
+<div class="container">
+  <h2> Gestión de Preguntas </h2>
+  <p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
+  <form >
+    <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
+    <label>
+      <p>Seleccione el Activo</p>
+    </label>
+    <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+      <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_type}}">{{auditAsset.name_audit_asset}}</option>
+    </select> <br />
+    <!-- QUESTION CREATION-->
+    <label>
+      <p> Asociar una pregunta</p>
+    </label>
+    <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="firstQuestion" name="firstQuestion" /> <br />
+    <p> O Seleccione una existente</p> <br />
+    <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
+      <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+    </select> <br />
+    <!-- ANSWERS ASSOCIATED-->
+    <label>
+      <p> Respuesta 1</p>
+    </label>
+    <input type="text" class="form-control" placeholder="Respuesta 1" [(ngModel)]="firstAnswer" name="firstAnswer" /> <br />
+    <label>
+      <p> Respuesta 2</p>
+    </label>
+    <input type="text" class="form-control" placeholder="Respuesta 2" [(ngModel)]="secondAnswer" name="secondAnswer" /> <br />
+    <label>
+      <p> Respuesta 3</p>
+    </label>
+    <input type="text" class="form-control" placeholder="Respuesta 3" [(ngModel)]="thirdAnswer" name="thirdAnswer" /> <br />
+    <label>
+      <p> Respuesta 4</p>
+    </label>
+    <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" /> <br />
+    <input type="submit" class="btnSubmit btn-primary float-right" value="Enviar" /> <br />
+  </form >
+</div>

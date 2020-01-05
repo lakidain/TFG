@@ -44,34 +44,30 @@
   </div>
 </div>
 <hr class="thin">
-<h2> Panel de empleados </h2>
-<div class="card border-primary mb-3">
-  <div class="card-header">Asignación de empleados a empresas</div>
-  <div class="card-body text-primary">
-    <h5 class="card-title">Listado de Empleados de la empresa {{usuario.companyName}}</h5>
-    <table class="table table-bordered table-striped table-responsive">
-      <thead>
-        <tr>
-          <th scope="col"><i class="fas fa-sort-numeric-down"></i> Id</th>
-          <th scope="col"><i class="fas fa-signature"></i> Name</th>
-          <th scope="col"><i class="fas fa-passport"></i> Dni</th>
-          <th scope="col"><i class="fas fa-envelope"></i> E-Mail</th>
-          <th scope="col"><i class="fas fa-phone"></i> Phone</th>
-          <!--<th scope="col"><i class="fas fa-building"></i> Company Name</th>-->
-          <th scope="col"><i class="fas fa-check"></i> Dado de Alta</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let empleado of empleados">
-          <td scope="row">{{empleado.id}}</td>
-          <td>{{empleado.name_user}}</td>
-          <td>{{empleado.username}}</td>
-          <td>{{empleado.email_user}}</td>
-          <td>{{empleado.phone_user}}</td>
-          <!--<td>{{empleado.name_company}}</td>-->
-          <td><form (ngSubmit) = "aceptarPersona(empleado)"><div *ngIf="!isEnabled(empleado)" class="form-group"><input type="submit" class="btn btn-success" value="Aceptar" /></div><div *ngIf="isEnabled(empleado)" class="form-group">✓</div></form></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="container">
+  <h2> Panel de empleados </h2>
+  <table class="table table-bordered table-striped table-responsive text-center">
+    <thead>
+      <tr>
+        <th scope="col"><i class="fas fa-sort-numeric-down"></i> Id</th>
+        <th scope="col"><i class="fas fa-signature"></i> Name</th>
+        <th scope="col"><i class="fas fa-passport"></i> Dni</th>
+        <th scope="col"><i class="fas fa-envelope"></i> E-Mail</th>
+        <th scope="col"><i class="fas fa-phone"></i> Phone</th>
+        <!--<th scope="col"><i class="fas fa-building"></i> Company Name</th>-->
+        <th scope="col"><i class="fas fa-check"></i> Dado de Alta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empleado of empleados">
+        <td scope="row">{{empleado.id}}</td>
+        <td>{{empleado.name_user}}</td>
+        <td>{{empleado.username}}</td>
+        <td>{{empleado.email_user}}</td>
+        <td>{{empleado.phone_user}}</td>
+        <!--<td>{{empleado.name_company}}</td>-->
+        <td><form (ngSubmit) = "aceptarPersona(empleado)"><div *ngIf="!isEnabled(empleado)" class="form-group"><input type="submit" class="btn btn-success" value="Aceptar" /></div><div *ngIf="isEnabled(empleado)" class="form-group">✓</div></form></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

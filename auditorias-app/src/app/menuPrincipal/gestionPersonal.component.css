@@ -20,6 +20,11 @@ h2{
   width:20%;
 }
 
-.formLabel{
+.formLabel{ /* Por algun motivo no funciona de momento*/
   text-align: center;
+}
+
+.table{
+  margin: auto;
+  width: 60% !important;
 }

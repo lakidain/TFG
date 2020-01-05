@@ -48,8 +48,9 @@ h1{
 
 .container-bg{
   width:100%;
-  padding: 2em 2em 2em 2em;
+  padding: 4em 4em 4em 4em;
   background-color: rgba(220, 220, 220,0.2);
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
   opacity: 1;
 }
 
