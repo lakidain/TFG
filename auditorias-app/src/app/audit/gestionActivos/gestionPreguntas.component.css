@@ -19,3 +19,10 @@ h2{
 .btnSubmit{
   width:20%;
 }
+
+.sameQuestionContainer{
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  padding: 2em 2em 2em 2em;
+  margin: 0em 0em 1em 0em;
+  border-radius: 12px;
+}
