@@ -1,5 +1,6 @@
 <h1>Panel de Gestión</h1>
 <div class="container">
+<div (click)="infoAuditCreation()"><i class="far fa-question-circle float-right" ></i></div>
 <h2>Creación de Auditoría</h2>
   <div class="form-group">
     <form (ngSubmit) = "enviar()">
@@ -45,6 +46,7 @@
 </div>
 <hr class="thin">
 <div class="container">
+  <div (click)="infoEmployeeTable()"><i class="far fa-question-circle float-right" ></i></div>
   <h2> Panel de empleados </h2>
   <table class="table table-bordered table-striped table-responsive text-center">
     <thead>

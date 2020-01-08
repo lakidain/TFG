@@ -1,16 +1,18 @@
 <h1> Gestion de Preguntas </h1>
 <!-- AUDIT TYPE CREATION-->
 <div class="container">
-  <h2> Tipo de Auditoría </h2>
+  <div (click)="infoAuditType()"><i class="far fa-question-circle float-right" ></i></div>
+  <h2> Tipo de Auditoría</h2>
   <label><p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p></label>
   <form (ngSubmit) = "typeSend()">
     <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Enviar" /><br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /><br />
   </form>
 </div>
 <hr class="thin">
 <!-- ASSETS CREATION -->
 <div class="container">
+  <div (click)="infoAsset()"><i class="far fa-question-circle float-right" ></i></div>
   <h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
     <label>
       <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
@@ -29,12 +31,13 @@
        <br /> <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
        <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
      </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Enviar" /> <br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
   </form >
 </div>
 <hr class="thin">
 <!-- QUESTION AND ANSWER CREATION-->
 <div class="container">
+  <div (click)="infoAnswer()"><i class="far fa-question-circle float-right" ></i></div>
   <h2> Gestión de Preguntas </h2>
   <p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
   <form >
@@ -90,6 +93,6 @@
         <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" /> <br />
       </div>
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Enviar" /> <br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
   </form >
 </div>

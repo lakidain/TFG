@@ -83,4 +83,17 @@ export class GestionPreguntas{
           }
         );
   }
+
+  /* Info events when info button clicked*/
+  infoAuditType(){
+    Swal.fire('Information', 'First create an Audit Type. Example: Security', 'info');
+  }
+
+  infoAsset(){
+    Swal.fire('Information', 'Associate an audit type with an asset. This asset can be selected from a list of previously created assets or be created from the text field. Example: Security & Database', 'info');
+  }
+
+  infoAnswer(){
+    Swal.fire('Information', 'An asset is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
+  }
 }

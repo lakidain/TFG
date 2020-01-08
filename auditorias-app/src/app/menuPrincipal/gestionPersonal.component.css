@@ -26,5 +26,16 @@ h2{
 
 .table{
   margin: auto;
-  width: 60% !important;
+  width: 50% !important;
+}
+
+/* Question mark info */
+.fa-question-circle{
+  opacity: 0.6;
+  height: auto;
+  width: 25px;
+}
+
+.fa-question-circle:hover {
+  cursor: pointer;
 }

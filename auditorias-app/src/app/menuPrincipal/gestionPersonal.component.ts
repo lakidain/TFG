@@ -105,4 +105,13 @@ export class GestionPersonalComponent{
       }
     );
   }
+
+  /* Info events when info button clicked*/
+  infoAuditCreation(){
+    Swal.fire('Information', 'Create an Audit introducing the information requested. If the company to be audited it\'s not created, you should register his boss and the company in the Register pannel', 'info');
+  }
+
+  infoEmployeeTable(){
+    Swal.fire('Information', 'Table with employees. You can accept a request from a new employee clicking the button in the last box', 'info');
+  }
 }
