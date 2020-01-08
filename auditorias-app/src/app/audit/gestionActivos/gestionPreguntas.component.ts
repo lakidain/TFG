@@ -24,11 +24,13 @@ export class GestionPreguntas{
 
   tipoAuditorias:AuditType[];
   assetsToAudit: AuditAsset[];
+  answerNumber: string;
 
   constructor(private gestionPersonalService:GestionPersonalService, private gestionPreguntasService:GestionPreguntasService){
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();
+    this.answerNumber="one";
   }
 
   ngOnInit(){

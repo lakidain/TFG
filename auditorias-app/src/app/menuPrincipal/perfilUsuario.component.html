@@ -23,7 +23,7 @@
         <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" /> <br />
         <label><b><i class="fas fa-phone"></i> Phone</b></label>
         <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" /> <br />
-        <input type="submit" class="btnSubmit btn-warning float-right" value="Actualizar Campos" /> <br />
+        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Actualizar Campos" /> <br />
       </div>
     </form>
   <hr class="thin">
@@ -36,7 +36,7 @@
       <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" />  <br />
       <label><b><i class="fas fa-key"></i> Password Nueva</b></label>
       <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" />  <br />
-      <input type="submit" class="btnSubmit btn-warning float-right" value="Cambiar Password" />  <br />
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Cambiar Password" />  <br />
     </div>
   </form>
 
@@ -49,6 +49,6 @@
     <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control">
       <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
     </select> <br />
-    <input type="submit" class="btnSubmit btn-warning float-right" value="Cambio de empresa" />  <br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Cambio de empresa" />  <br />
   </form>
 </div>

@@ -28,18 +28,18 @@
         </select>
       </div>  <br />
       <div class="form-row col-12">
-        <label class="formLabel" for="periodo">
+        <label class="formLabel mr-4" for="periodo">
           <b><i class="fas fa-hourglass-start"></i> Comienzo periodo auditado </b>
         </label>
-        <input type="date" id="start" [(ngModel)]="seleccionFechaInicio" name="audit-start" />
+        <input type="date" class="ml-4 rounded" id="start" [(ngModel)]="seleccionFechaInicio" name="audit-start" />
       </div> <br />
       <div class="form-row col-12">
-        <label class="formLabel" for="periodo">
+        <label class="formLabel mr-4" for="periodo">
           <b><i class="fas fa-hourglass-end"></i> Fin periodo auditado </b>
         </label>
-        <input type="date" id="end" [(ngModel)]="seleccionFechaFin" name="audit-end" />
+        <input type="date" class="ml-4 rounded" id="end" [(ngModel)]="seleccionFechaFin" name="audit-end" />
       </div>
-      <input type="submit" class="btnSubmit btn-warning float-right" value="Crear" /> <br />
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
     </form>
   </div>
 </div>
