@@ -18,6 +18,7 @@ import { PerfilUsuarioComponent } from './menuPrincipal/perfilUsuario.component'
 import { LoginComponent } from './usuario/login/login.component';
 import { RegistroComponent } from './usuario/registro/registro.component';
 import { HeaderComponent } from './header/header.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 
 /* DECLARACION DE SERVICIOS*/
@@ -43,6 +44,7 @@ const routes: Routes = [
     LoginComponent,
     RegistroComponent,
     HeaderComponent,
+    NavbarComponent,
     FooterComponent,
     MenuComponent,
     GestionPreguntas,

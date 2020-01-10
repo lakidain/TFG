@@ -9,14 +9,16 @@
   <form (ngSubmit)="typeSend()" #createAuditType="ngForm">
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" required #auditTypeCreationError="ngModel" />
-      <!-- Error Audit Type div-->
+      <!-- Error Audit Type Creation div-->
       <div class="alert alert-danger" *ngIf="auditTypeCreationError.invalid && (auditTypeCreationError.dirty || auditTypeCreationError.touched)">
         <div *ngIf="auditTypeCreationError.errors.required">
           Audit Type is required
         </div>
       </div>
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAuditType.form.valid" value="Crear" /><br />
+    <div class="form-group">
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAuditType.form.valid" value="Crear" /><br />
+    </div>
   </form>
 </div>
 <hr class="thin">
@@ -27,22 +29,33 @@
   <label>
     <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
   </label>
-  <form (ngSubmit)="assetSend()">
-    <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control">
-      <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
-    </select> <br />
+  <form (ngSubmit)="assetSend()" #createAsset="ngForm">
+    <div class="form-group">
+      <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
+        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+      </select>
+      <!-- Error Audit Type Selection div-->
+      <div class="alert alert-danger" *ngIf="dtoAssetCreationTypeError.invalid && (dtoAssetCreationTypeError.dirty || dtoAssetCreationTypeError.touched)">
+        <div *ngIf="dtoAssetCreationTypeError.errors.required">
+          Audit Type is required
+        </div>
+      </div>
+    </div>
     <div class="sameQuestionContainer">
       <label>
         <p><i class="fas fa-tools"></i><b> Asociar el Activo</b></p>
       </label>
-      <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-        <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
-      </select>
-      <br />
+      <div class="form-group">
+        <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+          <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
+        </select>
+      </div>
       <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
       <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
+    <div class="form-group">
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAsset.form.valid" value="Crear" /> <br />
+    </div>
   </form>
 </div>
 <hr class="thin">
@@ -55,19 +68,25 @@
     <label>
       <p><i class="fas fa-tools"></i><b> Seleccione el Activo</b></p>
     </label>
-    <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-      <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_type}}">{{auditAsset.name_audit_asset}}</option>
-    </select> <br />
+    <div class="form-group">
+      <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+        <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_type}}">{{auditAsset.name_audit_asset}}</option>
+      </select>
+    </div>
     <!-- QUESTION CREATION-->
     <div class="sameQuestionContainer">
       <label>
         <p><i class="fas fa-question"></i><b> Asociar una pregunta</b></p>
       </label>
-      <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
-        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
-      </select> <br />
+      <div class="form-group">
+        <select id="auditAsset" name="auditAsset" [(ngModel)]="seleccionAssetAuditoria" class="form-control">
+          <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+        </select>
+      </div>
       <p> <b>O Crea una nueva (Si rellena este campo es el que se usara)</b></p>
-      <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="firstQuestion" name="firstQuestion" />
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="firstQuestion" name="firstQuestion" />
+      </div>
     </div>
     <!-- ANSWERS ASSOCIATED-->
     <div class="sameQuestionContainer">
@@ -82,27 +101,37 @@
         <label>
           <p><i class="fas fa-feather-alt"></i><b> Respuesta 1</b></p>
         </label>
-        <input type="text" class="form-control" placeholder="Respuesta 1" [(ngModel)]="firstAnswer" name="firstAnswer" /> <br />
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Respuesta 1" [(ngModel)]="firstAnswer" name="firstAnswer" />
+        </div>
       </div>
       <div *ngIf="answerNumber === 'two' || answerNumber=== 'three' || answerNumber=== 'four'" id="answerTwo">
         <label>
           <p><i class="fas fa-feather-alt"></i><b> Respuesta 2</b></p>
         </label>
-        <input type="text" class="form-control" placeholder="Respuesta 2" [(ngModel)]="secondAnswer" name="secondAnswer" /> <br />
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Respuesta 2" [(ngModel)]="secondAnswer" name="secondAnswer" />
+        </div>
       </div>
       <div *ngIf="answerNumber=== 'three' || answerNumber=== 'four'" id="answerThree">
         <label>
           <p><i class="fas fa-feather-alt"></i><b> Respuesta 3</b></p>
         </label>
-        <input type="text" class="form-control" placeholder="Respuesta 3" [(ngModel)]="thirdAnswer" name="thirdAnswer" /> <br />
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Respuesta 3" [(ngModel)]="thirdAnswer" name="thirdAnswer" />
+        </div>
       </div>
       <div *ngIf="answerNumber=== 'four'" id="answerFour">
         <label>
           <p><i class="fas fa-feather-alt"></i><b> Respuesta 4</b></p>
         </label>
-        <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" /> <br />
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" />
+        </div>
       </div>
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
+    <div class="form-group">
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
+    </div>
   </form>
 </div>

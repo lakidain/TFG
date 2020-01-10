@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: #ffcc19;
+  color: #6b6b6b;
+  transition: all 0.3s;
+}
+
+.sidebar.active {
+  margin-left: -250px;
+}
+
+.sidebar .sidebar-header {
+  padding: 20px;
+  background: #e5b200;
+  /*#6d7fcc*/
+}
+
+/* --------------------------------------------------- CONTENT STYLE ----------------------------------------------------- */
+#content {
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
