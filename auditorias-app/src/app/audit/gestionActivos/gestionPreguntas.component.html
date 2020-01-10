@@ -6,9 +6,17 @@
   <label>
     <p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p>
   </label>
-  <form (ngSubmit)="typeSend()">
-    <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /><br />
+  <form (ngSubmit)="typeSend()" #createAuditType="ngForm">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" required #auditTypeCreationError="ngModel" />
+      <!-- Error Audit Type div-->
+      <div class="alert alert-danger" *ngIf="auditTypeCreationError.invalid && (auditTypeCreationError.dirty || auditTypeCreationError.touched)">
+        <div *ngIf="auditTypeCreationError.errors.required">
+          Audit Type is required
+        </div>
+      </div>
+    </div>
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAuditType.form.valid" value="Crear" /><br />
   </form>
 </div>
 <hr class="thin">
@@ -34,7 +42,7 @@
       <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
       <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
   </form>
 </div>
 <hr class="thin">
@@ -42,7 +50,6 @@
 <div class="container">
   <div (click)="infoAnswer()"><i class="far fa-question-circle float-right"></i></div>
   <h2> Gestión de Preguntas </h2>
-  <p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
   <form>
     <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
     <label>
@@ -96,6 +103,6 @@
         <input type="text" class="form-control" placeholder="Respuesta 4" [(ngModel)]="fourthAnswer" name="fourthAnswer" /> <br />
       </div>
     </div>
-    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
+    <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
   </form>
 </div>
