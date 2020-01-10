@@ -6,6 +6,6 @@ export class Usuario {
   phone_user: string;
   password: string;
   id_company: number;
-  roles:string[]=[];  //Por defecto no tiene roles
-  enabled:boolean;
+  roles: string[] = [];  //Por defecto no tiene roles
+  enabled: boolean;
 }

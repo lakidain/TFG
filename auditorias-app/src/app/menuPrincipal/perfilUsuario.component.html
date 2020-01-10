@@ -17,47 +17,47 @@
   <!-- FORM CAMBIO DE EMAIL-->
   <!-- Text input-->
   <h3>Modificar correo electrónico/teléfono</h3>
-    <form (ngSubmit) = "updateUsuario()"  #updateUsuarioForm="ngForm">
+  <form (ngSubmit)="updateUsuario()" #updateUsuarioForm="ngForm">
+    <div class="form-group">
+      <label><b><i class="fas fa-envelope"></i> E-mail</b></label>
       <div class="form-group">
-        <label><b><i class="fas fa-envelope"></i> E-mail</b></label>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" required email #email_user="ngModel"/>
-          <!-- Error email div-->
-          <div class="alert alert-danger" *ngIf="email_user.invalid && (email_user.dirty || email_user.touched)">
-            <div *ngIf="email_user.errors.required">
-              Email is required
-            </div>
-            <div *ngIf="email_user.errors.email">
-              The email must have a correct format
-            </div>
+        <input type="text" class="form-control" placeholder="Modificar Correo Electronico" [(ngModel)]="usuario.email_user" name="email_user" required email #email_user="ngModel" />
+        <!-- Error email div-->
+        <div class="alert alert-danger" *ngIf="email_user.invalid && (email_user.dirty || email_user.touched)">
+          <div *ngIf="email_user.errors.required">
+            Email is required
+          </div>
+          <div *ngIf="email_user.errors.email">
+            The email must have a correct format
           </div>
         </div>
-        <label><b><i class="fas fa-phone"></i> Phone</b></label>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel"/>
-          <!-- Error phone div-->
-          <div class="alert alert-danger" *ngIf="phone_user.invalid && (phone_user.dirty || phone_user.touched)">
-            <div *ngIf="phone_user.errors.required">
-              Phone is required
-            </div>
-            <div *ngIf="phone_user.errors.pattern">
-              The phone must have spanish format
-            </div>
-          </div>
-        </div>
-        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateUsuarioForm.form.valid" value="Actualizar Campos" /> <br />
       </div>
-    </form>
+      <label><b><i class="fas fa-phone"></i> Phone</b></label>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Modificar Telefono" [(ngModel)]="usuario.phone_user" name="phone_user" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
+        <!-- Error phone div-->
+        <div class="alert alert-danger" *ngIf="phone_user.invalid && (phone_user.dirty || phone_user.touched)">
+          <div *ngIf="phone_user.errors.required">
+            Phone is required
+          </div>
+          <div *ngIf="phone_user.errors.pattern">
+            The phone must have spanish format
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateUsuarioForm.form.valid" value="Actualizar Campos" /> <br />
+    </div>
+  </form>
 
   <hr class="thin">
 
   <h3>Cambio de password</h3>
 
-  <form (ngSubmit) = "updatePassword()" #updatePasswordForm="ngForm">
+  <form (ngSubmit)="updatePassword()" #updatePasswordForm="ngForm">
     <div class="form-group">
       <label><b><i class="fas fa-unlock-alt"></i> Password Antigua</b></label>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" required minlength="6" #oldPasswordError="ngModel"/>
+        <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" required minlength="6" #oldPasswordError="ngModel" />
         <!-- Error Old password div-->
         <div class="alert alert-danger" *ngIf="oldPasswordError.invalid && (oldPasswordError.dirty || oldPasswordError.touched)">
           <div *ngIf="oldPasswordError.errors.required">
@@ -70,7 +70,7 @@
       </div>
       <label><b><i class="fas fa-key"></i> Password Nueva</b></label>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" required minlength="6" #newPasswordError="ngModel"/>
+        <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" required minlength="6" #newPasswordError="ngModel" />
         <!-- Error New password div-->
         <div class="alert alert-danger" *ngIf="newPasswordError.invalid && (newPasswordError.dirty || newPasswordError.touched)">
           <div *ngIf="newPasswordError.errors.required">
@@ -91,7 +91,7 @@
 
   <h3>Cambio de empresa</h3>
 
-  <form (ngSubmit) = "updateCompany()" #updateCompanyForm="ngForm">
+  <form (ngSubmit)="updateCompany()" #updateCompanyForm="ngForm">
     <label><b><i class="fas fa-building"></i> Company</b></label>
     <div class="form-group">
       <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control" required #seleccionEmpresaError="ngModel">
@@ -105,7 +105,7 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Cambio de empresa" />  <br />
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Cambio de empresa" /> <br />
     </div>
   </form>
 </div>

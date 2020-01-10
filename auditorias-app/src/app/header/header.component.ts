@@ -9,16 +9,16 @@ import Swal from 'sweetalert2';
   templateUrl: './header.component.html',
 })
 
-export class HeaderComponent{
+export class HeaderComponent {
   title: string = 'Upaudit'
 
-  constructor(private authService:AuthService, private router: Router){
+  constructor(private authService: AuthService, private router: Router) {
 
   }
 
-  logout():void{
+  logout(): void {
     this.authService.logout();
-    Swal.fire('Logout','Adios, esperemos que tenga un buen día','success');
+    Swal.fire('Logout', 'Adios, esperemos que tenga un buen día', 'success');
     this.router.navigate(['/index']);
   }
 }

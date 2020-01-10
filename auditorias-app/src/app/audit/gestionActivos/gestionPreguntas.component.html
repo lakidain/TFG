@@ -1,10 +1,12 @@
 <h1> Gestion de Preguntas </h1>
 <!-- AUDIT TYPE CREATION-->
 <div class="container">
-  <div (click)="infoAuditType()"><i class="far fa-question-circle float-right" ></i></div>
+  <div (click)="infoAuditType()"><i class="far fa-question-circle float-right"></i></div>
   <h2> Tipo de Auditoría</h2>
-  <label><p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p></label>
-  <form (ngSubmit) = "typeSend()">
+  <label>
+    <p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p>
+  </label>
+  <form (ngSubmit)="typeSend()">
     <input type="text" class="form-control" placeholder=" Nuevo Tipo de Auditoría" [(ngModel)]="auditType.name_audit_type" name="name_audit_type" /> <br />
     <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /><br />
   </form>
@@ -12,12 +14,12 @@
 <hr class="thin">
 <!-- ASSETS CREATION -->
 <div class="container">
-  <div (click)="infoAsset()"><i class="far fa-question-circle float-right" ></i></div>
-  <h2> Gestion de Activos </h2>  <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
-    <label>
-      <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
-    </label>
-  <form (ngSubmit) = "assetSend()">
+  <div (click)="infoAsset()"><i class="far fa-question-circle float-right"></i></div>
+  <h2> Gestion de Activos </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+  <label>
+    <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
+  </label>
+  <form (ngSubmit)="assetSend()">
     <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control">
       <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
     </select> <br />
@@ -28,19 +30,20 @@
       <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
         <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
       </select>
-       <br /> <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
-       <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
-     </div>
+      <br />
+      <p><b>O crea uno nuevo (Si rellena este campo es el que se usara)</b></p>
+      <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
+    </div>
     <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
-  </form >
+  </form>
 </div>
 <hr class="thin">
 <!-- QUESTION AND ANSWER CREATION-->
 <div class="container">
-  <div (click)="infoAnswer()"><i class="far fa-question-circle float-right" ></i></div>
+  <div (click)="infoAnswer()"><i class="far fa-question-circle float-right"></i></div>
   <h2> Gestión de Preguntas </h2>
   <p> Cada pregunta podrá tener hasta 4 respuestas con una puntuación asociada </p>
-  <form >
+  <form>
     <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
     <label>
       <p><i class="fas fa-tools"></i><b> Seleccione el Activo</b></p>
@@ -62,7 +65,7 @@
     <!-- ANSWERS ASSOCIATED-->
     <div class="sameQuestionContainer">
       <div class="answerNumber">
-        <b>Número Respuestas:</b> <br/>
+        <b>Número Respuestas:</b> <br />
         <input type="radio" name="answerNumber" [(ngModel)]="answerNumber" value="one" /> 1
         <input type="radio" name="answerNumber" [(ngModel)]="answerNumber" value="two" /> 2
         <input type="radio" name="answerNumber" [(ngModel)]="answerNumber" value="three" /> 3
@@ -94,5 +97,5 @@
       </div>
     </div>
     <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold" value="Crear" /> <br />
-  </form >
+  </form>
 </div>

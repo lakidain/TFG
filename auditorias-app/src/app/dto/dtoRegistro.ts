@@ -1,5 +1,5 @@
 export class DtoRegistro {
-  name_company:string;
+  name_company: string;
   username: string;
   name_user: string;
   email_user: string;

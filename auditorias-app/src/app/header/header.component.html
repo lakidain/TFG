@@ -7,14 +7,14 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li *ngIf="!authService.isAuthenticated()" class="nav-item" routerLinkActive= 'active'>
-        <a  class="nav-link" routerLink='/login'> Login <i class="fas fa-sign-in-alt"></i></a>
+      <li *ngIf="!authService.isAuthenticated()" class="nav-item" routerLinkActive='active'>
+        <a class="nav-link" routerLink='/login'> Login <i class="fas fa-sign-in-alt"></i></a>
       </li>
-      <li *ngIf="authService.isAuthenticated()" class="nav-item" routerLinkActive= 'active'>
-        <a  class="nav-link" routerLink='/perfil'> Perfil de Usuario <i class="fas fa-user-circle"></i></a>
+      <li *ngIf="authService.isAuthenticated()" class="nav-item" routerLinkActive='active'>
+        <a class="nav-link" routerLink='/perfil'> Perfil de Usuario <i class="fas fa-user-circle"></i></a>
       </li>
-      <li *ngIf="authService.isAuthenticated()" class="nav-item" routerLinkActive= 'active'>
-        <a  class="nav-link" routerLink='/login' (click)="logout()"> Logout <i class="fas fa-sign-out-alt"></i></a>
+      <li *ngIf="authService.isAuthenticated()" class="nav-item" routerLinkActive='active'>
+        <a class="nav-link" routerLink='/login' (click)="logout()"> Logout <i class="fas fa-sign-out-alt"></i></a>
       </li>
     </ul>
   </div>

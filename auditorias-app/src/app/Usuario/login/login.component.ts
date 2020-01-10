@@ -11,16 +11,16 @@ import { Router } from '@angular/router'
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
-  usuario:Usuario;
+  usuario: Usuario;
 
-  constructor(private authService: AuthService, private router: Router){ //Este metodo constructor inicializa de forma normal
-    this.usuario= new Usuario(); //Y este tambien es valido, se puede hacer de las dos formas
+  constructor(private authService: AuthService, private router: Router) { //Este metodo constructor inicializa de forma normal
+    this.usuario = new Usuario(); //Y este tambien es valido, se puede hacer de las dos formas
   }
 
-  ngOnInit(){
-    if(this.authService.isAuthenticated()){
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
       Swal.fire('Login', 'Ya estás identificado', 'info')
       this.router.navigate(['/menu']);
     }
@@ -28,18 +28,18 @@ export class LoginComponent implements OnInit{
 
   public login(): void {
     this.authService.login(this.usuario).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-        console.log(response);
+      console.log(response);
 
-        this.authService.guardarUsuario(response.access_token);
-        this.authService.guardarToken(response.access_token);
-        let usuario = this.authService.usuario;
-        Swal.fire('Bienvenido al sistema', `Se ha logeado como ${usuario.username}`,'success');
-        this.router.navigate(['/menu']);
-      }, err => {
-        if(err.status==400 || err.status==401){
-          Swal.fire('Error al logearse', 'Pruebe a volver a introducir sus credenciales o espere a ser autentificado por su jefe', 'error');
-        }
+      this.authService.guardarUsuario(response.access_token);
+      this.authService.guardarToken(response.access_token);
+      let usuario = this.authService.usuario;
+      Swal.fire('Bienvenido al sistema', `Se ha logeado como ${usuario.username}`, 'success');
+      this.router.navigate(['/menu']);
+    }, err => {
+      if (err.status == 400 || err.status == 401) {
+        Swal.fire('Error al logearse', 'Pruebe a volver a introducir sus credenciales o espere a ser autentificado por su jefe', 'error');
       }
+    }
     )
   }
 }

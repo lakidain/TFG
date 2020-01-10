@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +7,5 @@ import {Component} from '@angular/core';
 })
 
 export class FooterComponent {
-  public autor: any = {nombre: 'Ander', apellido: 'Lakidain'}; //any es objetos que no sean de una clase particular, por defecto si no se define es public
+  public autor: any = { nombre: 'Ander', apellido: 'Lakidain' }; //any es objetos que no sean de una clase particular, por defecto si no se define es public
 }

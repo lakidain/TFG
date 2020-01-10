@@ -1,18 +1,19 @@
 /*
 * Font Style for Cards
 */
-.cardLetters{
+.cardLetters {
   text-align: center;
   font-size: 500%;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 /*
  * Bootstrap classes
  */
-.row {  /* Actualmente se ha deshabilitado con la transparencia*/
+.row {
+  /* Actualmente se ha deshabilitado con la transparencia*/
   padding: 2em 2em 2em 2em;
-  background-color: rgba(220, 220, 220,0);
+  background-color: rgba(220, 220, 220, 0);
   opacity: 1;
   margin-top: 20px;
 }
@@ -37,21 +38,26 @@
   font-style: normal;
   font-variant: normal;
   text-rendering: auto;
-  line-height: 1; }
+  line-height: 1;
+}
 
 .fa,
 .fas {
   font-family: 'Font Awesome 5 Free';
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .fa-arrow-circle-right:before {
-  content: "\f0a9"; }
+  content: "\f0a9";
+}
 
 .fa-chalkboard-teacher:before {
-  content: "\f51c"; }
+  content: "\f51c";
+}
 
-  .fa-coins:before {
-  content: "\f51e"; }
+.fa-coins:before {
+  content: "\f51e";
+}
 
 /*
  * Component: Small Box
@@ -65,11 +71,11 @@
   margin-bottom: 20px;
 }
 
-.small-box > .inner {
+.small-box>.inner {
   padding: 10px;
 }
 
-.small-box > .small-box-footer {
+.small-box>.small-box-footer {
   position: relative;
   text-align: center;
   padding: 3px 0;
@@ -81,7 +87,7 @@
   text-decoration: none;
 }
 
-.small-box > .small-box-footer:hover {
+.small-box>.small-box-footer:hover {
   color: #ffffff;
   background: rgba(0, 0, 0, 0.15);
 }
@@ -98,7 +104,7 @@
   font-size: 15px;
 }
 
-.small-box p > small {
+.small-box p>small {
   display: block;
   color: #f9f9f9;
   font-size: 13px;
@@ -131,9 +137,11 @@
   .small-box {
     text-align: center;
   }
+
   .small-box .icon {
     display: none;
   }
+
   .small-box p {
     font-size: 12px;
   }

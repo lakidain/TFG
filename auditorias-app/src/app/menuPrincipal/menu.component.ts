@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 
-export class MenuComponent{
+export class MenuComponent {
 }

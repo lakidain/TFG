@@ -11,24 +11,24 @@ import { Router } from '@angular/router'
   styleUrls: ['./registro.component.css']
 })
 
-export class RegistroComponent implements OnInit{
+export class RegistroComponent implements OnInit {
 
   private dtoRegistro: DtoRegistro = new DtoRegistro();
 
-  constructor(private usuarioService: UsuarioService, private router: Router){ //Este metodo constructor inicializa de forma normal
+  constructor(private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
   }
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
   public create(): void {
     this.usuarioService.create(this.dtoRegistro).subscribe(
-        response => {
-          Swal.fire('Registrado', `El registro ha sido un exito`,'success');
-          this.router.navigate(['/login']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-        }, err => {
-          Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`,'error');
-        }
+      response => {
+        Swal.fire('Registrado', `El registro ha sido un exito`, 'success');
+        this.router.navigate(['/login']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+      }, err => {
+        Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
+      }
     )
   }
 
