@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-navbar class="sidebar"></app-navbar>
+  <app-navbar class="sidebar" *ngIf="authService.isAuthenticated()"></app-navbar>
   <div id="content">
     <app-header></app-header>
 

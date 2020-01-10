@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../usuario/login/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 })
 
 export class NavbarComponent {
-  constructor() {
+  constructor(private authService: AuthService, private router: Router) {
 
   }
 }

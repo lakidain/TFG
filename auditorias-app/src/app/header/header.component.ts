@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
   selector: 'app-header',
   /*template: ` CODIGO ` TAMBIEN podemos gacer templateUrl y le creamos una vista*/
   templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 
 export class HeaderComponent {
