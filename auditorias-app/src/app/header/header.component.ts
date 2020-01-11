@@ -3,6 +3,12 @@ import { AuthService } from '../usuario/login/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+/* Javascript function import */
+import '../../assets/javascript/navbarhide.js';
+
+/* Navbar hiding control */
+declare var navBarHide: Function;
+
 @Component({
   selector: 'app-header',
   /*template: ` CODIGO ` TAMBIEN podemos gacer templateUrl y le creamos una vista*/
@@ -21,5 +27,10 @@ export class HeaderComponent {
     this.authService.logout();
     Swal.fire('Logout', 'Adios, esperemos que tenga un buen día', 'success');
     this.router.navigate(['/index']);
+  }
+
+  /* Hide Menu */
+  hide(){
+    navBarHide();
   }
 }
