@@ -61,6 +61,12 @@ export class AuthService {
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
 
+  changeEmailAndPhone(usuario: Usuario): void{
+    this._usuario.email_user=usuario.email_user;
+    this._usuario.phone_user=usuario.phone_user;
+    sessionStorage.setItem('usuario', JSON.stringify(this._usuario)); /* When changes made is important to save in session! */
+  }
+
   guardarToken(accessToken: string): void {
     this._token = accessToken;
     sessionStorage.setItem('token', accessToken);

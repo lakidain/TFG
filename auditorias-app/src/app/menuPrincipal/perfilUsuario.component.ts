@@ -44,6 +44,7 @@ export class PerfilUsuarioComponent {
   updateUsuario(): void {
     this.usuarioService.updateUsuario(this.usuario).subscribe(
       response => {
+        this.authService.changeEmailAndPhone(this.usuario);
         Swal.fire('Actualizado', `Sus datos han sido actualizados correctamente`, 'success');
         this.router.navigate(['/perfil']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       }
