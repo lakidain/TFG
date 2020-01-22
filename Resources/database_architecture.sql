@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-12-2019 a las 21:51:04
+-- Tiempo de generación: 22-01-2020 a las 17:42:26
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -97,6 +97,14 @@ CREATE TABLE `asi_audit_assets` (
   `name_audit_asset` varchar(200) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `asi_audit_assets`
+--
+
+INSERT INTO `asi_audit_assets` (`id_audit_asset`, `name_audit_asset`) VALUES
+(3, 'Cableado'),
+(2, 'Usuario/Password');
+
 -- --------------------------------------------------------
 
 --
@@ -148,7 +156,9 @@ CREATE TABLE `asi_audit_types` (
 --
 
 INSERT INTO `asi_audit_types` (`id_audit_type`, `name_audit_type`) VALUES
-(1, 'Informática');
+(6, 'Base de Datos'),
+(1, 'Informática'),
+(2, 'Seguridad');
 
 -- --------------------------------------------------------
 
@@ -161,6 +171,15 @@ CREATE TABLE `asi_audit_types_assets` (
   `id_audit_type` int(11) NOT NULL,
   `id_audit_asset` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_types_assets`
+--
+
+INSERT INTO `asi_audit_types_assets` (`id_audit_type_asset`, `id_audit_type`, `id_audit_asset`) VALUES
+(1, 6, 2),
+(2, 6, 3),
+(3, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -229,7 +248,7 @@ INSERT INTO `asi_users` (`id`, `username`, `name_user`, `password`, `email_user`
 (2, '746563A', 'Pepe Yufera', '$2a$10$GQQC/mtwC7x8D/ifCxvCsO/fqS.g1o5OxhyAPHgviqbSOZijOoJGu', 'andlwkee@gmail.com', '746564732', 1, 1),
 (4, '75648364R', 'Manolo', '$2a$10$HII7nIhdEZwIDK.FtPlizOLPB8tmGWV8ROFL3mKKL55Fw1e9APV2K', 'loc@gmail.com', '786547385', 1, 1),
 (6, '6475738E', 'Pablo', '$2a$10$HJSv9bpuKug/rBAFDfyFSezbVtRfLgdKpr2YtMBI8zE3SyQQaK/qq', 'pl@gmail.com', '784374', 2, 1),
-(7, '182736O', 'Pepe', '$2a$10$K2JigM3yrrltTxVNOpqwXOFiQEZsbHFRVC6qGjyGQ0N2ZDNC1rBmy', 'locos@hotmail.com', '8928392', 2, 1),
+(7, '18273634A', 'Pepe', '$2a$10$K2JigM3yrrltTxVNOpqwXOFiQEZsbHFRVC6qGjyGQ0N2ZDNC1rBmy', 'pepe@hotmail.com', '657456523', 2, 1),
 (8, '29832983E', 'lskdslkdslk', '$2a$10$1vbrcSrBYSW3SkiV6biv2.onf9OL0OfEBc7RHEyvMNRTywkwbnpwq', 'epoper@gmail.com', '9829323', 2, 1),
 (19, 'qwerty', 'qwerty', '$2a$10$.J05.cp6UmATmY1mVlaD0uRIcmVYi4VWN/5AeL.3EQ8m4ddJAHqV6', 'locos@hotmail.com', '8928392', 8, 1),
 (21, 'papo', 'qwerty', '$2a$10$FToyjeCZC4uMNYfPl3mM8O519gEpYuEi2kQFLb0WIdwqFdk9dhyJi', 'erer', '72', 2, 1);
@@ -275,7 +294,8 @@ ALTER TABLE `asi_auditors`
 -- Indices de la tabla `asi_audit_assets`
 --
 ALTER TABLE `asi_audit_assets`
-  ADD PRIMARY KEY (`id_audit_asset`);
+  ADD PRIMARY KEY (`id_audit_asset`),
+  ADD UNIQUE KEY `name_audit_asset` (`name_audit_asset`);
 
 --
 -- Indices de la tabla `asi_audit_assets_questions`
@@ -354,7 +374,7 @@ ALTER TABLE `asi_auditors`
 -- AUTO_INCREMENT de la tabla `asi_audit_assets`
 --
 ALTER TABLE `asi_audit_assets`
-  MODIFY `id_audit_asset` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_audit_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_assets_questions`
@@ -378,13 +398,13 @@ ALTER TABLE `asi_audit_questions_answers`
 -- AUTO_INCREMENT de la tabla `asi_audit_types`
 --
 ALTER TABLE `asi_audit_types`
-  MODIFY `id_audit_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_audit_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_types_assets`
 --
 ALTER TABLE `asi_audit_types_assets`
-  MODIFY `id_audit_type_asset` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_audit_type_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_companies`
