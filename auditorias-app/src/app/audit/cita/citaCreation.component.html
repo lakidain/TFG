@@ -1,0 +1,31 @@
+<div class="abrirModal" *ngIf="modalCita.modal">
+  <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Appointment Creation</h5>
+          <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form (ngSubmit)="create()" #registerForm="ngForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Appointment Name" />
+            </div>
+            <div class="form-group">
+              <textarea name="name" rows="8" cols="80" class="form-control" placeholder="Description"></textarea>
+            </div>
+            <div class="form-group">
+              <input type="datetime-local" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning">Create Appointment</button>
+            <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

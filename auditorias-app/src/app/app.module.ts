@@ -12,7 +12,9 @@ import { AppComponent } from './app.component';
 //Cuando creas un componente es necesario importarlo aqui
 import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menuPrincipal/menu.component';
-import { AuditoriasComponent } from './audit/cita/auditorias.component';
+import { AuditoriasComponent } from './audit/auditoria/auditorias.component';
+import { CitaCreationComponent } from './audit/cita/citaCreation.component';
+import { EmployeeAddComponent } from './audit/cita/employeeAdd.component';
 import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.component';
 import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
 import { GestionPersonalComponent } from './menuPrincipal/gestionPersonal.component';
@@ -29,7 +31,7 @@ import { GestionPersonalService } from './menuPrincipal/gestionPersonal.service'
 import { GestionPreguntasService } from './audit/gestionActivos/gestionPreguntas.service';
 import { CompanyService } from './empresa/company.service';
 import { PerfilUsuarioService } from './menuPrincipal/perfilUsuario.service';
-import { AuditoriaService } from './audit/cita/auditorias.service';
+import { AuditoriaService } from './audit/auditoria/auditorias.service';
 
 /* EXTRAS */
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
@@ -58,6 +60,8 @@ const routes: Routes = [
     FooterComponent,
     MenuComponent,
     AuditoriasComponent,
+    CitaCreationComponent,
+    EmployeeAddComponent,
     GestionPreguntas,
     GestionPersonalComponent,
     CompanyToAuditComponent,

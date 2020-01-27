@@ -4,6 +4,11 @@ import { Audit } from '../audit';
 import { DtoAuditList } from '../../dto/dtoAuditList';
 import { Usuario } from '../../usuario/login/usuario';
 import { AuthService } from 'src/app/usuario/login/auth.service';
+
+/* Modals */
+import { ModalCita } from '../cita/modalCita.service';
+import { ModalEmployee } from '../cita/modalEmployee.service';
+
 /* CALENDAR */
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -20,12 +25,13 @@ export class AuditoriasComponent {
 
   auditList : DtoAuditList[];
   usuario: Usuario;
+  seleccionAudit: DtoAuditList;
+  auditCitaCreation: DtoAuditList;
+  auditEmployeeAdd: DtoAuditList;
   /* Calendar inicializations*/
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin]; // important!
 
-  public autor: any = { nombre: 'Ander', apellido: 'Lakidain' }; //any es objetos que no sean de una clase particular, por defecto si no se define es public
-
-  constructor(private authService: AuthService, private auditoriaService: AuditoriaService) {
+  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private modalCita:ModalCita, private modalEmployee: ModalEmployee) {
     this.usuario = authService.usuario
   }
 
@@ -36,4 +42,15 @@ export class AuditoriasComponent {
       }
     );
   }
+
+  abrirModalAddAppointment(){
+    this.auditCitaCreation = this.seleccionAudit;
+    this.modalCita.abrirModal();
+  }
+
+  abrirModalAddEmployee(){
+    this.auditEmployeeAdd = this.seleccionAudit;
+    this.modalEmployee.abrirModal();
+  }
+
 }
