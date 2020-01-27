@@ -1,0 +1,81 @@
+<div class="container login-container">
+  <div class="row align-middle">
+    <div class="col-md-8 register-form-1 mx-auto" align="center">
+      <h3>Registro de nueva empresa</h3>
+      <form (ngSubmit)="create()" #registerForm="ngForm">
+        <!-- Name company-->
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Nombre comercial empresa" [(ngModel)]="empresa.name_company" name="name_company" required #name_company="ngModel" />
+          <!-- Error name company div-->
+          <div class="alert alert-danger" *ngIf="name_company.invalid && (name_company.dirty || name_company.touched)">
+            <div *ngIf="name_company.errors.required">
+              Company name is required
+            </div>
+          </div>
+        </div>
+        <!-- Name And Surname field -->
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="CIF" [(ngModel)]="empresa.cif_company" name="cif_company" required pattern="^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$" #cif_company="ngModel" />
+          <!-- Error name div-->
+          <div class="alert alert-danger" *ngIf="cif_company.invalid && (cif_company.dirty || cif_company.touched)">
+            <div *ngIf="cif_company.errors.required">
+              CIF is required
+            </div>
+            <div *ngIf="cif_company.errors.pattern">
+              CIF pattern
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- Regex for NIF ^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$ AND for NIE ^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$-->
+          <input type="text" class="form-control" placeholder="Razón Social" [(ngModel)]="empresa.business_name_company" name="business_name_company" required #business_name_company="ngModel" />
+          <!-- Error DNI div-->
+          <div class="alert alert-danger" *ngIf="business_name_company.invalid && (business_name_company.dirty || business_name_company.touched)">
+            <div *ngIf="business_name_company.errors.required">
+              Bussiness Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="adress" class="form-control" placeholder="Direccion" [(ngModel)]="empresa.adress_company" name="adress_company" required #adress_company="ngModel" />
+          <!-- Error adress div-->
+          <div class="alert alert-danger" *ngIf="adress_company.invalid && (adress_company.dirty || adress_company.touched)">
+            <div *ngIf="adress_company.errors.required">
+              Adress is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email" [(ngModel)]="empresa.email_company" name="email_company" required email #email_company="ngModel" />
+          <!-- Error email div-->
+          <div class="alert alert-danger" *ngIf="email_company.invalid && (email_company.dirty || email_company.touched)">
+            <div *ngIf="email_company.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="email_company.errors.email">
+              The email must have a correct format
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="empresa.phone_company" name="phone_company" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_company="ngModel" />
+          <!-- Error phone div-->
+          <div class="alert alert-danger" *ngIf="phone_company.invalid && (phone_company.dirty || phone_company.touched)">
+            <div *ngIf="phone_company.errors.required">
+              Phone is required
+            </div>
+            <div *ngIf="phone_company.errors.pattern">
+              The phone must have spanish format
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btnSubmit btn" value="Crear" [disabled]="!registerForm.form.valid" />
+        </div>
+        <div class="form-group">
+          <a routerLink='/gestionPersonal' class="ForgetPwd">Panel de Gestion</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

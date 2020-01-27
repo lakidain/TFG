@@ -11,12 +11,21 @@ import com.auditorias.springboot.backend.model.Empresa;
 @Mapper
 public interface EmpresaMapper {
 
-	@Select("select * from asi_companies")
-	List<Empresa> findAll();
+	@Select("select * from asi_companies where type_company=1")
+	List<Empresa> findAllAuditing();
+	
+	@Select("select * from asi_companies where type_company=2")
+	List<Empresa> findAllAudited();
 
 	@Select("select * from asi_companies where name_company=#{name_company}")
 	List<Empresa> getId(String name_company);
 	
-	@Insert("insert into asi_companies(name_company,id_user_boss) values(#{name_company},#{id})")
-	void insertCompanyBoss(Long id, String name_company);
+	@Select("select * from asi_companies where id_company=#{id}")
+	List<Empresa> getCompanyName(Long id);
+	
+	@Insert("insert into asi_companies(name_company,cif_company,business_name_company,adress_company,email_company,phone_company,id_user_boss,type_company) values(#{name_company},'-','-','-','-','-',#{id},1)")
+	void insertAuditCompany(Long id, String name_company);
+	
+	@Insert("insert into asi_companies(name_company,cif_company,business_name_company,adress_company,email_company,phone_company,id_user_boss,type_company) values(#{name_company},#{cif_company},#{business_name_company},#{adress_company},#{email_company},#{phone_company},0,2)")
+	void insert(Empresa empresa);
 }

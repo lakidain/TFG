@@ -94,6 +94,10 @@ export class GestionPreguntas {
   }
 
   infoAnswer() {
-    Swal.fire('Information', 'An asset is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
+    Swal.fire('Information', 'A threat is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
+  }
+
+  infoThreat(){
+    Swal.fire('Information', 'An Asset have some threats Associated. Threat probability will be later filled. Example: User/Password have associated the thread Brute Force', 'info');
   }
 }

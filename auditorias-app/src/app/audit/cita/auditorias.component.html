@@ -1,0 +1,37 @@
+<div class="calendarContainer">
+  <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [themeSystem]="standard" [events]="[
+    { title: 'Ayesa-Cita1', date: '2020-01-01T13:30:00' },
+    { title: 'Accenture-Cita2', date: '2020-01-02T13:30:00' }
+  ]" [header]="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }"></full-calendar>
+      </div>
+  <div class="row">
+
+    <!-- First Half -->
+
+    <div class="containerManage col">
+          <h3>Gestiona las auditorias</h3> <br />
+          <!-- Select Audit to work-->
+          <select id="empleado" name="empleado" [(ngModel)]="seleccionUsuario" class="form-control" required #selectionUserError="ngModel">
+            <option *ngFor="let audit of auditList" value="{{audit.id}}">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
+          </select> <br />
+          <h4>Cuestionarios</h4>
+          <p>Aqui iran los cuestionarios que quedan en lista</p>
+          <hr class="thin">
+          <h4>Citas</h4>
+          <a class="nav-link float-right"> Add appointment </a> <br />
+          <p>Aqui iran las citas creadas</p>
+    </div>
+
+    <!-- Second Half -->
+
+    <div class="containerEmployees col">
+        <h3>Empleados añadidos</h3>
+        <a class="nav-link float-right"> Add employee </a> <br />
+        <p>Aqui irá una tabla con los empleados de una auditoria (Checkbox para activar citas, informes, cuestionarios)</p>
+    </div>
+
+  </div>

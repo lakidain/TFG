@@ -4,4 +4,9 @@
 
 .navbar-brand{
   margin-left: 1em;
+  font-family: 'Pacifico', cursive;
+}
+
+.fa-bookmark{
+  color: #ffc107;
 }

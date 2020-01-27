@@ -12,7 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 export class GestionPersonalService {
 
   private urlEndPointEmpleados: string = 'http://localhost:8080/api/empleados';
-  private urlEndPointEmpresas: string = 'http://localhost:8080/api/empresas';
+  private urlEndPointEmpresas: string = 'http://localhost:8080/api/empresasAudited';
   private urlEndPointAuditTypes: string = 'http://localhost:8080/api/auditTypes';
   private urlEndPointAudit: string = "http://localhost:8080/api/audit";
 

@@ -100,7 +100,7 @@ public class UsuarioRestController {
 		// person is the boss
 		if (usuarioMapper.checkCompany(dtoRegistro.getName_company()).size() == 0) {
 			usuarioMapper.enableUser(usuario);
-			companyMapper.insertCompanyBoss(id, dtoRegistro.getName_company());
+			companyMapper.insertAuditCompany(id, dtoRegistro.getName_company());
 			Long id_company = companyMapper.getId(dtoRegistro.getName_company()).get(0).getId_company();
 			usuarioMapper.updateCompany(id_company, id, true);
 		} else {

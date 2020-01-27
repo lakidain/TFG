@@ -87,6 +87,10 @@ a, a:hover, a:focus {
 /*#47748b*/
 /*#fff*/
 /*#fff*/
+h3 {
+  font-family: 'Pacifico', cursive;
+}
+
 .text-sidebar {
   color: #6b6b6b;
 }

@@ -5,7 +5,7 @@ import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
 import { DtoPassword } from '../dto/dtoPassword';
 
-import { GestionPersonalService } from './gestionPersonal.service';
+import { PerfilUsuarioService } from './perfilUsuario.service';
 import { UsuarioService } from '../usuario/login/usuario.service';
 import { AuthService } from '../usuario/login/auth.service';
 
@@ -29,12 +29,12 @@ export class PerfilUsuarioComponent {
   /* Parameter for the company change */
   seleccionEmpresa: number;
 
-  constructor(private authService: AuthService, private gestionPersonalService: GestionPersonalService, private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  constructor(private authService: AuthService, private perfilUsuarioService: PerfilUsuarioService, private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
     this.usuario = authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento
-    this.gestionPersonalService.getEmpresas().subscribe(
+    this.perfilUsuarioService.getEmpresas().subscribe(
       empresas => {
         this.empresas = empresas;
       }

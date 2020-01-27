@@ -12,6 +12,18 @@ import com.auditorias.springboot.backend.model.Audit_Type;
 @Mapper
 public interface AuditMapper {
 	
+	/* 
+	 * Search a List of the Audits assigned to a worker
+	 */
+	@Select("select * from asi_audit where id_user_manager=#{id}")
+	List<Audit> getAuditsAssigned(Long id);
+	
+	/* 
+	 * Returns name_type from a audit_type with the id
+	 */
+	@Select("select * from asi_audit_types where id_audit_type=#{id}")
+	List<Audit_Type> getNameType(Long id);
+	
 	/*
 	 * Select all audit types available
 	 */

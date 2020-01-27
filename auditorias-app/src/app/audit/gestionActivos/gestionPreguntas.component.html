@@ -26,10 +26,10 @@
 <div class="container">
   <div (click)="infoAsset()"><i class="far fa-question-circle float-right"></i></div>
   <h2> Gestion de Activos </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
-  <label>
-    <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
-  </label>
   <form (ngSubmit)="assetSend()" #createAsset="ngForm">
+    <label>
+      <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
+    </label>
     <div class="form-group">
       <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
         <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
@@ -59,6 +59,37 @@
   </form>
 </div>
 <hr class="thin">
+<!-- THREATS CREATION -->
+<div class="container">
+  <div (click)="infoThreat()"><i class="far fa-question-circle float-right"></i></div>
+  <h2> Threats Management </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+  <form (ngSubmit)="assetSend()" #createAsset="ngForm">
+    <label>
+      <p><i class="fas fa-tools"></i><b> Select the Asset </b></p>
+    </label>
+    <div class="form-group">
+      <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
+        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+      </select>
+    </div>
+    <div class="sameQuestionContainer">
+      <label>
+        <p><i class="fas fa-exclamation-triangle"></i><b> Associate the threat </b></p>
+      </label>
+      <div class="form-group">
+        <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+          <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
+        </select>
+      </div>
+      <p><b>Or create a new one (if filled this field will be used)</b></p>
+      <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAsset.form.valid" value="Crear" /> <br />
+    </div>
+  </form>
+</div>
+<hr class="thin">
 <!-- QUESTION AND ANSWER CREATION-->
 <div class="container">
   <div (click)="infoAnswer()"><i class="far fa-question-circle float-right"></i></div>
@@ -66,7 +97,7 @@
   <form>
     <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
     <label>
-      <p><i class="fas fa-tools"></i><b> Seleccione el Activo</b></p>
+      <p><i class="fas fa-exclamation-triangle"></i><b> Seleccione el Activo</b></p>
     </label>
     <div class="form-group">
       <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
@@ -121,7 +152,7 @@
           <input type="text" class="form-control" placeholder="Respuesta 3" [(ngModel)]="thirdAnswer" name="thirdAnswer" />
         </div>
       </div>
-      <div *ngIf="answerNumber=== 'four'" id="answerFour">
+      <div *ngIf="answerNumber === 'four'" id="answerFour">
         <label>
           <p><i class="fas fa-feather-alt"></i><b> Respuesta 4</b></p>
         </label>

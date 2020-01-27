@@ -9,7 +9,11 @@
 }
 
 h1 {
-  border-bottom: 3px solid #ff0000;
+  border-bottom: 3px solid #ffc107;
+}
+
+h1 span{
+  font-family: 'Pacifico', cursive;
 }
 
 #intro .intro-info h2 {
@@ -20,7 +24,7 @@ h1 {
 }
 
 #intro .intro-info h2 span {
-  color: #1bb1dc;
+  color: #ffbf00;
 }
 
 #intro .intro-info .btn-get-started,
@@ -35,14 +39,14 @@ h1 {
   border-radius: 4px;
   transition: 0.5s;
   color: #fff;
-  background: #1bb1dc;
+  background: #ffc107;
   color: #fff;
   width: 50%;
 }
 
 #intro .intro-info .btn-get-started:hover,
 #intro .intro-info .btn-services:hover {
-  background: #0a98c0;
+  background: #e6ac00;
 }
 
 .container-bg {
