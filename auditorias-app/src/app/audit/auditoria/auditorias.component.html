@@ -1,8 +1,5 @@
 <div class="calendarContainer">
-  <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [themeSystem]="standard" [events]="[
-    { title: 'Ayesa-Cita1', date: '2020-01-01T13:30:00' },
-    { title: 'Accenture-Cita2', date: '2020-01-02T13:30:00' }
-  ]" [header]="{
+  <full-calendar defaultView="dayGridMonth" timeZone='local' [plugins]="calendarPlugins" [themeSystem]="standard" [events]="calendarEvents" [header]="{
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
@@ -16,7 +13,8 @@
     <h3>Gestiona las auditorias</h3> <br />
     <!-- Select Audit to work-->
     <select id="seleccionAudit" name="seleccionAudit" [(ngModel)]="seleccionAudit" class="form-control">
-      <option *ngFor="let audit of auditList" value="{{audit}}">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
+      <!-- ngValue permite el binding de objetos-->
+      <option *ngFor="let audit of auditList" [ngValue]="audit">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
     </select> <br />
     <div *ngIf="seleccionAudit">
       <h4>Cuestionarios</h4>

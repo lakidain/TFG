@@ -23,6 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/audit").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/cita").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/type").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/assets").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/empresas").permitAll()
@@ -36,6 +37,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.GET,"/api/empresasAuditing").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/audit/{id}").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/auditTypes").permitAll()
+		.antMatchers(HttpMethod.GET,"/api//allCitas/{id}").permitAll()
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	}

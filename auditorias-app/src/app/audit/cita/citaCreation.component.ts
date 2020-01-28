@@ -1,6 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalCita } from './modalCita.service';
-import { Audit } from '../audit';
+import { AuditoriasComponent } from '../auditoria/auditorias.component';
+import { DtoAuditList } from '../../dto/dtoAuditList';
+import { Cita } from './cita';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
+/* Services */
+import { CitaService } from './cita.service';
 
 @Component({
   selector: 'app-citaCreation',
@@ -10,19 +17,32 @@ import { Audit } from '../audit';
 
 export class CitaCreationComponent {
 
-  @Input() audit: Audit;
+  @Input() audit: DtoAuditList;
+  private cita: Cita;
 
-  constructor(private modalCita:ModalCita) {
+  constructor(private modalCita: ModalCita, private citaService: CitaService, private router: Router, private auditoriasComponent: AuditoriasComponent) {
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento
+    this.cita = new Cita();
   }
 
-  create(){
-      console.log("Creamoss");
+  create() {
+    this.cita.id_audit = this.audit.id_audit;
+    this.citaService.createCita(this.cita).subscribe(
+      response => {
+        Swal.fire('Cita Registrada', `La creacion de la nueva cita ha sido ha un exito`, 'success');
+        this.auditoriasComponent.actualizarCalendarioCitas();
+        this.auditoriasComponent.actualizarListaCitas();
+        this.cerrarModal();
+      }, err => {
+        Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
+      }
+    )
   }
 
-  cerrarModal(){
+  cerrarModal() {
+    this.cita = new Cita(); /* Si se cierra el Modal perdemos reseteamos los campos */
     this.modalCita.cerrarModal();
   }
 }

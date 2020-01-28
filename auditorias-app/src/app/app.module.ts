@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 /* Las aplicacion en angular son single page y hay que rutearles la url*/
 import { RouterModule, Routes } from '@angular/router';
@@ -32,6 +33,7 @@ import { GestionPreguntasService } from './audit/gestionActivos/gestionPreguntas
 import { CompanyService } from './empresa/company.service';
 import { PerfilUsuarioService } from './menuPrincipal/perfilUsuario.service';
 import { AuditoriaService } from './audit/auditoria/auditorias.service';
+import { CitaService } from './audit/cita/cita.service';
 
 /* EXTRAS */
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
@@ -74,7 +76,7 @@ const routes: Routes = [
     FormsModule,
     FullCalendarModule, // for FullCalendar!
   ],
-  providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
+  providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService, CitaService, DatePipe], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
   bootstrap: [AppComponent]
 })
 export class AppModule { }
