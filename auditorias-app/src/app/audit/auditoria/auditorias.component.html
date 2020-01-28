@@ -12,7 +12,7 @@
   <div class="containerManage col">
     <h3>Gestiona las auditorias</h3> <br />
     <!-- Select Audit to work-->
-    <select id="seleccionAudit" name="seleccionAudit" [(ngModel)]="seleccionAudit" class="form-control">
+    <select id="seleccionAudit" name="seleccionAudit" (change)="actualizarListaCitas()" [(ngModel)]="seleccionAudit" class="form-control">
       <!-- ngValue permite el binding de objetos-->
       <option *ngFor="let audit of auditList" [ngValue]="audit">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
     </select> <br />
@@ -22,7 +22,17 @@
       <hr class="thin">
       <h4>Citas</h4>
       <a class="nav-link float-right" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
-      <p>Aqui iran las citas creadas</p>
+      <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover table-responsive text-center">
+        <tbody>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+          <tr class="appointmentRow" *ngFor="let appointment of auditAppointments" (click)="abrirModalCita(appointment)">
+            <td>{{appointment.name_appointment}}</td>
+            <td>{{appointment.date_appointment | date}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -38,5 +48,6 @@
     </div>
   </div>
 
-  <app-citaCreation *ngIf="auditCitaCreation" [audit]="auditCitaCreation" ></app-citaCreation>
-  <app-employeeAdd *ngIf="auditEmployeeAdd" [audit]="auditEmployeeAdd" ></app-employeeAdd>
+  <app-citaCreation *ngIf="auditCitaCreation" [audit]="auditCitaCreation"></app-citaCreation>
+  <app-employeeAdd *ngIf="auditEmployeeAdd" [audit]="auditEmployeeAdd"></app-employeeAdd>
+  <app-citaMostrar *ngIf="appointmentSelected" [cita]="appointmentSelected"></app-citaMostrar>

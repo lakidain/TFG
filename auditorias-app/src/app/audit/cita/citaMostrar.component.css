@@ -11,3 +11,7 @@
 .modal{
   overflow: auto;
 }
+
+.messageCard{
+  background-color: #fff3cd !important;
+}

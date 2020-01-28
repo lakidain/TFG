@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalCita } from './modalCita.service';
+import { ModalCrearCita } from './modalCrearCita.service';
 import { AuditoriasComponent } from '../auditoria/auditorias.component';
 import { DtoAuditList } from '../../dto/dtoAuditList';
 import { Cita } from './cita';
@@ -20,7 +20,7 @@ export class CitaCreationComponent {
   @Input() audit: DtoAuditList;
   private cita: Cita;
 
-  constructor(private modalCita: ModalCita, private citaService: CitaService, private router: Router, private auditoriasComponent: AuditoriasComponent) {
+  constructor(private modalCrearCita: ModalCrearCita, private citaService: CitaService, private router: Router, private auditoriasComponent: AuditoriasComponent) {
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento
@@ -43,6 +43,6 @@ export class CitaCreationComponent {
 
   cerrarModal() {
     this.cita = new Cita(); /* Si se cierra el Modal perdemos reseteamos los campos */
-    this.modalCita.cerrarModal();
+    this.modalCrearCita.cerrarModal();
   }
 }

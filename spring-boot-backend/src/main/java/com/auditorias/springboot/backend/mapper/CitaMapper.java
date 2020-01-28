@@ -22,4 +22,10 @@ public interface CitaMapper {
 	 */
 	@Select("select asi_appointment.id_appointment,asi_appointment.id_audit,asi_appointment.name_appointment,asi_appointment.description_appointment,asi_appointment.date_appointment from asi_appointment,asi_audit where asi_appointment.id_audit=asi_audit.id_audit and asi_audit.id_user_manager=#{id}")
 	List<Cita> getAllCitas(Long id);
+	
+	/*
+	 * Returns a List of appointments associated with a concrete audit
+	 */
+	@Select("select asi_appointment.id_appointment,asi_appointment.id_audit,asi_appointment.name_appointment,asi_appointment.description_appointment,asi_appointment.date_appointment from asi_appointment,asi_audit where asi_appointment.id_audit=asi_audit.id_audit and asi_audit.id_audit=#{id}")
+	List<Cita> getAuditCitas(Long id);
 }

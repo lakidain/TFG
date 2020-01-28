@@ -27,6 +27,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.POST, "/api/type").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/assets").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/empresas").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/message").permitAll()
 		.antMatchers(HttpMethod.PUT, "/api/usuario/{id}").permitAll()
 		.antMatchers(HttpMethod.PUT, "/api/usuarioPassword/{id}").permitAll()
 		.antMatchers(HttpMethod.PUT, "/api/usuarioCompany/{id}").permitAll()
@@ -38,6 +39,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.GET,"/api/audit/{id}").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/auditTypes").permitAll()
 		.antMatchers(HttpMethod.GET,"/api//allCitas/{id}").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/auditCitas/{id}").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/message/{id}").permitAll()
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	}

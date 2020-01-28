@@ -7,3 +7,7 @@
   height: 100%;
   z-index: 1000;
 }
+
+.modal{
+  overflow: auto;
+}
