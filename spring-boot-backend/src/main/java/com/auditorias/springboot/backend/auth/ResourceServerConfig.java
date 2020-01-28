@@ -21,9 +21,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
+		http.authorizeRequests()
+		.antMatchers(HttpMethod.POST,"/api/**").permitAll()
+		.antMatchers(HttpMethod.PUT,"/api/**").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/**").permitAll()
+		/*
+		.antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/audit").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/cita").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/cita/uploads").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/type").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/assets").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/empresas").permitAll()
@@ -40,7 +46,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.GET,"/api/auditTypes").permitAll()
 		.antMatchers(HttpMethod.GET,"/api//allCitas/{id}").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/auditCitas/{id}").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/uploads/img/{nombreFoto:.+}").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/message/{id}").permitAll()
+		*/
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	}

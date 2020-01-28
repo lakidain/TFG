@@ -1,16 +1,30 @@
 package com.auditorias.springboot.backend.controllers;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
@@ -45,6 +59,50 @@ public class CitaRestController {
 	@GetMapping("/auditCitas/{id}") // Para generar el endpoint
 	public List<Cita> getAuditCitas(@PathVariable Long id) {
 		return citaMapper.getAuditCitas(id);
+	}
+	
+	@PostMapping("/cita/uploads")
+	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id){
+		Map<String,Object> response = new HashMap<>();
+		
+		if(!archivo.isEmpty()) {
+			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
+			Path rutaArchivo = Paths.get("citasUploads").resolve(nombreArchivo).toAbsolutePath();
+			
+			try {
+				Files.copy(archivo.getInputStream(), rutaArchivo);
+			} catch (IOException e) {
+				response.put("mensaje", "Error al subir la imagen" + nombreArchivo);
+				e.printStackTrace();
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			citaMapper.uploadAppointmentImage(nombreArchivo,id);
+			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
+		Path rutaArchivo = Paths.get("citasUploads").resolve(nombreFoto).toAbsolutePath();
+		
+		Resource recurso=null;
+		
+		try {
+			recurso = new UrlResource(rutaArchivo.toUri());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(!recurso.exists() && !recurso.isReadable()){
+			throw new RuntimeException("Error no se pudo cargar la imagen: " + nombreFoto);
+		}
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +recurso.getFilename() + "\"");
+		
+		return new ResponseEntity<Resource>(recurso,cabecera, HttpStatus.OK);
 	}
 
 }

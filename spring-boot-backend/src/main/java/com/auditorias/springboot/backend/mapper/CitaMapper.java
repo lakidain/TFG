@@ -14,7 +14,7 @@ public interface CitaMapper {
 	/*
 	 * Insert new Appointment
 	 */
-	@Insert("insert into asi_appointment(id_appointment,id_audit,name_appointment,description_appointment,date_appointment) values(#{id_appointment},#{id_audit},#{name_appointment},#{description_appointment},#{date_appointment})")
+	@Insert("insert into asi_appointment(id_appointment,id_audit,name_appointment,description_appointment,date_appointment) values (#{id_appointment},#{id_audit},#{name_appointment},#{description_appointment},#{date_appointment})")
 	void insert(Cita cita);
 
 	/*
@@ -28,4 +28,10 @@ public interface CitaMapper {
 	 */
 	@Select("select asi_appointment.id_appointment,asi_appointment.id_audit,asi_appointment.name_appointment,asi_appointment.description_appointment,asi_appointment.date_appointment from asi_appointment,asi_audit where asi_appointment.id_audit=asi_audit.id_audit and asi_audit.id_audit=#{id}")
 	List<Cita> getAuditCitas(Long id);
+	
+	/*
+	 * Uploads image related to an Appointment to Database
+	 */
+	@Insert("insert into asi_appointments_gallery(id_appointment,photo_gallery) values (#{id},#{imagen})")
+	void uploadAppointmentImage(String imagen, Long id);
 }

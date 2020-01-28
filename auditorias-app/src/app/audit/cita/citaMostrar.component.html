@@ -15,12 +15,15 @@
             <p><b>Descripción:</b> {{cita.description_appointment}}</p>
           </div>
           <hr class="thin" />
+          <hr class="charlie">
           <div>
             <p><b>Mensajes</b></p>
             <div class="messageCard">
+              <hr class="style5">
               <div *ngFor="let message of messagesList">
                 <p><b>{{message.timestamp_message | date:'short'}}</b></p>
                 <p>{{message.text_message}}</p>
+                <hr class="style5">
               </div>
             </div>
             <form (ngSubmit)="createMessage()" #registerForm="ngForm">
