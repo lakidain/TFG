@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-01-2020 a las 17:42:26
+-- Tiempo de generación: 28-01-2020 a las 03:10:07
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -27,6 +27,27 @@ USE `db_springboot_backend`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `asi_appointment`
+--
+
+CREATE TABLE `asi_appointment` (
+  `id_appointment` int(11) NOT NULL,
+  `id_audit` int(11) NOT NULL,
+  `name_appointment` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `description_appointment` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `date_appointment` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_appointment`
+--
+
+INSERT INTO `asi_appointment` (`id_appointment`, `id_audit`, `name_appointment`, `description_appointment`, `date_appointment`) VALUES
+(2, 1, 'Coches wapos', 'Amos a ver los cochecillos', '2020-01-28 23:50:00');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `asi_audit`
 --
 
@@ -45,10 +66,11 @@ CREATE TABLE `asi_audit` (
 --
 
 INSERT INTO `asi_audit` (`id_audit`, `id_user_manager`, `id_company_auditing`, `id_company_audited`, `id_audit_type`, `date_start_audit`, `date_end_audit`) VALUES
-(1, 7, 1, 0, 1, '2019-12-30', '2020-01-01'),
+(1, 7, 1, 13, 1, '2019-12-30', '2020-01-01'),
 (2, 21, 2, 1, 1, '2019-12-24', '2019-12-25'),
 (3, 6, 2, 8, 1, '2019-12-30', '2020-01-01'),
-(4, 6, 2, 8, 1, '2019-12-30', '2019-12-31');
+(4, 6, 2, 8, 1, '2019-12-30', '2019-12-31'),
+(5, 7, 2, 13, 6, '2020-01-26', '2020-01-30');
 
 -- --------------------------------------------------------
 
@@ -190,17 +212,25 @@ INSERT INTO `asi_audit_types_assets` (`id_audit_type_asset`, `id_audit_type`, `i
 CREATE TABLE `asi_companies` (
   `id_company` int(11) NOT NULL,
   `name_company` varchar(30) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Para que no se repita el nombre de la base de datos',
-  `id_user_boss` int(11) NOT NULL
+  `cif_company` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
+  `business_name_company` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `adress_company` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `email_company` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `phone_company` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `id_user_boss` int(11) NOT NULL,
+  `type_company` int(11) NOT NULL COMMENT '1 Audita , 2 Auditada'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `asi_companies`
 --
 
-INSERT INTO `asi_companies` (`id_company`, `name_company`, `id_user_boss`) VALUES
-(1, 'Accenture', 4),
-(2, 'Link', 7),
-(8, 'Emergia', 19);
+INSERT INTO `asi_companies` (`id_company`, `name_company`, `cif_company`, `business_name_company`, `adress_company`, `email_company`, `phone_company`, `id_user_boss`, `type_company`) VALUES
+(1, 'Accenture', '', '', '', '', '0', 4, 0),
+(2, 'Link', '', '', '', '', '0', 7, 0),
+(8, 'Emergia', '', '', '', '', '0', 19, 0),
+(11, 'Pepeyu', '-', '-', '-', '-', '-', 27, 1),
+(13, 'Nintendo', 'E38420824', 'Nintendo S.A', 'C/Japon', 'nintendo@nintendo.com', '764563546', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -251,7 +281,8 @@ INSERT INTO `asi_users` (`id`, `username`, `name_user`, `password`, `email_user`
 (7, '18273634A', 'Pepe', '$2a$10$K2JigM3yrrltTxVNOpqwXOFiQEZsbHFRVC6qGjyGQ0N2ZDNC1rBmy', 'pepe@hotmail.com', '657456523', 2, 1),
 (8, '29832983E', 'lskdslkdslk', '$2a$10$1vbrcSrBYSW3SkiV6biv2.onf9OL0OfEBc7RHEyvMNRTywkwbnpwq', 'epoper@gmail.com', '9829323', 2, 1),
 (19, 'qwerty', 'qwerty', '$2a$10$.J05.cp6UmATmY1mVlaD0uRIcmVYi4VWN/5AeL.3EQ8m4ddJAHqV6', 'locos@hotmail.com', '8928392', 8, 1),
-(21, 'papo', 'qwerty', '$2a$10$FToyjeCZC4uMNYfPl3mM8O519gEpYuEi2kQFLb0WIdwqFdk9dhyJi', 'erer', '72', 2, 1);
+(21, 'papo', 'qwerty', '$2a$10$FToyjeCZC4uMNYfPl3mM8O519gEpYuEi2kQFLb0WIdwqFdk9dhyJi', 'erer', '72', 2, 1),
+(27, '76564678Y', 'qwerty', '$2a$10$Iz.Pxb55gJMTlyOeHgX9tuO2Aw8fsc7acGESZcxFXe6rdxoxROTh.', 'nintendo@nintendo.com', '876453645', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -276,6 +307,12 @@ INSERT INTO `asi_users_rols` (`id`, `id_user`, `id_rol`) VALUES
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `asi_appointment`
+--
+ALTER TABLE `asi_appointment`
+  ADD PRIMARY KEY (`id_appointment`);
 
 --
 -- Indices de la tabla `asi_audit`
@@ -359,10 +396,16 @@ ALTER TABLE `asi_users_rols`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `asi_appointment`
+--
+ALTER TABLE `asi_appointment`
+  MODIFY `id_appointment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `asi_audit`
 --
 ALTER TABLE `asi_audit`
-  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_auditors`
@@ -410,7 +453,7 @@ ALTER TABLE `asi_audit_types_assets`
 -- AUTO_INCREMENT de la tabla `asi_companies`
 --
 ALTER TABLE `asi_companies`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_rols`
@@ -422,7 +465,7 @@ ALTER TABLE `asi_rols`
 -- AUTO_INCREMENT de la tabla `asi_users`
 --
 ALTER TABLE `asi_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_users_rols`
