@@ -9,6 +9,7 @@ public class Cita {
 	private String name_appointment;
 	private String description_appointment;
 	private Date date_appointment;
+	private int state_appointment;
 	
 	public Long getId_appointment() {
 		return id_appointment;
@@ -40,5 +41,13 @@ public class Cita {
 	public void setDate_appointment(Date date_appointment) {
 		this.date_appointment = date_appointment;
 	}
+	public int getState_appointment() {
+		return state_appointment;
+	}
+	public void setState_appointment(int state_appointment) {
+		this.state_appointment = state_appointment;
+	}
+	
+	
 		
 }

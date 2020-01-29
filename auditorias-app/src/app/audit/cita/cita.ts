@@ -4,4 +4,5 @@ export class Cita {
   name_appointment: string;
   description_appointment: string;
   date_appointment: Date;
+  state_appointment: number;
 }

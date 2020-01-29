@@ -22,14 +22,16 @@
       <hr class="thin">
       <h4>Citas</h4>
       <a class="nav-link float-right" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
-      <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover table-responsive text-center">
+      <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover text-center">
         <tbody>
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Date</th>
+            <th scope="col">State</th>
           <tr class="appointmentRow" *ngFor="let appointment of auditAppointments" (click)="abrirModalCita(appointment)">
             <td>{{appointment.name_appointment}}</td>
             <td>{{appointment.date_appointment | date}}</td>
+            <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td> <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
           </tr>
         </tbody>
       </table>

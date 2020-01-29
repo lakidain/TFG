@@ -20,3 +20,9 @@ hr.style5 {
 	background-color: #fff;
 	border-top: 2px dashed #8c8b8b;
 }
+
+.img-fluid{
+  max-width: 100% !important;
+  max-height: 40% !important;
+  height: auto !important;
+}

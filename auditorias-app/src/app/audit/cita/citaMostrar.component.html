@@ -15,7 +15,6 @@
             <p><b>Descripción:</b> {{cita.description_appointment}}</p>
           </div>
           <hr class="thin" />
-          <hr class="charlie">
           <div>
             <p><b>Mensajes</b></p>
             <div class="messageCard">
@@ -26,7 +25,7 @@
                 <hr class="style5">
               </div>
             </div>
-            <form (ngSubmit)="createMessage()" #registerForm="ngForm">
+            <form *ngIf="cita.state_appointment===0" (ngSubmit)="createMessage()" #registerForm="ngForm">
               <div class="modal-body">
                 <div class="form-group">
                   <textarea name="name" class="form-control" rows="8" [(ngModel)]="message.text_message" placeholder="New Message"></textarea>
@@ -40,6 +39,19 @@
           <hr class="thin" />
           <div>
             <p><b>Evidencias</b></p>
+            <div *ngIf="cita.state_appointment===0" class="input-group">
+              <div class="custom-file">
+                <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+                <label class="custom-file-label" for="inputGroupFile04">Seleccionar foto</label>
+              </div>
+              <div class="input-group-append">
+                <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Subir</button>
+              </div>
+            </div>
+            <br />
+            <div *ngIf="previewUrl">
+              <img class="img-fluid" [src]="previewUrl" height="300" />
+            </div>
           </div>
         </div>
         <div class="modal-footer">

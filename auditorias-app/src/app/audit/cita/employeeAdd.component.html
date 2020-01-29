@@ -9,7 +9,72 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <h6>Crea un empleado</h6>
+          <form (ngSubmit)="create()" #registerForm="ngForm">
+            <!-- Name And Surname field -->
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="dtoRegistro.name_user" name="name_user" required #name_user="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="name_user.invalid && (name_user.dirty || name_user.touched)">
+                <div *ngIf="name_user.errors.required">
+                  Name is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <!-- Regex for NIF ^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$ AND for NIE ^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$-->
+              <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" required pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$|^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$" #username="ngModel" />
+              <!-- Error DNI div-->
+              <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+                <div *ngIf="username.errors.required">
+                  DNI is required
+                </div>
+                <div *ngIf="username.errors.pattern">
+                  DNI pattern
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" required email #email_user="ngModel" />
+              <!-- Error email div-->
+              <div class="alert alert-danger" *ngIf="email_user.invalid && (email_user.dirty || email_user.touched)">
+                <div *ngIf="email_user.errors.required">
+                  Email is required
+                </div>
+                <div *ngIf="email_user.errors.email">
+                  The email must have a correct format
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
+              <!-- Error phone div-->
+              <div class="alert alert-danger" *ngIf="phone_user.invalid && (phone_user.dirty || phone_user.touched)">
+                <div *ngIf="phone_user.errors.required">
+                  Phone is required
+                </div>
+                <div *ngIf="phone_user.errors.pattern">
+                  The phone must have spanish format
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Password" [(ngModel)]="dtoRegistro.password" name="password" required minlength="6" #password="ngModel" />
+              <!-- Error password div-->
+              <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors.required">
+                  Password is required
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  The password must be at least 6 characters
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Crear y asociar" [disabled]="!registerForm.form.valid" />
+            </div>
+          </form><br />
+          <h6>o Asocia uno ya existente</h6>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-warning">Save changes</button>
