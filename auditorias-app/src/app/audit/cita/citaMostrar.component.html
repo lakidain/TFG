@@ -39,13 +39,22 @@
           <hr class="thin" />
           <div>
             <p><b>Evidencias</b></p>
-            <div *ngIf="cita.state_appointment===0" class="input-group">
-              <div class="custom-file">
-                <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input" id="inputGroupFile04">
-                <label class="custom-file-label" for="inputGroupFile04">Seleccionar foto</label>
+            <div class="col-xs-1" align="center">
+              <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div>
+            <div *ngIf="cita.state_appointment===0">
+              <p><b>Nueva evidencia</b></p>
+              <div class="form-group">
+                <input class="form-control" type="text" [(ngModel)]="textoEvidencia" placeholder="Tipo Evidencia">
               </div>
-              <div class="input-group-append">
-                <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Subir</button>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+                  <label class="custom-file-label" for="inputGroupFile04">Seleccionar foto</label>
+                </div>
+                <div class="input-group-append">
+                  <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Subir</button>
+                </div>
               </div>
             </div>
             <br />

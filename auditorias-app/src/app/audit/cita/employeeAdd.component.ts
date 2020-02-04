@@ -24,4 +24,12 @@ export class EmployeeAddComponent {
   cerrarModal(){
     this.modalEmployee.cerrarModal();
   }
+
+  createEmployee(){
+    console.log(this.dtoRegistro);
+  }
+
+  addEmployee(){
+
+  }
 }

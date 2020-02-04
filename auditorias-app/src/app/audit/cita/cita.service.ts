@@ -19,6 +19,7 @@ export class CitaService {
   private urlEndPointPostMessage: string = 'http://localhost:8080/api/message';
   private urlEndPointGetMessages: string = 'http://localhost:8080/api/message';
   private urlEndPointUpload: string = 'http://localhost:8080/api/cita';
+  private urlEndPointGetGallery: string = 'http://localhost:8080/api/uploads/gallery';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
@@ -49,10 +50,11 @@ export class CitaService {
   }
 
   /* Upload photo for an appointment*/
-  subirFoto(archivo: File, id): Observable<string> {
+  subirFoto(archivo: File, id, textoEvidencia: string): Observable<string> {
     let formData = new FormData();
     formData.append("archivo", archivo);
     formData.append("id", id);
+    formData.append("description_gallery", textoEvidencia)
     return this.http.post(`${this.urlEndPointUpload}/uploads`, formData).pipe(
       map((response: any) => response.mensaje as string),
       catchError(e => {
@@ -61,5 +63,10 @@ export class CitaService {
         return throwError(e);
       })
     );
+  }
+
+  /* Get all photos related to an appointment*/
+  getFotos(idAppointment: number): Observable <Gallery[]>{
+    return this.http.get<Gallery[]>(this.urlEndPointGetGallery+"/"+idAppointment);
   }
 }

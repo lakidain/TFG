@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 
 import { DtoAssetCreation } from '../../dto/dtoAssetCreation';
-import { AuditType } from '../auditType';
 import { AuditAsset } from '../auditAsset';
+import { AuditType } from '../auditType';
+import { AuditThreat } from '../auditThreat';
 
 import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './gestionPreguntas.service';
@@ -24,7 +25,13 @@ export class GestionPreguntas {
 
   tipoAuditorias: AuditType[];
   assetsToAudit: AuditAsset[];
+  threatsToAudit: AuditThreat[];
   answerNumber: string;
+
+  /* Threats Management */
+  newThreat: string;
+  assetThreat: number;
+  existingThreat: number;
 
   constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService) {
     this.auditType = new AuditType();
@@ -36,6 +43,7 @@ export class GestionPreguntas {
   ngOnInit() {
     this.updateAuditTypes();
     this.updateAuditAssets();
+    this.updateAuditThreats();
   }
 
   updateAuditTypes(): void {
@@ -50,6 +58,14 @@ export class GestionPreguntas {
     this.gestionPreguntasService.getAuditAssets().subscribe(
       types => {
         this.assetsToAudit = types;
+      }
+    );
+  }
+
+  updateAuditThreats(): void{
+    this.gestionPreguntasService.getAuditThreats().subscribe(
+      types => {
+        this.threatsToAudit = types;
       }
     );
   }
@@ -69,7 +85,6 @@ export class GestionPreguntas {
 
   /* Creation of Assets */
   assetSend() {
-    console.log(this.dtoAssetCreation.id_audit_type);
     if (!this.dtoAssetCreation.name_audit_asset) {
       this.dtoAssetCreation.name_audit_asset = "";
     }
@@ -79,6 +94,22 @@ export class GestionPreguntas {
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
         Swal.fire('Error al crear el tipo de activo', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
+      }
+    }
+    );
+  }
+
+  /* Creation of threats */
+  threatSend(){
+    if (!this.newThreat) {
+      this.newThreat = "";
+    }
+    this.gestionPreguntasService.createThreat(this.newThreat, this.assetThreat, this.existingThreat).subscribe(response => {
+      Swal.fire('Exito al crear la amenaza', 'La amenaza ha sido creada con exito', 'success');
+      this.updateAuditThreats();
+    }, err => {
+      if (err.status == 400 || err.status == 401 || err.status == 500) {
+        Swal.fire('Error al crear la amenaza', 'Vuelva a a crearla', 'error');
       }
     }
     );

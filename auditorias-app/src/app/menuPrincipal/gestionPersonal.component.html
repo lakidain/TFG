@@ -31,7 +31,7 @@
           Company is required
         </div>
       </div>
-          <a class="nav-link float-right" routerLink='/newCompany'> Create new company to audit </a>
+          <a class="nav-link float-right" (click)="abrirModalCompanyToAudit()"> Create new company to audit </a>
     </div> <br />
     <div class="form-group">
       <label class="formLabel" for="auditType">
@@ -108,3 +108,5 @@
     </tbody>
   </table>
 </div>
+
+<app-newCompany *ngIf="mostrarModal"></app-newCompany>

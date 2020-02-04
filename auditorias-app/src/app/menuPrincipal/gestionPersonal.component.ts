@@ -4,6 +4,7 @@ import { Usuario } from '../usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
 import { Audit } from '../audit/audit';
 import { AuditType } from '../audit/auditType';
+import { ModalCompanyToAudit } from './companyToAudit/modalCompanyToAudit.service';
 import Swal from 'sweetalert2'
 
 import { GestionPersonalService } from './gestionPersonal.service';
@@ -32,7 +33,10 @@ export class GestionPersonalComponent {
   seleccionFechaInicio: Date;
   seleccionFechaFin: Date;
 
-  constructor(private authService: AuthService, private gestionPersonalService: GestionPersonalService, private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  /* Modal */
+  mostrarModal: boolean;
+
+  constructor(private authService: AuthService, private gestionPersonalService: GestionPersonalService, private usuarioService: UsuarioService, private router: Router, private modalCompanyToAudit:ModalCompanyToAudit) { //Este metodo constructor inicializa de forma normal
     this.usuario = authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
   }
 
@@ -113,5 +117,10 @@ export class GestionPersonalComponent {
 
   infoEmployeeTable() {
     Swal.fire('Information', 'Table with employees. You can accept a request from a new employee clicking the button in the last box', 'info');
+  }
+
+  abrirModalCompanyToAudit() {
+    this.mostrarModal = true;
+    this.modalCompanyToAudit.abrirModal();
   }
 }

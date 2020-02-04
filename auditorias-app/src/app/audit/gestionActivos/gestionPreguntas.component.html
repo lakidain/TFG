@@ -63,13 +63,13 @@
 <div class="container">
   <div (click)="infoThreat()"><i class="far fa-question-circle float-right"></i></div>
   <h2> Threats Management </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
-  <form (ngSubmit)="assetSend()" #createAsset="ngForm">
+  <form (ngSubmit)="threatSend()" #createAsset="ngForm">
     <label>
       <p><i class="fas fa-tools"></i><b> Select the Asset </b></p>
     </label>
     <div class="form-group">
-      <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
-        <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
+      <select id="auditAsset" name="id_audit_asset" [(ngModel)]="assetThreat" class="form-control">
+        <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
       </select>
     </div>
     <div class="sameQuestionContainer">
@@ -77,12 +77,12 @@
         <p><i class="fas fa-exclamation-triangle"></i><b> Associate the threat </b></p>
       </label>
       <div class="form-group">
-        <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-          <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
+        <select id="auditThreat" name="id_audit_threat" [(ngModel)]="existingThreat" class="form-control">
+          <option *ngFor="let auditThreat of threatsToAudit" value="{{auditThreat.id_audit_threat}}">{{auditThreat.name_audit_threat}}</option>
         </select>
       </div>
       <p><b>Or create a new one (if filled this field will be used)</b></p>
-      <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="dtoAssetCreation.name_audit_asset" name="name_audit_asset" /> <br />
+      <input type="text" class="form-control" placeholder="Nuevo Activo" [(ngModel)]="newThreat" name="newThreat" /> <br />
     </div>
     <div class="form-group">
       <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!createAsset.form.valid" value="Crear" /> <br />

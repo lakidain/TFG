@@ -79,4 +79,10 @@ public class AuditRestController {
 		auditMapper.insert(audit); // Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;
 	}
+	
+	/* Add Employee Associated with an appointment */
+	@PostMapping("/addAuditEmployee")
+	public boolean addAuditEmployee() {
+		return true;
+	}
 }

@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -38,6 +38,14 @@ import { CitaService } from './audit/cita/cita.service';
 
 /* EXTRAS */
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
+import { NgxGalleryModule } from 'ngx-gallery'; //for gallery
+
+export class CustomHammerConfig extends HammerGestureConfig  {  /* Needed for Gallery */
+   overrides = {
+       pinch: { enable: false },
+       rotate: { enable: false }
+   };
+}
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' }, //Esta sera nuestra pagina principal
@@ -46,7 +54,6 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'cita', component: AuditoriasComponent },
   { path: 'gestionPreguntas', component: GestionPreguntas },
-  { path: 'newCompany', component: CompanyToAuditComponent },
   { path: 'gestionPersonal', component: GestionPersonalComponent },
   { path: 'perfil', component: PerfilUsuarioComponent },
   { path: 'registro', component: RegistroComponent },
@@ -75,10 +82,13 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes), //Aqui le metemos el arreglo que creamos arriba que mapeaba
+    NgxGalleryModule,
     FormsModule,
     FullCalendarModule, // for FullCalendar!
   ],
-  providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService, CitaService, DatePipe], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
+  providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService, CitaService, DatePipe, { /* Needed for gallery */
+        provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig
+    }], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
   bootstrap: [AppComponent]
 })
 export class AppModule { }

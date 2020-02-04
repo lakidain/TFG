@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
+import com.auditorias.springboot.backend.model.Gallery;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
 //realizan al navegador, desde aqui podemos controlar todo
@@ -62,7 +63,7 @@ public class CitaRestController {
 	}
 	
 	@PostMapping("/cita/uploads")
-	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id){
+	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id, @RequestParam("description_gallery") String description_gallery){
 		Map<String,Object> response = new HashMap<>();
 		
 		if(!archivo.isEmpty()) {
@@ -76,7 +77,7 @@ public class CitaRestController {
 				e.printStackTrace();
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			citaMapper.uploadAppointmentImage(nombreArchivo,id);
+			citaMapper.uploadAppointmentImage(nombreArchivo,id,description_gallery);
 			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
 		}
 		
@@ -103,6 +104,11 @@ public class CitaRestController {
 		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +recurso.getFilename() + "\"");
 		
 		return new ResponseEntity<Resource>(recurso,cabecera, HttpStatus.OK);
+	}
+	
+	@GetMapping("/uploads/gallery/{id}")
+	public List<Gallery> getGalleryCita(@PathVariable Long id){
+		return citaMapper.getGalleryCita(id);
 	}
 
 }

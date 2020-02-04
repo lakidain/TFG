@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <h6>Crea un empleado</h6>
-          <form (ngSubmit)="create()" #registerForm="ngForm">
+          <form (ngSubmit)="createEmployee()" #registerForm="ngForm">
             <!-- Name And Surname field -->
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="dtoRegistro.name_user" name="name_user" required #name_user="ngModel" />
@@ -74,13 +74,24 @@
               <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Crear y asociar" [disabled]="!registerForm.form.valid" />
             </div>
           </form><br />
-          <h6>o Asocia uno ya existente</h6>
+          <h6>o asocia uno ya existente</h6>
+          <form (ngSubmit)="addEmployee()">
+            <div class="form-group">
+              <!--
+              <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+                <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
+              </select>
+              -->
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Asociar" />
+          </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning">Save changes</button>
-          <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class=" modal-footer">
+              <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
       </div>
     </div>
   </div>
-</div>

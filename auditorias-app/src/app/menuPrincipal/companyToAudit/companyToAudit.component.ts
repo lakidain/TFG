@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2'
+import { ModalCompanyToAudit } from './modalCompanyToAudit.service';
 import { Empresa } from '../../empresa/Empresa';
 import { Router } from '@angular/router';
 import { CompanyService } from '../../empresa/company.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-newCompany',
@@ -15,7 +16,7 @@ export class CompanyToAuditComponent implements OnInit {
 
   private empresa: Empresa = new Empresa();
 
-  constructor(private companyService: CompanyService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit:ModalCompanyToAudit) { //Este metodo constructor inicializa de forma normal
   }
 
   ngOnInit() {
@@ -30,6 +31,10 @@ export class CompanyToAuditComponent implements OnInit {
         Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
       }
     )
+  }
+
+  cerrarModal() {
+    this.modalCompanyToAudit.cerrarModal();
   }
 
 }

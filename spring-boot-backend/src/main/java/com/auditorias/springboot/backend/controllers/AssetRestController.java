@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auditorias.springboot.backend.dto.DtoAssetCreation;
 import com.auditorias.springboot.backend.mapper.AssetMapper;
 import com.auditorias.springboot.backend.model.Audit_Asset;
+import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
 
 @CrossOrigin(origins= {"http://localhost:4200"}) //CrossOrigin es un porotocolo para comunicar peticiones que se realizan al navegador, desde aqui podemos controlar todo (metodos, direcciones)
@@ -32,8 +34,16 @@ public class AssetRestController {
 	 * @link      Audit_Type
 	 */
 	@GetMapping("/assets") //Para generar el endpoint
-	public List <Audit_Asset> getAll() {	
-		return assetMapper.findAll();
+	public List <Audit_Asset> getAllAssets() {	
+		return assetMapper.findAllAssets();
+	}
+	
+	/*
+	 * Returns a List with all the threats
+	 */
+	@GetMapping("/threats") //Para generar el endpoint
+	public List <Audit_Threat> getAllThreats() {	
+		return assetMapper.findAllThreats();
 	}
 	
 	/**
@@ -52,12 +62,28 @@ public class AssetRestController {
 	@PostMapping("/assets" )
 	@ResponseStatus(HttpStatus.CREATED)
 	public boolean createAsset(@RequestBody DtoAssetCreation dtoAssetCreation) {	//Como viene en formato JSON es necesario convertirlo	
-		if(dtoAssetCreation.getName_audit_asset() != "") {	/* Just need to create the asset if it's new*/
+		if(!("".contentEquals(dtoAssetCreation.getName_audit_asset()))) {	/* Just need to create the asset if it's new*/
 			assetMapper.insertAsset(dtoAssetCreation);
-			dtoAssetCreation.setId_audit_asset(assetMapper.findName(dtoAssetCreation).get(0).getId_audit_asset());
+			dtoAssetCreation.setId_audit_asset(assetMapper.findAsset(dtoAssetCreation).get(0).getId_audit_asset());
 		}
 		/* If the field text is not completed we use the select, not need to create the asset, just the association */
 		assetMapper.associateTypeAsset(dtoAssetCreation.getId_audit_type(), dtoAssetCreation.getId_audit_asset());
+		return true;	
+	}
+	
+	/*
+	 * Creation of a Threat
+	 */
+	@PostMapping("/threats" )
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean createThreat(@RequestParam("newThreat") String newThreat, @RequestParam("assetThreat") Long assetThreat, @RequestParam("existingThreat") Long existingThreat) {	//Como viene en formato JSON es necesario convertirlo	
+		
+		if(!("".contentEquals(newThreat))) {	/* Just need to create the threat if it's new*/
+			assetMapper.insertThreat(newThreat);
+			existingThreat = assetMapper.findThreat(newThreat).get(0).getId_audit_threat();
+		}
+		/* If the field text is not completed we use the select, not need to create the asset, just the association */
+		assetMapper.associateAssetThreat(assetThreat, existingThreat);
 		return true;	
 	}
 }
