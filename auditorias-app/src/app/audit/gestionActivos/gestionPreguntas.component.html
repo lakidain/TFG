@@ -90,6 +90,37 @@
   </form>
 </div>
 <hr class="thin">
+<!-- Vulnerability CREATION -->
+<div class="container">
+  <div (click)="infoVulnerability()"><i class="far fa-question-circle float-right"></i></div>
+  <h2> Vulnerability Management </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+  <form (ngSubmit)="vulnerabilitySend()">
+    <label>
+      <p><i class="fas fa-exclamation-triangle"></i><b> Select the Threat </b></p>
+    </label>
+    <div class="form-group">
+      <select id="auditAsset" name="id_audit_threat" [(ngModel)]="threatVulnerability" class="form-control">
+        <option *ngFor="let auditThreat of threatsToAudit" value="{{auditThreat.id_audit_threat}}">{{auditThreat.name_audit_threat}}</option>
+      </select>
+    </div>
+    <div class="sameQuestionContainer">
+      <label>
+        <p><i class="fas fa-bullseye"></i><b> Associate the vulnerability </b></p>
+      </label>
+      <div class="form-group">
+        <select id="auditVulnerability" name="id_audit_threat" [(ngModel)]="existingVulnerability" class="form-control">
+          <option *ngFor="let auditVulnerability of vulnerabilitiesToAudit" value="{{auditVulnerability.id_audit_vulnerability}}">{{auditVulnerability.name_audit_vulnerability}}</option>
+        </select>
+      </div>
+      <p><b>Or create a new one (if filled this field will be used)</b></p>
+      <input type="text" class="form-control" placeholder="New vulnerability" [(ngModel)]="newVulnerability" name="newVulnerability" /> <br />
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="Crear" /> <br />
+    </div>
+  </form>
+</div>
+<hr class="thin">
 <!-- QUESTION AND ANSWER CREATION-->
 <div class="container">
   <div (click)="infoAnswer()"><i class="far fa-question-circle float-right"></i></div>

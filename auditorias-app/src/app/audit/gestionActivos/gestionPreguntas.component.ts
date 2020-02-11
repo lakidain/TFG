@@ -6,6 +6,7 @@ import { DtoAssetCreation } from '../../dto/dtoAssetCreation';
 import { AuditAsset } from '../auditAsset';
 import { AuditType } from '../auditType';
 import { AuditThreat } from '../auditThreat';
+import { AuditVulnerability } from '../auditVulnerability';
 
 import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './gestionPreguntas.service';
@@ -19,31 +20,42 @@ import { GestionPreguntasService } from './gestionPreguntas.service';
 
 export class GestionPreguntas {
 
-  auditType: AuditType;
   auditAsset: AuditAsset;
-  dtoAssetCreation: DtoAssetCreation;
-
-  tipoAuditorias: AuditType[];
-  assetsToAudit: AuditAsset[];
-  threatsToAudit: AuditThreat[];
   answerNumber: string;
+  /* Type Management */
+  auditType: AuditType;
+  tipoAuditorias: AuditType[];
+
+  /* Assets Management */
+  dtoAssetCreation: DtoAssetCreation;
+  assetsToAudit: AuditAsset[];
 
   /* Threats Management */
   newThreat: string;
   assetThreat: number;
   existingThreat: number;
+  threatsToAudit: AuditThreat[];
+
+  /* Vulnerability Management */
+  newVulnerability: string;
+  threatVulnerability: number;
+  existingVulnerability: number;
+  vulnerabilitiesToAudit: AuditVulnerability[];
 
   constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();
     this.answerNumber = "one";
+    this.existingThreat = 0;
+    this.existingVulnerability=0;
   }
 
   ngOnInit() {
     this.updateAuditTypes();
     this.updateAuditAssets();
     this.updateAuditThreats();
+    this.updateVulnerabilities();
   }
 
   updateAuditTypes(): void {
@@ -56,16 +68,24 @@ export class GestionPreguntas {
 
   updateAuditAssets(): void {
     this.gestionPreguntasService.getAuditAssets().subscribe(
-      types => {
-        this.assetsToAudit = types;
+      assets => {
+        this.assetsToAudit = assets;
       }
     );
   }
 
   updateAuditThreats(): void{
     this.gestionPreguntasService.getAuditThreats().subscribe(
-      types => {
-        this.threatsToAudit = types;
+      threats => {
+        this.threatsToAudit = threats;
+      }
+    );
+  }
+
+  updateVulnerabilities(): void{
+    this.gestionPreguntasService.getAuditVulnerabilities().subscribe(
+      vulnerabilities => {
+        this.vulnerabilitiesToAudit = vulnerabilities;
       }
     );
   }
@@ -115,6 +135,22 @@ export class GestionPreguntas {
     );
   }
 
+  /* Creation of vulnerability */
+  vulnerabilitySend(){
+    if (!this.newVulnerability) {
+      this.newVulnerability = "";
+    }
+    this.gestionPreguntasService.createVulnerability(this.newVulnerability, this.threatVulnerability, this.existingVulnerability).subscribe(response => {
+      Swal.fire('Exito al crear la vulnerabilidad', 'La vulnerabilidad ha sido creada con exito', 'success');
+      this.updateVulnerabilities();
+    }, err => {
+      if (err.status == 400 || err.status == 401 || err.status == 500) {
+        Swal.fire('Error al crear la vulnerabilidad', 'Vuelva a a crearla', 'error');
+      }
+    }
+    );
+  }
+
   /* Info events when info button clicked*/
   infoAuditType() {
     Swal.fire('Information', 'First create an Audit Type. Example: Security', 'info');
@@ -130,5 +166,9 @@ export class GestionPreguntas {
 
   infoThreat(){
     Swal.fire('Information', 'An Asset have some threats Associated. Threat probability will be later filled. Example: User/Password have associated the thread Brute Force', 'info');
+  }
+
+  infoVulnerability(){
+    Swal.fire('Information', 'A threat have some vulnerabilities associated. As an example a logic intrusion could be done by an outdated DB or by some options bad configurated', 'info');
   }
 }
