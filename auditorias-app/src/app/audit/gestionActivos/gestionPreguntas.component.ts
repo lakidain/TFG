@@ -7,6 +7,8 @@ import { AuditAsset } from '../auditAsset';
 import { AuditType } from '../auditType';
 import { AuditThreat } from '../auditThreat';
 import { AuditVulnerability } from '../auditVulnerability';
+import { AuditAnswer } from '../auditAnswer';
+import { AuditQuestion } from '../auditQuestion';
 
 import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './gestionPreguntas.service';
@@ -42,13 +44,36 @@ export class GestionPreguntas {
   existingVulnerability: number;
   vulnerabilitiesToAudit: AuditVulnerability[];
 
+  /* Questions Management */
+  vulnerabilityQuestion: number;
+  newQuestion: string;
+  newFirstAnswer: string;
+  newSecondAnswer: string;
+  newThirdAnswer: string;
+  newFourthAnswer: string;
+  newFifthAnswer: string;
+  existingQuestion: number;
+  existingNewFirstAnswer: number;
+  existingNewSecondAnswer: number;
+  existingNewThirdAnswer: number;
+  existingNewFourthAnswer: number;
+  existingNewFifthtAnswer: number;
+  questionsToAudit: AuditQuestion[];
+  answersToAudit: AuditAnswer[];
+
   constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();
-    this.answerNumber = "one";
+    this.answerNumber = "five";
     this.existingThreat = 0;
     this.existingVulnerability=0;
+    this.existingQuestion=0;
+    this.existingNewFirstAnswer=0;
+    this.existingNewSecondAnswer=0;
+    this.existingNewThirdAnswer=0;
+    this.existingNewFourthAnswer=0;
+    this.existingNewFifthtAnswer=0;
   }
 
   ngOnInit() {
@@ -56,6 +81,7 @@ export class GestionPreguntas {
     this.updateAuditAssets();
     this.updateAuditThreats();
     this.updateVulnerabilities();
+    this.updateQuestionsAndAnswers();
   }
 
   updateAuditTypes(): void {
@@ -86,6 +112,19 @@ export class GestionPreguntas {
     this.gestionPreguntasService.getAuditVulnerabilities().subscribe(
       vulnerabilities => {
         this.vulnerabilitiesToAudit = vulnerabilities;
+      }
+    );
+  }
+
+  updateQuestionsAndAnswers(): void{
+    this.gestionPreguntasService.getAuditQuestions().subscribe(
+      questions => {
+        this.questionsToAudit = questions;
+      }
+    );
+    this.gestionPreguntasService.getAuditAnswers().subscribe(
+      answers => {
+        this.answersToAudit = answers;
       }
     );
   }
@@ -151,6 +190,38 @@ export class GestionPreguntas {
     );
   }
 
+  /* Creation of a question with answers */
+  questionSend(){
+    if (!this.newQuestion) {
+      this.newQuestion = "";
+    }
+    if (!this.newFirstAnswer) {
+      this.newFirstAnswer = "";
+    }
+    if (!this.newSecondAnswer) {
+      this.newSecondAnswer = "";
+    }
+    if (!this.newThirdAnswer) {
+      this.newThirdAnswer = "";
+    }
+    if (!this.newFourthAnswer) {
+      this.newFourthAnswer = "";
+    }
+    if (!this.newFifthAnswer) {
+      this.newFifthAnswer = "";
+    }
+    this.gestionPreguntasService.createQuestion(this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer,this.newFifthAnswer,this.vulnerabilityQuestion, this.existingQuestion,
+      this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
+      Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
+      this.updateQuestionsAndAnswers();
+    }, err => {
+      if (err.status == 400 || err.status == 401 || err.status == 500) {
+        Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla', 'error');
+      }
+    }
+    );
+  }
+
   /* Info events when info button clicked*/
   infoAuditType() {
     Swal.fire('Information', 'First create an Audit Type. Example: Security', 'info');
@@ -161,7 +232,7 @@ export class GestionPreguntas {
   }
 
   infoAnswer() {
-    Swal.fire('Information', 'A threat is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
+    Swal.fire('Information', 'A vulnerability is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
   }
 
   infoThreat(){
