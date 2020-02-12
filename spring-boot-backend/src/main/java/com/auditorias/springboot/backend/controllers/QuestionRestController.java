@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.mapper.QuestionMapper;
 import com.auditorias.springboot.backend.model.Audit_Question;
-import com.auditorias.springboot.backend.model.Audit_Threat;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController // Como no va a tener vista

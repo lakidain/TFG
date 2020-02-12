@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -121,5 +122,35 @@ public class UsuarioRestController {
 	public Usuario enable(@RequestBody Usuario user, @PathVariable Long id) {
 		usuarioMapper.enableUser(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
+	}
+
+	/* METODOS GENERADOS PARA LOS CLIENTES (PERSONAS AUDITADAS) */
+	@PostMapping("/clientes")
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean createCliente(@RequestParam("email_user") String email_user,
+			@RequestParam("name_user") String name_user,
+			@RequestParam("password") String password,
+			@RequestParam("phone_user") String phone_user,
+			@RequestParam("username") String username,
+			@RequestParam("companyAudited") Long companyAudited,
+			@RequestParam("id_audit") Long id_audit) {
+		/* Primero creamos el usuario */
+		Usuario usuario = new Usuario();
+		usuario.setEmail_user(email_user);
+		usuario.setName_user(name_user);
+		usuario.setPassword(passwordEncoder.encode(password));
+		usuario.setPhone_user(phone_user);
+		usuario.setUsername(username);
+		usuario.setId_company(companyAudited);
+		usuarioMapper.insertCliente(usuario);
+		/* A continuación lo asociamos a la auditoria */
+		usuarioMapper.associateClienteAuditoria(id_audit, usuarioMapper.findByUsername(username).get(0).getId());
+		return true;
+	}
+	
+	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS */
+	@GetMapping("/clientes/{id_audit}") // Para generar el endpoint
+	public List<Usuario> getEmployeesNotInAudit(@PathVariable Long id_audit) {
+		return usuarioMapper.getEmployeesNotInAudit(id_audit);
 	}
 }

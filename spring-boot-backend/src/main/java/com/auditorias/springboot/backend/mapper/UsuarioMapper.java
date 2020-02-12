@@ -43,4 +43,15 @@ public interface UsuarioMapper {
 	
 	@Update("update asi_users set enabled=1 where id=#{id}")
 	void enableUser(Usuario user);
+	
+	/* METODOS CREADOS PARA LOS CLIENTES */
+	@Insert("insert into asi_users(name_user,username,email_user,phone_user,password,enabled,id_company) values(#{name_user},#{username},#{email_user},#{phone_user},#{password},1,#{id_company})")
+	void insertCliente(Usuario user);
+	
+	@Insert("insert into asi_audit_employees(id_audit,id_user,appointment_permit_audit_employees,questionnaire_permit_audit_employees,report_permit_audit_employees) values(#{id_audit},#{id_user},0,0,0)")
+	void associateClienteAuditoria(Long id_audit, Long id_user);
+	
+	@Select("select id,name_user,username,email_user,phone_user,password,enabled,asi_users.id_company from asi_users,asi_audit_employees,asi_audit,asi_companies where asi_audit.id_audit=#{id_audit} and asi_audit.id_company_audited=asi_companies.id_company and asi_companies.id_company=asi_users.id_company")
+	/*asi_audit_employees.id_audit!=#{id_audit} and asi_users.id!=asi_audit_employees.id_us*/
+	List<Usuario> getEmployeesNotInAudit(Long id_audit);
 }

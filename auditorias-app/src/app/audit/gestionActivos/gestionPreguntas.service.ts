@@ -85,7 +85,6 @@ export class GestionPreguntasService {
     formData.append("existingNewThirdAnswer", existingNewThirdAnswer);
     formData.append("existingNewFourthAnswer", existingNewFourthAnswer);
     formData.append("existingNewFifthtAnswer", existingNewFifthtAnswer);
-    console.log(formData);
     return this.http.post<any>(this.urlEndPointAuditQuestions, formData);
   }
 

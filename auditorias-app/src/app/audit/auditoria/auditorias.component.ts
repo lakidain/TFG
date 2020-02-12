@@ -75,7 +75,6 @@ export class AuditoriasComponent {
     this.auditAppointments = [];
     this.citaService.getAuditAppointmentList(this.seleccionAudit).subscribe(
       allAppointments => {
-        console.log(allAppointments[0].state_appointment);
         this.auditAppointments = allAppointments;
       }
     );
