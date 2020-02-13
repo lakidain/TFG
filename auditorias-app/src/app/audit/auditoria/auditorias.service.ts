@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DtoAuditList } from '../../dto/dtoAuditList';
 import { Usuario } from '../../usuario/login/usuario';
+import { DtoAuditEmployee } from '../../dto/dtoAuditEmployee';
+import { Audit_Employees } from '../auditEmployees';
 import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
@@ -8,7 +10,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 @Injectable() //El decorador indica que funcion cumple, injectable simboliza que va a ser servicio (modelo de negocio)
 export class AuditoriaService {
 
-  private urlEndPointAuditList: string = 'http://localhost:8080/api/audit'
+  private urlEndPointAuditList: string = 'http://localhost:8080/api/audit';
+  private urlEndPointAuditEmployees: string = 'http://localhost:8080/api/clientesAssociate';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
@@ -16,5 +19,15 @@ export class AuditoriaService {
   /* Get Audit List */
   getAuditsAssigned(usuario: Usuario): Observable<DtoAuditList[]> {
     return this.http.get<DtoAuditList[]>(this.urlEndPointAuditList+ "/" + usuario.id);
+  }
+
+  /* Get Employees associated with an audit */
+  getEmployeesAssigned(id_audit:number): Observable <DtoAuditEmployee[]>{
+    return this.http.get<DtoAuditEmployee[]>(this.urlEndPointAuditEmployees+"/"+id_audit);
+  }
+
+  /* Update asi_audit_employees */
+  updateEmployeesAssigned(auditEmployee: Audit_Employees): Observable<any>{
+    return this.http.put<Usuario>(this.urlEndPointAuditEmployees + "/" + auditEmployee.id_audit_employees, auditEmployee, { headers: this.httpHeaders })
   }
 }

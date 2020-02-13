@@ -11,6 +11,7 @@ export class ModalEmployee {
 
   modal: boolean = false;
   private urlEndPointCreateEmployee: string = 'http://localhost:8080/api/clientes';
+  private urlEndPointAssociateEmployee: string = 'http://localhost:8080/api/clientesAssociate';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -30,7 +31,6 @@ export class ModalEmployee {
 
   createEmployee(dtoRegistro: DtoRegistro, companyAudited, id_audit):Observable<any>{
     let formData = new FormData();
-    console.log(companyAudited);
     formData.append("email_user", dtoRegistro.email_user);
     formData.append("name_user", dtoRegistro.name_user);
     formData.append("password", dtoRegistro.password);
@@ -39,5 +39,12 @@ export class ModalEmployee {
     formData.append("companyAudited",companyAudited);
     formData.append("id_audit",id_audit);
     return this.http.post<any>(this.urlEndPointCreateEmployee, formData);
+  }
+
+  associateEmployee(selectedEmployee,id_audit):Observable<any>{
+    let formData= new FormData();
+    formData.append("selectedEmployee",selectedEmployee);
+    formData.append("id_audit",id_audit);
+    return this.http.post<any>(this.urlEndPointAssociateEmployee, formData);
   }
 }

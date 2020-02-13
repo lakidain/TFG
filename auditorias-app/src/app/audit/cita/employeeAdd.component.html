@@ -77,11 +77,9 @@
           <h6>o asocia uno ya existente</h6>
           <form (ngSubmit)="addEmployee()">
             <div class="form-group">
-              <!--
-              <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
-                <option *ngFor="let employee of employees" value="{{employee.id}}">{{auditAsset.username}}</option>
+              <select id="selectedEmployee" name="selectedEmployee" [(ngModel)]="selectedEmployee" class="form-control">
+                <option *ngFor="let employee of employees" value="{{employee.id}}">{{employee.username}} - {{employee.name_user}}</option>
               </select>
-              -->
             </div>
             <div class="form-group">
               <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Asociar" />

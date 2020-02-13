@@ -15,6 +15,7 @@ export class EmployeeAddComponent {
 
   @Input() audit: Audit;
   dtoRegistro: DtoRegistro;
+  selectedEmployee: number;
 
   /* Employees of this company */
   employees: Usuario[];
@@ -53,6 +54,13 @@ export class EmployeeAddComponent {
   }
 
   addEmployee(){
-
+    this.modalEmployee.associateEmployee(this.selectedEmployee,this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+      Swal.fire('Exito al asociar el empleado', 'El empleado ha sido asociado con exito', 'success');
+    }, err => {
+      if (err.status == 400 || err.status == 401 || err.status == 500) {
+        Swal.fire('Error al asociar el usuario', 'Compruebe que no está ya asociado', 'error');
+      }
+    }
+    );
   }
 }

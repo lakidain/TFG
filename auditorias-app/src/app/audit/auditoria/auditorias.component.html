@@ -45,7 +45,21 @@
       <h3>Empleados añadidos</h3>
       <a class="nav-link float-right" (click)="abrirModalAddEmployee()"> Add employee </a> <br />
       <div *ngIf="seleccionAudit">
-        <p>Aqui irá una tabla con los empleados de una auditoria (Checkbox para activar citas, informes, cuestionarios)</p>
+        <table *ngIf="auditEmployees.length > 0" class="table table-warning table-hover text-center">
+          <tbody>
+            <tr>
+              <th scope="col">DNI</th>
+              <th scope="col">Appointment</th>
+              <th scope="col">Questionnaire</th>
+              <th scope="col">Report</th>
+            <tr class="appointmentRow" *ngFor="let employee of auditEmployees">
+              <td>{{employee.username}}</td>
+              <td *ngIf="employee.appointment_permit_audit_employees===0"><input type="checkbox" (click)="activateAppointment(employee)"></td> <td *ngIf="employee.appointment_permit_audit_employees===1"><input type="checkbox" (click)="deActivateAppointment(employee)" checked></td>
+              <td *ngIf="employee.questionnaire_permit_audit_employees===0"><input type="checkbox" (click)="activateQuestionnaire(employee)"></td> <td *ngIf="employee.questionnaire_permit_audit_employees===1"><input type="checkbox" (click)="deActivateQuestionnaire(employee)" checked></td>
+              <td *ngIf="employee.report_permit_audit_employees===0"><input type="checkbox" (click)="activateReport(employee)"></td> <td *ngIf="employee.report_permit_audit_employees===1"><input type="checkbox" (click)="deActivateReport(employee)" checked></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

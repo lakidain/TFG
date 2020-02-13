@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auditorias.springboot.backend.dto.DtoAuditEmployee;
 import com.auditorias.springboot.backend.dto.DtoPassword;
 import com.auditorias.springboot.backend.dto.DtoRegistro;
 import com.auditorias.springboot.backend.mapper.EmpresaMapper;
 import com.auditorias.springboot.backend.mapper.UsuarioMapper;
+import com.auditorias.springboot.backend.model.Audit_Employees;
 import com.auditorias.springboot.backend.model.Usuario;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
@@ -128,12 +130,9 @@ public class UsuarioRestController {
 	@PostMapping("/clientes")
 	@ResponseStatus(HttpStatus.CREATED)
 	public boolean createCliente(@RequestParam("email_user") String email_user,
-			@RequestParam("name_user") String name_user,
-			@RequestParam("password") String password,
-			@RequestParam("phone_user") String phone_user,
-			@RequestParam("username") String username,
-			@RequestParam("companyAudited") Long companyAudited,
-			@RequestParam("id_audit") Long id_audit) {
+			@RequestParam("name_user") String name_user, @RequestParam("password") String password,
+			@RequestParam("phone_user") String phone_user, @RequestParam("username") String username,
+			@RequestParam("companyAudited") Long companyAudited, @RequestParam("id_audit") Long id_audit) {
 		/* Primero creamos el usuario */
 		Usuario usuario = new Usuario();
 		usuario.setEmail_user(email_user);
@@ -147,10 +146,36 @@ public class UsuarioRestController {
 		usuarioMapper.associateClienteAuditoria(id_audit, usuarioMapper.findByUsername(username).get(0).getId());
 		return true;
 	}
-	
+
+	@PostMapping("/clientesAssociate")
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean associateCliente(@RequestParam("id_audit") Long id_audit,
+			@RequestParam("selectedEmployee") Long selectedEmployee) throws Exception {
+		if (usuarioMapper.checkAssociation(id_audit, selectedEmployee).size() > 0) {
+			throw new Exception();
+		}
+		usuarioMapper.associateClienteAuditoria(id_audit, selectedEmployee);
+		return true;
+	}
+
 	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS */
 	@GetMapping("/clientes/{id_audit}") // Para generar el endpoint
-	public List<Usuario> getEmployeesNotInAudit(@PathVariable Long id_audit) {
-		return usuarioMapper.getEmployeesNotInAudit(id_audit);
+	public List<Usuario> getEmployees(@PathVariable Long id_audit) {
+		return usuarioMapper.getEmployees(id_audit);
+	}
+
+	@GetMapping("/clientesAssociate/{id_audit}")
+	public List<DtoAuditEmployee> getEmployeesAssociated(@PathVariable Long id_audit) {
+		return usuarioMapper.getEmployeesAssociated(id_audit);
+	}
+
+	/* Change roles associated with an audit */
+	@PutMapping("/clientesAssociate/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public boolean updatePassword(@RequestBody Audit_Employees auditEmployees, @PathVariable Long id) {
+		/* The method matches is used to compare the equality of both passwords */
+		System.out.print("AAAAAAA" + auditEmployees.getAppointment_permit_audit_employees());
+		usuarioMapper.updateEmployeesAssociated(auditEmployees);
+		return true;
 	}
 }
