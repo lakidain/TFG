@@ -12,6 +12,7 @@ import { AuditQuestion } from '../auditQuestion';
 
 import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './gestionPreguntas.service';
+import { AuthService } from '../../usuario/login/auth.service';
 
 @Component({
   selector: 'app-questions',
@@ -61,7 +62,7 @@ export class GestionPreguntas {
   questionsToAudit: AuditQuestion[];
   answersToAudit: AuditAnswer[];
 
-  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService) {
+  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService:AuthService) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();

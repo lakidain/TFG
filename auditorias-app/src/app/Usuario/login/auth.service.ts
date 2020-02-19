@@ -57,7 +57,7 @@ export class AuthService {
     this._usuario.email_user = payload.email;
     this._usuario.phone_user = payload.phone;
     this._usuario.id_company = payload.companyId;
-    this.usuario.roles = payload.authorities;
+    this._usuario.roles = payload.authorities;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
 
@@ -82,6 +82,13 @@ export class AuthService {
   isAuthenticated(): boolean {
     let payload = this.obtenerDatosToken(this.token);
     if (payload != null && payload.user_name && payload.user_name.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  hasRole(role:string):boolean{
+    if(this.usuario.roles.includes(role)){
       return true;
     }
     return false;

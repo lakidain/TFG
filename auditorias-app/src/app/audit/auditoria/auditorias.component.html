@@ -18,7 +18,15 @@
     </select> <br />
     <div *ngIf="seleccionAudit">
       <h4>Cuestionarios</h4>
-      <p>Aqui iran los cuestionarios que quedan en lista</p>
+      <table *ngIf="questionnaireList.length > 0" class="table table-warning table-hover text-center">
+        <tbody>
+          <tr>
+            <th scope="col">Asset Questionnaire</th>
+          <tr class="appointmentRow" *ngFor="let asset of questionnaireList" (click)="abrirModalAsset(asset)">
+            <td>{{asset.name_audit_asset}}</td>
+          </tr>
+        </tbody>
+      </table>
       <hr class="thin">
       <h4>Citas</h4>
       <a class="nav-link float-right" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
@@ -28,10 +36,12 @@
             <th scope="col">Name</th>
             <th scope="col">Date</th>
             <th scope="col">State</th>
-          <tr class="appointmentRow" *ngFor="let appointment of auditAppointments" (click)="abrirModalCita(appointment)">
-            <td>{{appointment.name_appointment}}</td>
+            <th scope="col">Delete</th>
+          <tr *ngFor="let appointment of auditAppointments">
+            <td class="appointmentRow" (click)="abrirModalCita(appointment)">{{appointment.name_appointment}}</td>
             <td>{{appointment.date_appointment | date}}</td>
             <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td> <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
+            <td class="hoverable" (click)="deleteAppointment(appointment)" *ngIf="appointment.state_appointment===0"><i class="fas fa-trash-alt"></i> </td> <td *ngIf="appointment.state_appointment===1"> - </td>
           </tr>
         </tbody>
       </table>
@@ -52,11 +62,13 @@
               <th scope="col">Appointment</th>
               <th scope="col">Questionnaire</th>
               <th scope="col">Report</th>
-            <tr class="appointmentRow" *ngFor="let employee of auditEmployees">
+              <th scope="col">Eliminar</th>
+            <tr *ngFor="let employee of auditEmployees">
               <td>{{employee.username}}</td>
-              <td *ngIf="employee.appointment_permit_audit_employees===0"><input type="checkbox" (click)="activateAppointment(employee)"></td> <td *ngIf="employee.appointment_permit_audit_employees===1"><input type="checkbox" (click)="deActivateAppointment(employee)" checked></td>
-              <td *ngIf="employee.questionnaire_permit_audit_employees===0"><input type="checkbox" (click)="activateQuestionnaire(employee)"></td> <td *ngIf="employee.questionnaire_permit_audit_employees===1"><input type="checkbox" (click)="deActivateQuestionnaire(employee)" checked></td>
-              <td *ngIf="employee.report_permit_audit_employees===0"><input type="checkbox" (click)="activateReport(employee)"></td> <td *ngIf="employee.report_permit_audit_employees===1"><input type="checkbox" (click)="deActivateReport(employee)" checked></td>
+              <td *ngIf="employee.appointment_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateAppointment(employee)"></td> <td *ngIf="employee.appointment_permit_audit_employees===1"><input type="checkbox" (click)="deActivateAppointment(employee)" checked></td>
+              <td *ngIf="employee.questionnaire_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateQuestionnaire(employee)"></td> <td *ngIf="employee.questionnaire_permit_audit_employees===1"><input type="checkbox" (click)="deActivateQuestionnaire(employee)" checked></td>
+              <td *ngIf="employee.report_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateReport(employee)"></td> <td *ngIf="employee.report_permit_audit_employees===1"><input type="checkbox" (click)="deActivateReport(employee)" checked></td>
+              <td class="hoverable" (click)="deleteEmployeeFromAppointment(employee)"><i class="fas fa-trash-alt"></i></td>
             </tr>
           </tbody>
         </table>
@@ -67,3 +79,4 @@
   <app-citaCreation *ngIf="auditCitaCreation" [audit]="auditCitaCreation"></app-citaCreation>
   <app-employeeAdd *ngIf="auditEmployeeAdd" [audit]="auditEmployeeAdd"></app-employeeAdd>
   <app-citaMostrar *ngIf="appointmentSelected" [cita]="appointmentSelected"></app-citaMostrar>
+  <app-questionnaire *ngIf="assetSelection" [asset]="assetSelection" [audit]="seleccionAudit"></app-questionnaire>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,6 +110,13 @@ public class CitaRestController {
 	@GetMapping("/uploads/gallery/{id}")
 	public List<Gallery> getGalleryCita(@PathVariable Long id){
 		return citaMapper.getGalleryCita(id);
+	}
+	
+	/* Close an open Appointment */
+	@PutMapping("cita/{id}")
+	public boolean changeCitaState(@PathVariable Long id){
+		citaMapper.changeCitaState(id);
+		return true;
 	}
 
 }

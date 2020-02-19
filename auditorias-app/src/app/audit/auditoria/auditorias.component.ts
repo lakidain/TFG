@@ -6,6 +6,7 @@ import { Usuario } from '../../usuario/login/usuario';
 import { Cita } from '../cita/cita';
 import { DtoAuditEmployee } from '../../dto/dtoAuditEmployee';
 import { Audit_Employees } from '../auditEmployees';
+import { AuditAsset } from '../auditAsset';
 
 /* Services */
 import { AuthService } from 'src/app/usuario/login/auth.service';
@@ -16,6 +17,7 @@ import { CitaService } from '../cita/cita.service';
 import { ModalCrearCita } from '../cita/modalCrearCita.service';
 import { ModalEmployee } from '../cita/modalEmployee.service';
 import { ModalMostrarCita } from '../cita//modalMostrarCita.service';
+import { ModalQuestionnaire } from './modalQuestionnaire.service';
 
 /* CALENDAR */
 import { Calendar } from '@fullcalendar/core';
@@ -41,6 +43,11 @@ export class AuditoriasComponent {
   auditEmployeeAdd: DtoAuditList;
   appointmentSelected: Cita;
 
+  /* Questionnaire */
+  assetSelection: AuditAsset;
+  questionnaireList: AuditAsset[];
+
+
   /* Parametros para los empleados */
   auditEmployees: DtoAuditEmployee[];
   auditEmployee: Audit_Employees;
@@ -51,9 +58,10 @@ export class AuditoriasComponent {
     //{ title: 'event 1', date: '2020-01-01' } EJEMPLO FORMATO
   ];
 
-  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe) {
+  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire:ModalQuestionnaire) {
     this.usuario = authService.usuario;
     this.auditEmployees = [];
+    this.questionnaireList = [];
     this.auditEmployee = new Audit_Employees;
   }
 
@@ -62,6 +70,14 @@ export class AuditoriasComponent {
     this.auditoriaService.getAuditsAssigned(this.usuario).subscribe(
       auditList => {
         this.auditList = auditList;
+      }
+    );
+  }
+
+  actualizarQuestionnaire() {
+    this.auditoriaService.getAssets(this.seleccionAudit.id_audit).subscribe(
+      assetList => {
+        this.questionnaireList = assetList;
       }
     );
   }
@@ -92,6 +108,7 @@ export class AuditoriasComponent {
   actualizarListaCitas() {
     this.auditAppointments = [];
     this.actualizarEmployees();
+    this.actualizarQuestionnaire();
     this.citaService.getAuditAppointmentList(this.seleccionAudit).subscribe(
       allAppointments => {
         this.auditAppointments = allAppointments;
@@ -104,6 +121,11 @@ export class AuditoriasComponent {
     this.modalCrearCita.abrirModal();
   }
 
+  abrirModalAsset(asset: AuditAsset){
+    this.assetSelection = asset;
+    this.modalQuestionnaire.abrirModal();
+  }
+
   abrirModalAddEmployee() {
     this.auditEmployeeAdd = this.seleccionAudit;
     this.modalEmployee.abrirModal();
@@ -112,6 +134,12 @@ export class AuditoriasComponent {
   abrirModalCita(appointment: Cita) {
     this.appointmentSelected = appointment;
     this.modalMostrarCita.abrirModal();
+  }
+
+  deleteAppointment(appointment: Cita){
+    if(confirm("¿Está seguro de que desea eliminar la cita? Podrá perderse información de importancia para el proceso de auditoría")){
+      console.log("Eliminada");
+    }
   }
 
   transformDate(date) {
@@ -132,7 +160,7 @@ export class AuditoriasComponent {
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error al actualizar permisos', 'Vuelva a intentarlo', 'error');
         }
       }
     );
@@ -227,10 +255,25 @@ export class AuditoriasComponent {
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error al actualizar permisos', 'Vuelva a intentarlo', 'error');
         }
       }
     );
+  }
+
+  deleteEmployeeFromAppointment(employee: DtoAuditEmployee){
+    if(confirm("¿Está seguro de que desea eliminar la asociación?")){
+      this.auditoriaService.deleteEmployeeFromAppointment(employee.id_audit_employees).subscribe(
+        reponse => {
+          Swal.fire('Asociación correctamente eliminada','','success');
+          this.actualizarEmployees();
+        } , err => {
+          if (err.status == 400 || err.status == 401) {
+            Swal.fire('Error al eliminar la asociación', 'Vuelva a intentarlo por favor', 'error');
+          }
+        }
+      );
+    }
   }
 
 }

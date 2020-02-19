@@ -69,4 +69,9 @@ export class CitaService {
   getFotos(idAppointment: number): Observable <Gallery[]>{
     return this.http.get<Gallery[]>(this.urlEndPointGetGallery+"/"+idAppointment);
   }
+
+  /* Update Appointment to state 1 (closed) */
+  cerrarCita(id_appointment: number): Observable<any>{
+      return this.http.put<any>(this.urlEndPointCitaCreate + "/" + id_appointment, { headers: this.httpHeaders })
+  }
 }

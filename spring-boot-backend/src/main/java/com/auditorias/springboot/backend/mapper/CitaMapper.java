@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Gallery;
@@ -38,4 +39,10 @@ public interface CitaMapper {
 
 	@Select("select * from asi_appointments_gallery where id_appointment=#{id}")
 	List<Gallery> getGalleryCita(Long id);
+	
+	/*
+	 * Updates an Appointment from open to close
+	 */
+	@Update("update asi_appointment set state_appointment=1 where id_appointment=#{id}")
+	void changeCitaState(Long id);
 }

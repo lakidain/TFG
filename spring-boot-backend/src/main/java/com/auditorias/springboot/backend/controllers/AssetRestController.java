@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,5 +86,14 @@ public class AssetRestController {
 		/* If the field text is not completed we use the select, not need to create the asset, just the association */
 		assetMapper.associateAssetThreat(assetThreat, existingThreat);
 		return true;	
+	}
+	
+	/*
+	 * Get Assets List for an audit
+	 */
+	@GetMapping("auditAssets/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public List<Audit_Asset> auditAssets(@PathVariable Long id){
+		return assetMapper.auditAssets(id);
 	}
 }

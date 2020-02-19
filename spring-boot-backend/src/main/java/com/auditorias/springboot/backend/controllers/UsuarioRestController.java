@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.auditorias.springboot.backend.dto.DtoAuditEmployee;
 import com.auditorias.springboot.backend.dto.DtoPassword;
 import com.auditorias.springboot.backend.dto.DtoRegistro;
 import com.auditorias.springboot.backend.mapper.EmpresaMapper;
+import com.auditorias.springboot.backend.mapper.RolesMapper;
 import com.auditorias.springboot.backend.mapper.UsuarioMapper;
 import com.auditorias.springboot.backend.model.Audit_Employees;
 import com.auditorias.springboot.backend.model.Usuario;
@@ -32,13 +34,15 @@ import com.auditorias.springboot.backend.model.Usuario;
 public class UsuarioRestController {
 	private UsuarioMapper usuarioMapper;
 	private EmpresaMapper companyMapper;
+	private RolesMapper rolesMapper;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	public UsuarioRestController(UsuarioMapper usuarioMapper, EmpresaMapper companyMapper) {
+	public UsuarioRestController(UsuarioMapper usuarioMapper, EmpresaMapper companyMapper, RolesMapper rolesMapper) {
 		this.usuarioMapper = usuarioMapper;
 		this.companyMapper = companyMapper;
+		this.rolesMapper = rolesMapper;
 	}
 
 	/* METODOS RELACIONADOS CON OBTENER LOS EMPLEADOS SUBORDINADOS */
@@ -106,12 +110,17 @@ public class UsuarioRestController {
 			companyMapper.insertAuditCompany(id, dtoRegistro.getName_company());
 			Long id_company = companyMapper.getId(dtoRegistro.getName_company()).get(0).getId_company();
 			usuarioMapper.updateCompany(id_company, id, true);
+			/* Añadimos el rol especifico de jefe */
+			Long rolId = rolesMapper.findRole("ROLE_AUDITORBOSS").get(0).getId_rol();
+			rolesMapper.insertRole(id, rolId);
 		} else {
 			Long id_company = companyMapper.getId(dtoRegistro.getName_company()).get(0).getId_company();
 			usuarioMapper.updateCompany(id_company, id, false);
 		}
-
-		// FALTARIA AÑADIR EL ROL
+		
+		/* Añadimos el rol generico */
+		Long rolId = rolesMapper.findRole("ROLE_AUDITOR").get(0).getId_rol();
+		rolesMapper.insertRole(id, rolId);
 		return true;
 	}
 
@@ -142,6 +151,16 @@ public class UsuarioRestController {
 		usuario.setUsername(username);
 		usuario.setId_company(companyAudited);
 		usuarioMapper.insertCliente(usuario);
+		Long user_id = usuarioMapper.findByUsername(usuario.getUsername()).get(0).getId();
+		/* Si es el primer usuario se le hace jefe y se le introduce el rol de jefe*/
+		if(companyMapper.getCompanyName(companyAudited).get(0).getId_user_boss()==0) {
+			companyMapper.updateBossAuditedCompany(user_id, companyAudited);
+			Long rolId = rolesMapper.findRole("ROLE_AUDITEDBOSS").get(0).getId_rol();
+			rolesMapper.insertRole(user_id, rolId);
+		}
+		/* Ademas tendra los roles normales asociados tambien */
+		Long rolId = rolesMapper.findRole("ROLE_AUDITED").get(0).getId_rol();
+		rolesMapper.insertRole(user_id, rolId);
 		/* A continuación lo asociamos a la auditoria */
 		usuarioMapper.associateClienteAuditoria(id_audit, usuarioMapper.findByUsername(username).get(0).getId());
 		return true;
@@ -149,8 +168,7 @@ public class UsuarioRestController {
 
 	@PostMapping("/clientesAssociate")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean associateCliente(@RequestParam("id_audit") Long id_audit,
-			@RequestParam("selectedEmployee") Long selectedEmployee) throws Exception {
+	public boolean associateCliente(@RequestParam("id_audit") Long id_audit, @RequestParam("selectedEmployee") Long selectedEmployee) throws Exception {
 		if (usuarioMapper.checkAssociation(id_audit, selectedEmployee).size() > 0) {
 			throw new Exception();
 		}
@@ -174,8 +192,15 @@ public class UsuarioRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public boolean updatePassword(@RequestBody Audit_Employees auditEmployees, @PathVariable Long id) {
 		/* The method matches is used to compare the equality of both passwords */
-		System.out.print("AAAAAAA" + auditEmployees.getAppointment_permit_audit_employees());
 		usuarioMapper.updateEmployeesAssociated(auditEmployees);
+		return true;
+	}
+	
+	/* Delete association */
+	@DeleteMapping("/clientesAssociate/{id}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deleteEmployeeFromAppointment(@PathVariable Long id) {
+		usuarioMapper.deleteEmployeeFromAppointment(id);
 		return true;
 	}
 }

@@ -22,6 +22,10 @@ public interface AssetMapper {
 	@Select("select * from asi_audit_threats")
 	List<Audit_Threat> findAllThreats();
 	
+	/* Return a list with the Assets for the concrete Audit type*/
+	@Select("select asi_audit_assets.id_audit_asset,asi_audit_assets.name_audit_asset from asi_audit,asi_audit_types_assets,asi_audit_assets where asi_audit.id_audit=#{id} and asi_audit.id_audit_type=asi_audit_types_assets.id_audit_type and asi_audit_types_assets.id_audit_asset=asi_audit_assets.id_audit_asset")
+	List<Audit_Asset> auditAssets(Long id);
+	
 	/* Select an Asset searching with a name */
 	@Select("select * from asi_audit_assets where name_audit_asset=#{name_audit_asset}")
 	List<Audit_Asset> findAsset(DtoAssetCreation dtoAssetCreation);

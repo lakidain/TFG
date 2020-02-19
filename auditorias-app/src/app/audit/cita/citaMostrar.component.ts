@@ -4,6 +4,7 @@ import { Gallery } from './Gallery';
 import { Usuario } from '../../usuario/login/usuario';
 import { Cita } from './cita';
 import { Message } from './message';
+import { AuditoriasComponent } from '../auditoria/auditorias.component';
 
 /* Servicios */
 import { AuthService } from 'src/app/usuario/login/auth.service';
@@ -34,7 +35,7 @@ export class CitaMostrarComponent implements OnInit {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService) {
+  constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent) {
     this.usuario = authService.usuario;
     this.message = new Message();
   }
@@ -108,7 +109,6 @@ export class CitaMostrarComponent implements OnInit {
   updateMessages() {
     this.citaService.getMessages(this.cita).subscribe(
       response => {
-        console.log(response);
         this.messagesList = response;
       }, err => {
         Swal.fire('Error', `Error al retirar los mensajes`, 'error');
@@ -154,6 +154,22 @@ export class CitaMostrarComponent implements OnInit {
           });
         }
       });
+  }
+
+  cerrarCita(){
+    if(confirm("¿Está seguro de cerrar la cita? Tras el cierre no se podrá añadir información adicional")){
+      this.citaService.cerrarCita(this.cita.id_appointment).subscribe(
+        response => {
+          Swal.fire('Cita cerrada correctamente', 'La cita ha sido cerrada correctamente', 'success');
+          this.auditoriasComponent.actualizarListaCitas();
+          this.cerrarModal();
+        }
+      ), err => {
+        if (err.status == 400 || err.status == 401) {
+          Swal.fire('Error al cerrar la cita', 'Vuelva a intentarlo', 'error');
+        }
+      };
+    }
   }
 
   cerrarModal() {

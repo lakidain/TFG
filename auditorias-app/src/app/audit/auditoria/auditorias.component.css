@@ -19,6 +19,10 @@ h1 {
   cursor: pointer;
 }
 
+.hoverable:hover{
+  cursor:pointer;
+}
+
 .calendarContainer {
   width: 100%;
   margin-top: 2em;

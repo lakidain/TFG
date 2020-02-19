@@ -10,17 +10,23 @@
         </div>
         <div class="modal-body">
           <div class="thin">
-            <p><b>Fecha:</b> {{cita.date_appointment | date:'short'}}</p>
+            <div class="textoCentrar">
+              <p><b>Fecha:</b> <br />
+                {{cita.date_appointment | date:'short'}}</p>
+            </div>
             <hr />
-            <p><b>Descripción:</b> {{cita.description_appointment}}</p>
+            <div class="textoCentrar">
+              <p><b>Descripción:</b> <br />
+                {{cita.description_appointment}}</p>
+            </div>
           </div>
           <hr class="thin" />
           <div>
-            <p><b>Mensajes</b></p>
+            <p class="textoCentrar"><b>Mensajes</b></p>
             <div class="messageCard">
               <hr class="style5">
               <div *ngFor="let message of messagesList">
-                <p><b>{{message.timestamp_message | date:'short'}}</b></p>
+                <p class="textoCentrar"><b>{{message.timestamp_message | date:'short'}}</b></p>
                 <p>{{message.text_message}}</p>
                 <hr class="style5">
               </div>
@@ -38,12 +44,12 @@
           </div> <br />
           <hr class="thin" />
           <div>
-            <p><b>Evidencias</b></p>
+            <p class="textoCentrar"><b>Evidencias</b></p>
             <div class="col-xs-1" align="center">
               <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
             </div>
             <div *ngIf="cita.state_appointment===0">
-              <p><b>Nueva evidencia</b></p>
+              <p class="textoCentrar"><b>Nueva evidencia</b></p>
               <div class="form-group">
                 <input class="form-control" type="text" [(ngModel)]="textoEvidencia" placeholder="Tipo Evidencia">
               </div>
@@ -64,6 +70,7 @@
           </div>
         </div>
         <div class="modal-footer">
+          <button *ngIf="cita.state_appointment===0" (click)="cerrarCita()" type="button" class="btn btn-danger">Cerrar Cita</button>
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

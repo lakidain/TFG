@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-xl-12 col-12">
 		<!-- small card -->
+		<!--
 		<div class="small-box bg-danger">
 			<div class="inner">
 				<p class="text-truncate cardLetters"> INFORMES </p>
@@ -11,42 +12,43 @@
 			<a href="#" class="small-box-footer">Entrar</a>
 		</div>
 	</div>
-	<br />
-	<!-- ./col -->
-	<div class="col-xl-12 col-12">
-		<!-- small card -->
-		<div class="small-box bg-warning">
-			<div class="inner">
-				<p class="text-truncate cardLetters"> AUDITORIAS </p>
+	-->
+		<br />
+		<!-- ./col -->
+		<div *ngIf="!authService.hasRole('ROLE_ADMIN')" class="col-xl-12 col-12">
+			<!-- small card -->
+			<div class="small-box bg-warning">
+				<div class="inner">
+					<p class="text-truncate cardLetters"> AUDITORIAS </p>
+				</div>
+				<div class="icon">
+					<i class="far fa-calendar-alt"></i>
+				</div>
+				<a routerLink='/cita' class="small-box-footer">Entrar</a>
 			</div>
-			<div class="icon">
-				<i class="far fa-calendar-alt"></i>
+		</div>
+		<div *ngIf="authService.hasRole('ROLE_AUDITORBOSS')" class="col-xl-12 col-12">
+			<!-- small card -->
+			<div class="small-box bg-success">
+				<div class="inner">
+					<p class="text-truncate cardLetters"> GESTIÓN DE PERSONAL </p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-users"></i>
+				</div>
+				<a routerLink='/gestionPersonal' class="small-box-footer">Entrar</a>
 			</div>
-			<a routerLink='/cita' class="small-box-footer">Entrar</a>
+		</div>
+		<div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-xl-12 col-12">
+			<!-- small card -->
+			<div class="small-box bg-info">
+				<div class="inner">
+					<p class="text-truncate cardLetters"> GESTIÓN DE PREGUNTAS </p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-question"></i>
+				</div>
+				<a routerLink='/gestionPreguntas' class="small-box-footer">Entrar</a>
+			</div>
 		</div>
 	</div>
-	<div class="col-xl-12 col-12">
-		<!-- small card -->
-		<div class="small-box bg-success">
-			<div class="inner">
-				<p class="text-truncate cardLetters"> GESTIÓN DE PERSONAL </p>
-			</div>
-			<div class="icon">
-				<i class="fas fa-users"></i>
-			</div>
-			<a routerLink='/gestionPersonal' class="small-box-footer">Entrar</a>
-		</div>
-	</div>
-	<div class="col-xl-12 col-12">
-		<!-- small card -->
-		<div class="small-box bg-info">
-			<div class="inner">
-				<p class="text-truncate cardLetters"> GESTIÓN DE PREGUNTAS </p>
-			</div>
-			<div class="icon">
-				<i class="fas fa-question"></i>
-			</div>
-			<a routerLink='/gestionPreguntas' class="small-box-footer">Entrar</a>
-		</div>
-	</div>
-</div>

@@ -2,6 +2,7 @@ package com.auditorias.springboot.backend.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -64,4 +65,7 @@ public interface UsuarioMapper {
 	
 	@Update("update asi_audit_employees set appointment_permit_audit_employees=#{appointment_permit_audit_employees},questionnaire_permit_audit_employees=#{questionnaire_permit_audit_employees},report_permit_audit_employees=#{report_permit_audit_employees} where id_audit_employees=#{id_audit_employees}")
 	void updateEmployeesAssociated(Audit_Employees auditEmployees);
+	
+	@Delete("delete from asi_audit_employees where id_audit_employees=#{id_audit_employees}")
+	void deleteEmployeeFromAppointment(Long id_audit_employees);
 }

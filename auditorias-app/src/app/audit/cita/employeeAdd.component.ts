@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalEmployee } from './modalEmployee.service';
+import { AuditoriasComponent } from '../auditoria/auditorias.component';
 import { DtoRegistro } from '../../dto/dtoRegistro';
 import { Audit } from '../audit';
 import { Usuario } from '../../Usuario/login/usuario';
@@ -20,7 +21,7 @@ export class EmployeeAddComponent {
   /* Employees of this company */
   employees: Usuario[];
 
-  constructor(private modalEmployee:ModalEmployee) {
+  constructor(private modalEmployee:ModalEmployee,private auditoriasComponent : AuditoriasComponent) {
     this.dtoRegistro = new DtoRegistro();
   }
 
@@ -45,6 +46,8 @@ export class EmployeeAddComponent {
   createEmployee(){
     this.modalEmployee.createEmployee(this.dtoRegistro, this.audit.id_company_audited, this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       Swal.fire('Exito al crear el empleado', 'El empleado ha sido creado con exito', 'success');
+      this.auditoriasComponent.actualizarEmployees();
+      this.modalEmployee.cerrarModal();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
         Swal.fire('Error al crear el usuario', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
@@ -56,6 +59,8 @@ export class EmployeeAddComponent {
   addEmployee(){
     this.modalEmployee.associateEmployee(this.selectedEmployee,this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       Swal.fire('Exito al asociar el empleado', 'El empleado ha sido asociado con exito', 'success');
+      this.auditoriasComponent.actualizarEmployees();
+      this.modalEmployee.cerrarModal();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
         Swal.fire('Error al asociar el usuario', 'Compruebe que no está ya asociado', 'error');

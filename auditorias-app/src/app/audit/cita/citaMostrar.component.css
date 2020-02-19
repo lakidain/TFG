@@ -26,3 +26,7 @@ hr.style5 {
   max-height: 40% !important;
   height: auto !important;
 }
+
+.textoCentrar{
+  text-align: center !important;
+}
