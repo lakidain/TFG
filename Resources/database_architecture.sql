@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-02-2020 a las 12:40:56
+-- Tiempo de generación: 19-02-2020 a las 12:55:37
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -106,38 +106,34 @@ INSERT INTO `asi_audit` (`id_audit`, `id_user_manager`, `id_company_auditing`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `asi_auditors`
---
-
-CREATE TABLE `asi_auditors` (
-  `id_auditor` int(11) NOT NULL,
-  `name_auditor` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `dni_auditor` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `email_auditor` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `phone_auditor` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `password_auditor` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `name_company` varchar(30) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `asi_auditors`
---
-
-INSERT INTO `asi_auditors` (`id_auditor`, `name_auditor`, `dni_auditor`, `email_auditor`, `phone_auditor`, `password_auditor`, `name_company`) VALUES
-(1, 'Ander', '12648712Y', 'pepeyu@hotmail.com', '765847365', 'qwerty', 'Pepeyu S.A'),
-(2, 'Andeer Lakidain', 'qwertyuiZ', 'ajsalkslak', '392039209', 'skdslkls', 'Amancio');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `asi_audit_answers`
 --
 
 CREATE TABLE `asi_audit_answers` (
   `id_audit_answer` int(11) NOT NULL,
-  `answer_audit_answer` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
-  `score_audit_answer` int(11) NOT NULL
+  `answer_audit_answer` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_answers`
+--
+
+INSERT INTO `asi_audit_answers` (`id_audit_answer`, `answer_audit_answer`) VALUES
+(6, 'Todas las contraseñas siguen la política de seguridad'),
+(7, 'Más del 50% de las contraseñas sigue la política de seguridad'),
+(8, 'Menos del 50% de las contraseñas sigue la política de seguridad'),
+(9, 'Menos del 25% de las contraseñas sigue la política de seguridad'),
+(10, 'Ninguna de las contraseñas sigue la política de seguridad'),
+(11, 'Sí y para cada una de las consultas'),
+(12, 'Sí, aunque entre un 75% al 99% de las consultas'),
+(13, 'Sí, aunque entre un 50% al 75% de las consultas'),
+(14, 'Sí, aunque menos del 50% de las consultas'),
+(15, 'No, en ningún caso'),
+(16, 'El 100% de los empleados tienen asignado los permisos mínimos'),
+(17, 'Más del 75% de los empleados tienen asignado los permisos mínimos'),
+(18, 'Entre el 50% al 75% de los empleados tienen asignado los permisos mínimos'),
+(19, 'Menos del 50% de los empleados tienen asignado los permisos mínimos'),
+(20, 'Ninguno de los empleados tiene asignado los permisos mínimos');
 
 -- --------------------------------------------------------
 
@@ -156,6 +152,7 @@ CREATE TABLE `asi_audit_assets` (
 
 INSERT INTO `asi_audit_assets` (`id_audit_asset`, `name_audit_asset`) VALUES
 (3, 'Cableado'),
+(4, 'SGDB'),
 (2, 'Usuario/Password');
 
 -- --------------------------------------------------------
@@ -175,7 +172,9 @@ CREATE TABLE `asi_audit_assets_threats` (
 --
 
 INSERT INTO `asi_audit_assets_threats` (`id_audit_asset_threat`, `id_audit_asset`, `id_audit_threat`) VALUES
-(1, 2, 3);
+(1, 2, 3),
+(2, 2, 4),
+(3, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -187,8 +186,19 @@ CREATE TABLE `asi_audit_employees` (
   `id_audit_employees` int(11) NOT NULL,
   `id_audit` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `appointment_permit_audit_employees` int(11) NOT NULL
+  `appointment_permit_audit_employees` int(11) NOT NULL,
+  `questionnaire_permit_audit_employees` int(11) NOT NULL,
+  `report_permit_audit_employees` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_employees`
+--
+
+INSERT INTO `asi_audit_employees` (`id_audit_employees`, `id_audit`, `id_user`, `appointment_permit_audit_employees`, `questionnaire_permit_audit_employees`, `report_permit_audit_employees`) VALUES
+(6, 1, 33, 0, 0, 0),
+(7, 1, 34, 0, 0, 0),
+(11, 1, 35, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -198,8 +208,17 @@ CREATE TABLE `asi_audit_employees` (
 
 CREATE TABLE `asi_audit_questions` (
   `id_audit_question` int(11) NOT NULL,
-  `question` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `question_audit_question` varchar(300) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_questions`
+--
+
+INSERT INTO `asi_audit_questions` (`id_audit_question`, `question_audit_question`) VALUES
+(2, '¿Todas las contraseñas siguen la política de seguridad establecida?'),
+(3, '¿Tiene delimitado el número de registros que puede devolver una consulta SQL?'),
+(4, '¿Qué porcentaje de empleados tienen asignados los permisos mínimos necesarios para completar sus tareas autorizadas?');
 
 -- --------------------------------------------------------
 
@@ -210,8 +229,30 @@ CREATE TABLE `asi_audit_questions` (
 CREATE TABLE `asi_audit_questions_answers` (
   `id_audit_question_answer` int(11) NOT NULL,
   `id_audit_question` int(11) NOT NULL,
-  `id_audit_answer` int(11) NOT NULL
+  `id_audit_answer` int(11) NOT NULL,
+  `score_audit_question_answer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_questions_answers`
+--
+
+INSERT INTO `asi_audit_questions_answers` (`id_audit_question_answer`, `id_audit_question`, `id_audit_answer`, `score_audit_question_answer`) VALUES
+(6, 2, 6, 5),
+(7, 2, 7, 4),
+(8, 2, 8, 3),
+(9, 2, 9, 2),
+(10, 2, 10, 1),
+(11, 3, 11, 5),
+(12, 3, 12, 4),
+(13, 3, 13, 3),
+(14, 3, 14, 2),
+(15, 3, 15, 1),
+(16, 4, 16, 5),
+(17, 4, 17, 4),
+(18, 4, 18, 3),
+(19, 4, 19, 2),
+(20, 4, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -229,7 +270,30 @@ CREATE TABLE `asi_audit_threats` (
 --
 
 INSERT INTO `asi_audit_threats` (`id_audit_threat`, `name_audit_threat`) VALUES
-(3, 'Fuerza Bruta');
+(3, 'Fuerza Bruta'),
+(4, 'De Diccionario'),
+(5, 'Inyección SQL');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_threats_vulnerabilities`
+--
+
+CREATE TABLE `asi_audit_threats_vulnerabilities` (
+  `id_audit_threat_vulnerability` int(11) NOT NULL,
+  `id_audit_threat` int(11) NOT NULL,
+  `id_audit_vulnerability` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_threats_vulnerabilities`
+--
+
+INSERT INTO `asi_audit_threats_vulnerabilities` (`id_audit_threat_vulnerability`, `id_audit_threat`, `id_audit_vulnerability`) VALUES
+(1, 3, 2),
+(2, 4, 2),
+(3, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -270,7 +334,48 @@ CREATE TABLE `asi_audit_types_assets` (
 INSERT INTO `asi_audit_types_assets` (`id_audit_type_asset`, `id_audit_type`, `id_audit_asset`) VALUES
 (1, 6, 2),
 (2, 6, 3),
-(3, 1, 3);
+(3, 1, 3),
+(4, 6, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_vulnerabilities`
+--
+
+CREATE TABLE `asi_audit_vulnerabilities` (
+  `id_audit_vulnerability` int(11) NOT NULL,
+  `name_audit_vulnerability` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_vulnerabilities`
+--
+
+INSERT INTO `asi_audit_vulnerabilities` (`id_audit_vulnerability`, `name_audit_vulnerability`) VALUES
+(2, 'Contraseñas sencillas e intuitivas'),
+(3, 'Acceso sin restricciones a BD');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asi_audit_vulnerabilities_questions`
+--
+
+CREATE TABLE `asi_audit_vulnerabilities_questions` (
+  `id_audit_vulnerability_question` int(11) NOT NULL,
+  `id_audit_vulnerability` int(11) NOT NULL,
+  `id_audit_question` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asi_audit_vulnerabilities_questions`
+--
+
+INSERT INTO `asi_audit_vulnerabilities_questions` (`id_audit_vulnerability_question`, `id_audit_vulnerability`, `id_audit_question`) VALUES
+(2, 2, 2),
+(3, 3, 3),
+(4, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -299,7 +404,8 @@ INSERT INTO `asi_companies` (`id_company`, `name_company`, `cif_company`, `busin
 (2, 'Link', '', '', '', '', '0', 7, 0),
 (8, 'Emergia', '', '', '', '', '0', 19, 0),
 (11, 'Pepeyu', '-', '-', '-', '-', '-', 27, 1),
-(13, 'Nintendo', 'E38420824', 'Nintendo S.A', 'C/Japon', 'nintendo@nintendo.com', '764563546', 0, 2);
+(13, 'Nintendo', 'E38420824', 'Nintendo S.A', 'C/Japon', 'nintendo@nintendo.com', '764563546', 34, 2),
+(15, 'Repsol', '-', '-', '-', '-', '-', 37, 1);
 
 -- --------------------------------------------------------
 
@@ -342,9 +448,11 @@ CREATE TABLE `asi_rols` (
 --
 
 INSERT INTO `asi_rols` (`id_rol`, `name`) VALUES
-(1, 'ROLE_USER'),
+(1, 'ROLE_AUDITOR'),
 (2, 'ROLE_ADMIN'),
-(3, 'ROLE_BOSS');
+(3, 'ROLE_AUDITORBOSS'),
+(4, 'ROLE_AUDITED'),
+(5, 'ROLE_AUDITEDBOSS');
 
 -- --------------------------------------------------------
 
@@ -371,12 +479,16 @@ INSERT INTO `asi_users` (`id`, `username`, `name_user`, `password`, `email_user`
 (1, '12648712Y', 'Ander Liked di Arraba', '$2a$10$.UhtWEAgWKdk1bUvax91nOWOwPO/w0IzlGTuhIhGtazKrjohzSkQu', 'anderlakidain@gmail.com', '682736485', 1, 1),
 (2, '746563A', 'Pepe Yufera', '$2a$10$GQQC/mtwC7x8D/ifCxvCsO/fqS.g1o5OxhyAPHgviqbSOZijOoJGu', 'andlwkee@gmail.com', '746564732', 1, 1),
 (4, '75648364R', 'Manolo', '$2a$10$HII7nIhdEZwIDK.FtPlizOLPB8tmGWV8ROFL3mKKL55Fw1e9APV2K', 'loc@gmail.com', '786547385', 1, 1),
-(6, '6475738E', 'Pablo', '$2a$10$HJSv9bpuKug/rBAFDfyFSezbVtRfLgdKpr2YtMBI8zE3SyQQaK/qq', 'pl@gmail.com', '784374', 2, 1),
 (7, '18273634A', 'Pepe', '$2a$10$K2JigM3yrrltTxVNOpqwXOFiQEZsbHFRVC6qGjyGQ0N2ZDNC1rBmy', 'pepe@hotmail.com', '657456523', 2, 1),
 (8, '29832983E', 'lskdslkdslk', '$2a$10$1vbrcSrBYSW3SkiV6biv2.onf9OL0OfEBc7RHEyvMNRTywkwbnpwq', 'epoper@gmail.com', '9829323', 2, 1),
 (19, 'qwerty', 'qwerty', '$2a$10$.J05.cp6UmATmY1mVlaD0uRIcmVYi4VWN/5AeL.3EQ8m4ddJAHqV6', 'locos@hotmail.com', '8928392', 8, 1),
 (21, 'papo', 'qwerty', '$2a$10$FToyjeCZC4uMNYfPl3mM8O519gEpYuEi2kQFLb0WIdwqFdk9dhyJi', 'erer', '72', 2, 1),
-(27, '76564678Y', 'qwerty', '$2a$10$Iz.Pxb55gJMTlyOeHgX9tuO2Aw8fsc7acGESZcxFXe6rdxoxROTh.', 'nintendo@nintendo.com', '876453645', 11, 1);
+(27, '76564678Y', 'qwerty', '$2a$10$Iz.Pxb55gJMTlyOeHgX9tuO2Aw8fsc7acGESZcxFXe6rdxoxROTh.', 'nintendo@nintendo.com', '876453645', 11, 1),
+(32, '11111111Z', 'admin', '$2a$10$ZmWpnjs3ZUPWZ.Qd8dsKEud6CzNUGc92dNTajq9/80TusHZPWMTpC', 'admin', 'admin', 0, 1),
+(34, '65746353Y', 'Lobo Estepario', '$2a$10$h80vHCi1NVpKtb1mkYkGW.81bVDElKu8owG/f8eBpibqC6qNaossm', 'loboestepario@gmail.com', '756453645', 13, 1),
+(35, '65743253Y', 'Manel Force', '$2a$10$McS8xtOeTBSTwKuiNfjHSe1.nSEC7bOIIVKyMD/3t0FSEE8nW9r12', 'manelForce@gmail.com', '657465746', 13, 1),
+(37, '65746352A', 'EDUARDO CRUCES CARAVACA', '$2a$10$f24trVLiDBnYJZiip4RKMuSv4bQur1rbMr/mpOOH9Jc/MZvpSEdLi', 'eduardocruces@gmail.com', '657564564', 15, 1),
+(38, '64567364Z', 'ISMAEL GRAÑA HERVAS', '$2a$10$3Qy7ju9JBLbUlBbclGOFDu.1.Crs4I8h4Ig0gnZGY/G7fG0oMV.zG', 'ismaelgrana@gmail.com', '765746573', 15, 0);
 
 -- --------------------------------------------------------
 
@@ -395,8 +507,14 @@ CREATE TABLE `asi_users_rols` (
 --
 
 INSERT INTO `asi_users_rols` (`id`, `id_user`, `id_rol`) VALUES
-(1, 1, 1),
-(2, 4, 3);
+(3, 7, 3),
+(4, 32, 2),
+(5, 34, 5),
+(6, 34, 4),
+(7, 35, 4),
+(8, 37, 3),
+(9, 37, 1),
+(10, 38, 1);
 
 --
 -- Índices para tablas volcadas
@@ -421,11 +539,10 @@ ALTER TABLE `asi_audit`
   ADD PRIMARY KEY (`id_audit`);
 
 --
--- Indices de la tabla `asi_auditors`
+-- Indices de la tabla `asi_audit_answers`
 --
-ALTER TABLE `asi_auditors`
-  ADD PRIMARY KEY (`id_auditor`),
-  ADD UNIQUE KEY `dni_auditor` (`dni_auditor`);
+ALTER TABLE `asi_audit_answers`
+  ADD PRIMARY KEY (`id_audit_answer`);
 
 --
 -- Indices de la tabla `asi_audit_assets`
@@ -465,6 +582,12 @@ ALTER TABLE `asi_audit_threats`
   ADD PRIMARY KEY (`id_audit_threat`);
 
 --
+-- Indices de la tabla `asi_audit_threats_vulnerabilities`
+--
+ALTER TABLE `asi_audit_threats_vulnerabilities`
+  ADD PRIMARY KEY (`id_audit_threat_vulnerability`);
+
+--
 -- Indices de la tabla `asi_audit_types`
 --
 ALTER TABLE `asi_audit_types`
@@ -476,6 +599,18 @@ ALTER TABLE `asi_audit_types`
 --
 ALTER TABLE `asi_audit_types_assets`
   ADD PRIMARY KEY (`id_audit_type_asset`);
+
+--
+-- Indices de la tabla `asi_audit_vulnerabilities`
+--
+ALTER TABLE `asi_audit_vulnerabilities`
+  ADD PRIMARY KEY (`id_audit_vulnerability`);
+
+--
+-- Indices de la tabla `asi_audit_vulnerabilities_questions`
+--
+ALTER TABLE `asi_audit_vulnerabilities_questions`
+  ADD PRIMARY KEY (`id_audit_vulnerability_question`);
 
 --
 -- Indices de la tabla `asi_companies`
@@ -532,46 +667,52 @@ ALTER TABLE `asi_audit`
   MODIFY `id_audit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `asi_auditors`
+-- AUTO_INCREMENT de la tabla `asi_audit_answers`
 --
-ALTER TABLE `asi_auditors`
-  MODIFY `id_auditor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `asi_audit_answers`
+  MODIFY `id_audit_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_assets`
 --
 ALTER TABLE `asi_audit_assets`
-  MODIFY `id_audit_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_audit_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_assets_threats`
 --
 ALTER TABLE `asi_audit_assets_threats`
-  MODIFY `id_audit_asset_threat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_audit_asset_threat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_employees`
 --
 ALTER TABLE `asi_audit_employees`
-  MODIFY `id_audit_employees` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_audit_employees` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_questions`
 --
 ALTER TABLE `asi_audit_questions`
-  MODIFY `id_audit_question` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_audit_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_questions_answers`
 --
 ALTER TABLE `asi_audit_questions_answers`
-  MODIFY `id_audit_question_answer` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_audit_question_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_threats`
 --
 ALTER TABLE `asi_audit_threats`
-  MODIFY `id_audit_threat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_audit_threat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_threats_vulnerabilities`
+--
+ALTER TABLE `asi_audit_threats_vulnerabilities`
+  MODIFY `id_audit_threat_vulnerability` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_types`
@@ -583,13 +724,25 @@ ALTER TABLE `asi_audit_types`
 -- AUTO_INCREMENT de la tabla `asi_audit_types_assets`
 --
 ALTER TABLE `asi_audit_types_assets`
-  MODIFY `id_audit_type_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_audit_type_asset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_vulnerabilities`
+--
+ALTER TABLE `asi_audit_vulnerabilities`
+  MODIFY `id_audit_vulnerability` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `asi_audit_vulnerabilities_questions`
+--
+ALTER TABLE `asi_audit_vulnerabilities_questions`
+  MODIFY `id_audit_vulnerability_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_companies`
 --
 ALTER TABLE `asi_companies`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_messages`
@@ -601,19 +754,19 @@ ALTER TABLE `asi_messages`
 -- AUTO_INCREMENT de la tabla `asi_rols`
 --
 ALTER TABLE `asi_rols`
-  MODIFY `id_rol` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rol` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_users`
 --
 ALTER TABLE `asi_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_users_rols`
 --
 ALTER TABLE `asi_users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
