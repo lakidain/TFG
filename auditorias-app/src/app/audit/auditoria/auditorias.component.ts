@@ -138,7 +138,16 @@ export class AuditoriasComponent {
 
   deleteAppointment(appointment: Cita){
     if(confirm("¿Está seguro de que desea eliminar la cita? Podrá perderse información de importancia para el proceso de auditoría")){
-      console.log("Eliminada");
+      this.auditoriaService.deleteAppointment(appointment.id_appointment).subscribe(
+        reponse => {
+          Swal.fire('Cita correctamente eliminada','','success');
+          this.actualizarListaCitas();
+        } , err => {
+          if (err.status == 400 || err.status == 401) {
+            Swal.fire('Error al eliminar la cita', 'Vuelva a intentarlo por favor', 'error');
+          }
+        }
+      );
     }
   }
 

@@ -17,6 +17,8 @@ import { AuditoriasComponent } from './audit/auditoria/auditorias.component';
 import { Questionnaire } from './audit/auditoria/questionnaire.component';
 import { CitaCreationComponent } from './audit/cita/citaCreation.component';
 import { CitaMostrarComponent } from './audit/cita/citaMostrar.component';
+import { CitaModifyComponent } from './audit/cita/citaMostrarModals/modifyCita.component';
+import { MessageModifyComponent } from './audit/cita/citaMostrarModals/modifyMessage.component';
 import { EmployeeAddComponent } from './audit/cita/employeeAdd.component';
 import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.component';
 import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
@@ -74,6 +76,8 @@ const routes: Routes = [
     Questionnaire,
     CitaCreationComponent,
     CitaMostrarComponent,
+    MessageModifyComponent,
+    CitaModifyComponent,
     EmployeeAddComponent,
     GestionPreguntas,
     GestionPersonalComponent,

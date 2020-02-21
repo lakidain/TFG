@@ -2,6 +2,7 @@ package com.auditorias.springboot.backend.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -45,4 +46,16 @@ public interface CitaMapper {
 	 */
 	@Update("update asi_appointment set state_appointment=1 where id_appointment=#{id}")
 	void changeCitaState(Long id);
+	
+	/*
+	 * Updates an Appointment with new info
+	 */
+	@Update("update asi_appointment set name_appointment=#{name_appointment},description_appointment=#{description_appointment},date_appointment=#{date_appointment} where id_appointment=#{id_appointment}")
+	void updateCita(Cita cita);
+	
+	/*
+	 * Delete Appointment
+	 */
+	@Delete("delete from asi_appointment where id_appointment=#{id_appointment}")
+	void deleteAppointment(Long id_appointment);
 }

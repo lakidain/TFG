@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Gallery;
+import com.auditorias.springboot.backend.model.Usuario;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
 //realizan al navegador, desde aqui podemos controlar todo
@@ -113,9 +115,24 @@ public class CitaRestController {
 	}
 	
 	/* Close an open Appointment */
+	@PutMapping("citaUpdate/{id}")
+	public boolean updateCita(@RequestBody Cita cita,@PathVariable Long id){
+		citaMapper.updateCita(cita);
+		return true;
+	}
+	
+	/* Close an open Appointment */
 	@PutMapping("cita/{id}")
 	public boolean changeCitaState(@PathVariable Long id){
 		citaMapper.changeCitaState(id);
+		return true;
+	}
+	
+	/* Delete Appointment */
+	@DeleteMapping("/cita/{id}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deleteEmployeeFromAppointment(@PathVariable Long id) {
+		citaMapper.deleteAppointment(id);
 		return true;
 	}
 

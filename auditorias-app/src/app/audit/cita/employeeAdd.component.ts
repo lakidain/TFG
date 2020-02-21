@@ -32,7 +32,6 @@ export class EmployeeAddComponent {
   updateEmployees(){
     this.modalEmployee.getEmployees(this.audit.id_audit).subscribe(
       employees => {
-        console.log(employees)
         this.employees = employees;
       }
     );

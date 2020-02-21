@@ -70,6 +70,11 @@ export class CitaService {
     return this.http.get<Gallery[]>(this.urlEndPointGetGallery+"/"+idAppointment);
   }
 
+  /* Delete message with an id*/
+  deleteMessage(id_message: number): Observable<any>{
+    return this.http.delete<any>(this.urlEndPointGetMessages+"/"+id_message, {headers: this.httpHeaders});
+  }
+
   /* Update Appointment to state 1 (closed) */
   cerrarCita(id_appointment: number): Observable<any>{
       return this.http.put<any>(this.urlEndPointCitaCreate + "/" + id_appointment, { headers: this.httpHeaders })

@@ -14,6 +14,7 @@ export class AuditoriaService {
   private urlEndPointAuditList: string = 'http://localhost:8080/api/audit';
   private urlEndPointAuditEmployees: string = 'http://localhost:8080/api/clientesAssociate';
   private urlEndPointAuditAssets: string = 'http://localhost:8080/api/auditAssets';
+  private urlEndPointAppointmentAssets: string = 'http://localhost:8080/api/cita';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
@@ -36,6 +37,11 @@ export class AuditoriaService {
   /* Update asi_audit_employees */
   updateEmployeesAssigned(auditEmployee: Audit_Employees): Observable<any>{
     return this.http.put<Usuario>(this.urlEndPointAuditEmployees + "/" + auditEmployee.id_audit_employees, auditEmployee, { headers: this.httpHeaders });
+  }
+
+  /* Delete Appointment */
+  deleteAppointment(id_appointment:number):Observable<any>{
+    return this.http.delete<any>(this.urlEndPointAppointmentAssets+"/"+id_appointment, {headers: this.httpHeaders});
   }
 
   /* Delete Employee Association with the actual appointment*/

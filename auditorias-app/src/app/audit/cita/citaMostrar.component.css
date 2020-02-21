@@ -30,3 +30,16 @@ hr.style5 {
 .textoCentrar{
   text-align: center !important;
 }
+
+.fa-edit:hover{
+  cursor:pointer;
+}
+
+.floatRight{
+  float:right;
+  margin-right: 1em;
+}
+
+.fa-trash-alt:hover{
+  cursor:pointer;
+}

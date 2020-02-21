@@ -6,6 +6,10 @@ import { Cita } from './cita';
 import { Message } from './message';
 import { AuditoriasComponent } from '../auditoria/auditorias.component';
 
+/* Modals */
+import { ModalModifyCita } from './citaMostrarModals/modalModifyCita.service';
+import { ModalModifyMessage } from './citaMostrarModals/modalModifyMessage.service';
+
 /* Servicios */
 import { AuthService } from 'src/app/usuario/login/auth.service';
 import { CitaService } from './cita.service';
@@ -35,9 +39,14 @@ export class CitaMostrarComponent implements OnInit {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent) {
+  /* Message Modify Parameter */
+  messageClicked: Message;
+
+  constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent, private modalModifyCita: ModalModifyCita,
+  private modalModifyMessage: ModalModifyMessage) {
     this.usuario = authService.usuario;
     this.message = new Message();
+    this.messageClicked = new Message();
   }
 
   ngOnInit(): void {
@@ -67,30 +76,34 @@ export class CitaMostrarComponent implements OnInit {
       }
     ];
     this.galleryImages = []
-/*
-    this.galleryImages = [
-      {
-        small: 'assets/1-small.jpg',
-        medium: 'assets/1-medium.jpg',
-        big: 'assets/1-big.jpg'
-      },
-      {
-        small: 'assets/2-small.jpg',
-        medium: 'assets/2-medium.jpg',
-        big: 'assets/2-big.jpg'
-      },
-      {
-        small: 'assets/3-small.jpg',
-        medium: 'assets/3-medium.jpg',
-        big: 'assets/3-big.jpg'
-      }
-    ];
-    */
+    /*
+        this.galleryImages = [
+          {
+            small: 'assets/1-small.jpg',
+            medium: 'assets/1-medium.jpg',
+            big: 'assets/1-big.jpg'
+          },
+          {
+            small: 'assets/2-small.jpg',
+            medium: 'assets/2-medium.jpg',
+            big: 'assets/2-big.jpg'
+          },
+          {
+            small: 'assets/3-small.jpg',
+            medium: 'assets/3-medium.jpg',
+            big: 'assets/3-big.jpg'
+          }
+        ];
+        */
   }
 
   ngOnChanges() { //Este componente es cuando se inicia el evento
     this.updateMessages();
     this.mostrarFotos();
+  }
+
+  modifyAppointment() {
+    this.modalModifyCita.abrirModal();
   }
 
   createMessage() {
@@ -102,8 +115,30 @@ export class CitaMostrarComponent implements OnInit {
         this.message = new Message();
         this.updateMessages();
       }, err => {
-        Swal.fire('Error', `Error al crear el mensaje, vuelva a intentarlo`, 'error');
+        if (err.status == 400 || err.status == 401) {
+          Swal.fire('Error', `Error al crear el mensaje, vuelva a intentarlo`, 'error');
+        }
       });
+  }
+
+  deleteMessage(message: Message) {
+    if (confirm("¿Esta seguro de que desea eliminar el mensaje?")) {
+      this.citaService.deleteMessage(message.id_message).subscribe(
+        response => {
+          Swal.fire('Message Removed', `The message has been removed successfully`, 'success');
+          this.message = new Message();
+          this.updateMessages();
+        }, err => {
+          if (err.status == 400 || err.status == 401) {
+            Swal.fire('Error', `Error al crear el mensaje, vuelva a intentarlo`, 'error');
+          }
+        });
+    }
+  }
+
+  modifyMessage(message: Message) {
+    this.messageClicked = message;
+    this.modalModifyMessage.abrirModal();
   }
 
   updateMessages() {
@@ -150,14 +185,14 @@ export class CitaMostrarComponent implements OnInit {
         this.gallery = galeria;
         if (galeria.length > 0) {
           this.galleryImages = galeria.map(foto => {
-            return { small:"http://localhost:8080/api/uploads/img/"+foto.photo_gallery , medium: "http://localhost:8080/api/uploads/img/"+foto.photo_gallery, big: "http://localhost:8080/api/uploads/img/"+foto.photo_gallery, description: foto.description_gallery };
+            return { small: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, medium: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, big: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, description: foto.description_gallery };
           });
         }
       });
   }
 
-  cerrarCita(){
-    if(confirm("¿Está seguro de cerrar la cita? Tras el cierre no se podrá añadir información adicional")){
+  cerrarCita() {
+    if (confirm("¿Está seguro de cerrar la cita? Tras el cierre no se podrá añadir información adicional")) {
       this.citaService.cerrarCita(this.cita.id_appointment).subscribe(
         response => {
           Swal.fire('Cita cerrada correctamente', 'La cita ha sido cerrada correctamente', 'success');
