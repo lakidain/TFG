@@ -78,8 +78,8 @@
   <hr class="thin">
   <div class="container">
     <div (click)="infoEmployeeTable()"><i class="far fa-question-circle float-right"></i></div>
-    <h2> Panel de empleados </h2>
-    <table class="table table-bordered table-striped table-responsive text-center">
+    <h2> Panel de Empleados </h2>
+    <table class="table table-bordered table-striped text-center"> <!-- table-responsive -->
       <thead>
         <tr>
           <th scope="col"><i class="fas fa-sort-numeric-down"></i> Id</th>
@@ -107,7 +107,31 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> <br />
+    <!-- Show every audit for the company -->
+    <h2>Panel de Auditorias</h2>
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col"> Name employee </th>
+          <th scope="col"> Company Audited </th>
+          <th scope="col"> Audit Type </th>
+          <th scope="col"> Audit Start </th>
+          <th scope="col"> Audit End </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let audit of auditList">
+          <td scope="row">{{audit.name_user_manager}}</td>
+          <td>{{audit.name_company}}</td>
+          <td>{{audit.name_audit_type}}</td>
+          <td>{{audit.date_start_audit | date}}</td>
+          <td>{{audit.date_end_audit | date}}</td>
+          <td><span (click)="modifyAudit(audit)"><i class="fas fa-edit"></i></span></td>
+          <td><span (click)="deleteAudit(audit)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </tbody>
+    </table> <br />
   </div>
 </div>
 <div *ngIf="!authService.hasRole('ROLE_AUDITORBOSS')">
@@ -115,3 +139,4 @@
 </div>
 
 <app-newCompany *ngIf="mostrarModal"></app-newCompany>
+<app-AuditModify *ngIf="auditModify" [audit]="auditModify" [empleados]="empleados"></app-AuditModify>

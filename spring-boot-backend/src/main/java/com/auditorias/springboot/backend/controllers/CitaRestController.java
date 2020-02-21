@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Gallery;
-import com.auditorias.springboot.backend.model.Usuario;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
 //realizan al navegador, desde aqui podemos controlar todo

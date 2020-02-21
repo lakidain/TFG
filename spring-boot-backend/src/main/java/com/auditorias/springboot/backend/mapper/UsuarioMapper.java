@@ -21,6 +21,9 @@ public interface UsuarioMapper {
 
 	@Select("select * from asi_users where username=#{username}")
 	List<Usuario> findByUsername(String username);
+	
+	@Select("select * from asi_users where id=#{id}")
+	List<Usuario> getUsuario(Long id);
 
 	@Select("select asi_rols.name from asi_users,asi_users_rols,asi_rols where asi_users.id=asi_users_rols.id_user"
 			+ " and asi_users_rols.id_rol=asi_rols.id_rol and asi_users.username=#{username}")

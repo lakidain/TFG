@@ -1,6 +1,7 @@
 export class DtoAuditList {
   id_audit: number;
   id_user_manager: number;
+  name_user_manager: string;
   id_company_auditing: number;
   id_company_audited: number;
   name_company: string;

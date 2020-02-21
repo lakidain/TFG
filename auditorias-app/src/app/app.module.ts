@@ -21,8 +21,9 @@ import { CitaModifyComponent } from './audit/cita/citaMostrarModals/modifyCita.c
 import { MessageModifyComponent } from './audit/cita/citaMostrarModals/modifyMessage.component';
 import { EmployeeAddComponent } from './audit/cita/employeeAdd.component';
 import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.component';
-import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
 import { GestionPersonalComponent } from './menuPrincipal/gestionPersonal.component';
+import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
+import { AuditModifyComponent } from './menuPrincipal/companyToAudit/modifyAudit.component';
 import { PerfilUsuarioComponent } from './menuPrincipal/perfilUsuario.component';
 import { LoginComponent } from './usuario/login/login.component';
 import { RegistroComponent } from './usuario/registro/registro.component';
@@ -81,6 +82,7 @@ const routes: Routes = [
     EmployeeAddComponent,
     GestionPreguntas,
     GestionPersonalComponent,
+    AuditModifyComponent,
     CompanyToAuditComponent,
     PerfilUsuarioComponent,
   ],

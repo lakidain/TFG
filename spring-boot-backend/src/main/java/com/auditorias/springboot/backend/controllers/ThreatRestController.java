@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.mapper.ThreatMapper;
-import com.auditorias.springboot.backend.model.Audit_Answer;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 
 @CrossOrigin(origins = { "http://localhost:4200" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
