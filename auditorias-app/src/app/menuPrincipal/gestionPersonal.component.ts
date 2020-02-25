@@ -54,14 +54,18 @@ export class GestionPersonalComponent {
   ngOnInit() { //Este componente es cuando se inicia el evento
     this.updateEmpleados();
     this.updateAudits();
-    this.gestionPersonalService.getEmpresas().subscribe(
-      empresas => {
-        this.empresas = empresas;
-      }
-    );
+    this.updateCompanies();
     this.gestionPersonalService.getAuditTypes().subscribe(
       types => {
         this.tipoAuditorias = types;
+      }
+    );
+  }
+
+  updateCompanies(){
+    this.gestionPersonalService.getEmpresas().subscribe(
+      empresas => {
+        this.empresas = empresas;
       }
     );
   }

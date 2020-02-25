@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GestionPersonalComponent } from '../gestionPersonal.component';
 import { ModalCompanyToAudit } from './modalCompanyToAudit.service';
 import { Empresa } from '../../empresa/Empresa';
 import { Router } from '@angular/router';
@@ -16,7 +17,7 @@ export class CompanyToAuditComponent implements OnInit {
 
   private empresa: Empresa = new Empresa();
 
-  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit:ModalCompanyToAudit) { //Este metodo constructor inicializa de forma normal
+  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit:ModalCompanyToAudit,private gestionPersonalComponent: GestionPersonalComponent) { //Este metodo constructor inicializa de forma normal
   }
 
   ngOnInit() {
@@ -26,7 +27,7 @@ export class CompanyToAuditComponent implements OnInit {
     this.companyService.create(this.empresa).subscribe(
       response => {
         Swal.fire('Empresa Registrada', `La creacion de la nueva empresa ha sido un exito`, 'success');
-        this.router.navigate(['/gestionPersonal']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+        this.cerrarModal();
       }, err => {
         Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
       }
@@ -34,6 +35,7 @@ export class CompanyToAuditComponent implements OnInit {
   }
 
   cerrarModal() {
+    this.gestionPersonalComponent.updateCompanies();
     this.modalCompanyToAudit.cerrarModal();
   }
 
