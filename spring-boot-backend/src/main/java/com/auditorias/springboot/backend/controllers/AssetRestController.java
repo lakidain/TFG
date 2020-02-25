@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import com.auditorias.springboot.backend.mapper.AssetMapper;
 import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
+import com.auditorias.springboot.backend.model.Message;
 
 @CrossOrigin(origins= {"http://localhost:4200"}) //CrossOrigin es un porotocolo para comunicar peticiones que se realizan al navegador, desde aqui podemos controlar todo (metodos, direcciones)
 @RestController //Como no va a tener vista
@@ -40,11 +43,37 @@ public class AssetRestController {
 	}
 	
 	/*
+	 *  Modify an audit asset 
+	 */
+	@PutMapping("/assets/{id}")
+	public boolean updateAuditAsset(@RequestBody Audit_Asset auditAsset, @PathVariable Long id){
+		assetMapper.updateAuditAsset(auditAsset);
+		return true;
+	}
+	
+	/*
+	 * Get Threat List related to an Asset
+	 */
+	@GetMapping("assetThreats/{id}")
+	public List<Audit_Threat> assetThreats(@PathVariable Long id){
+		return assetMapper.assetThreats(id);
+	}
+	
+	/*
 	 * Returns a List with all the threats
 	 */
 	@GetMapping("/threats") //Para generar el endpoint
 	public List <Audit_Threat> getAllThreats() {	
 		return assetMapper.findAllThreats();
+	}
+	
+	/*
+	 *  Modify an audit threat 
+	 */
+	@PutMapping("/threats/{id}")
+	public boolean updateAuditThreat(@RequestBody Audit_Threat auditThreat, @PathVariable Long id){
+		assetMapper.updateAuditThreat(auditThreat);
+		return true;
 	}
 	
 	/**
@@ -54,6 +83,33 @@ public class AssetRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public boolean createType(@RequestBody Audit_Type audit_type) {	//Como viene en formato JSON es necesario convertirlo	
 		assetMapper.insertAuditType(audit_type);	//Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
+		return true;	
+	}
+	
+	/*
+	 * Get Assets List related to a type
+	 */
+	@GetMapping("typeAssets/{id}")
+	public List<Audit_Asset> typeAssets(@PathVariable Long id){
+		return assetMapper.typeAssets(id);
+	}
+	
+	/*
+	 *  Modify an audit type 
+	 */
+	@PutMapping("/type/{id}")
+	public boolean updateAuditType(@RequestBody Audit_Type auditType, @PathVariable Long id){
+		assetMapper.updateAuditType(auditType);
+		return true;
+	}
+	
+	/**
+	 * Delete of an audit type
+	 */
+	@DeleteMapping("/type/{id}" )
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deleteType(@PathVariable Long id) {	//Como viene en formato JSON es necesario convertirlo	
+		assetMapper.removeAuditType(id);	//Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;	
 	}
 	
@@ -72,6 +128,16 @@ public class AssetRestController {
 		return true;	
 	}
 	
+	/**
+	 * Delete of an audit asset association
+	 */
+	@DeleteMapping("/assets/{id_audit_asset}/{id_audit_type}" )
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deleteAsset(@PathVariable Long id_audit_asset, @PathVariable Long id_audit_type) {	//Como viene en formato JSON es necesario convertirlo	
+		assetMapper.deleteAsset(id_audit_asset,id_audit_type);	//Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
+		return true;	
+	}
+	
 	/*
 	 * Creation of a Threat
 	 */
@@ -85,6 +151,16 @@ public class AssetRestController {
 		}
 		/* If the field text is not completed we use the select, not need to create the asset, just the association */
 		assetMapper.associateAssetThreat(assetThreat, existingThreat);
+		return true;	
+	}
+	
+	/**
+	 * Delete of an audit threat association
+	 */
+	@DeleteMapping("/threats/{id_audit_threat}/{id_audit_asset}" )
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deleteThreat(@PathVariable Long id_audit_threat, @PathVariable Long id_audit_asset) {	//Como viene en formato JSON es necesario convertirlo	
+		assetMapper.deleteThreat(id_audit_threat,id_audit_asset);	//Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;	
 	}
 	

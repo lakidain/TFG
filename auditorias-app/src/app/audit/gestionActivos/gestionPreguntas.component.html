@@ -4,6 +4,20 @@
   <div class="container">
     <div (click)="infoAuditType()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Tipo de Auditoría</h2>
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col"> Type name </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let auditType of tipoAuditorias">
+          <td scope="row">{{auditType.name_audit_type}}</td>
+          <td><span (click)="modifyAuditType(auditType)"><i class="fas fa-edit"></i></span></td>
+          <td><span (click)="deleteAuditType(auditType)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </tbody>
+    </table>
     <label>
       <p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p>
     </label>
@@ -27,12 +41,26 @@
   <div class="container">
     <div (click)="infoAsset()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Gestion de Activos </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+    <table *ngIf="assetsRelatedToType?.length > 0" class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col"> Asset name </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asset of assetsRelatedToType">
+          <td scope="row">{{asset.name_audit_asset}}</td>
+          <td><span (click)="modifyAuditAsset(asset)"><i class="fas fa-edit"></i></span></td>
+          <td><span (click)="deleteAuditAsset(asset)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </tbody>
+    </table>
     <form (ngSubmit)="assetSend()" #createAsset="ngForm">
       <label>
         <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
       </label>
       <div class="form-group">
-        <select id="auditType" name="id_audit_type" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
+        <select id="auditType" name="id_audit_type" (change)="updateAssetsRelatedToType()" [(ngModel)]="dtoAssetCreation.id_audit_type" class="form-control" required #dtoAssetCreationTypeError="ngModel">
           <option *ngFor="let auditType of tipoAuditorias" value="{{auditType.id_audit_type}}">{{auditType.name_audit_type}}</option>
         </select>
         <!-- Error Audit Type Selection div-->
@@ -47,7 +75,7 @@
           <p><i class="fas fa-tools"></i><b> Asociar el Activo</b></p>
         </label>
         <div class="form-group">
-          <select id="auditAsset" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
+          <select id="auditAsset1" name="id_audit_asset" [(ngModel)]="dtoAssetCreation.id_audit_asset" class="form-control">
             <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
           </select>
         </div>
@@ -64,12 +92,26 @@
   <div class="container">
     <div (click)="infoThreat()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Threats Management </h2> <!-- Dar la opcion de seleccionar uno existente o crear uno nuevo-->
+    <table *ngIf="threatsRelatedToAsset?.length > 0" class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col"> Threat name </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let threat of threatsRelatedToAsset">
+          <td scope="row">{{threat.name_audit_threat}}</td>
+          <td><span (click)="modifyAuditThreat(threat)"><i class="fas fa-edit"></i></span></td>
+          <td><span (click)="deleteAuditThreat(threat)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </tbody>
+    </table>
     <form (ngSubmit)="threatSend()" #createAsset="ngForm">
       <label>
         <p><i class="fas fa-tools"></i><b> Select the Asset </b></p>
       </label>
       <div class="form-group">
-        <select id="auditAsset" name="id_audit_asset" [(ngModel)]="assetThreat" class="form-control">
+        <select id="auditAsset2" (change)="updateThreatsRelatedToAsset()" name="id_audit_asset" [(ngModel)]="assetThreat" class="form-control">
           <option *ngFor="let auditAsset of assetsToAudit" value="{{auditAsset.id_audit_asset}}">{{auditAsset.name_audit_asset}}</option>
         </select>
       </div>
@@ -100,7 +142,7 @@
         <p><i class="fas fa-exclamation-triangle"></i><b> Select the Threat </b></p>
       </label>
       <div class="form-group">
-        <select id="auditAsset" name="id_audit_threat" [(ngModel)]="threatVulnerability" class="form-control">
+        <select id="auditAsset3" name="id_audit_threat" [(ngModel)]="threatVulnerability" class="form-control">
           <option *ngFor="let auditThreat of threatsToAudit" value="{{auditThreat.id_audit_threat}}">{{auditThreat.name_audit_threat}}</option>
         </select>
       </div>
@@ -129,12 +171,24 @@
     <form (ngSubmit)="questionSend()">
       <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
       <label>
-        <p><i class="fas fa-bullseye"></i><b> Select the vulnerability</b></p>
+        <p><i class="fas fa-exclamation-triangle"></i><b> Select the Threat </b></p>
       </label>
       <div class="form-group">
-        <select id="auditAsset" name="id_audit_asset" [(ngModel)]="vulnerabilityQuestion" class="form-control">
-          <option *ngFor="let auditVulnerability of vulnerabilitiesToAudit" value="{{auditVulnerability.id_audit_vulnerability}}">{{auditVulnerability.name_audit_vulnerability}}</option>
+        <select id="auditAsset4" name="id_audit_threat" [(ngModel)]="threatVulnerability" class="form-control">
+          <option *ngFor="let auditThreat of threatsToAudit" value="{{auditThreat.id_audit_threat}}">{{auditThreat.name_audit_threat}}</option>
         </select>
+      </div>
+      <div class="sameQuestionContainer">
+        <label>
+          <p><i class="fas fa-bullseye"></i><b> Associate the vulnerability </b></p>
+        </label>
+        <div class="form-group">
+          <select id="existingVulnerability" name="id_audit_threat" [(ngModel)]="existingVulnerability" class="form-control">
+            <option *ngFor="let auditVulnerability of vulnerabilitiesToAudit" value="{{auditVulnerability.id_audit_vulnerability}}">{{auditVulnerability.name_audit_vulnerability}}</option>
+          </select>
+        </div>
+        <p><b>Or create a new one (if filled this field will be used)</b></p>
+        <input type="text" class="form-control" placeholder="New vulnerability" [(ngModel)]="newVulnerability" name="newVulnerability" /> <br />
       </div>
       <!-- QUESTION CREATION-->
       <div class="sameQuestionContainer">
@@ -242,3 +296,7 @@
 <div *ngIf="!authService.hasRole('ROLE_ADMIN')">
   <h1 style="color:red"> No dispone de privilegios para acceder </h1>
 </div>
+
+<app-auditTypeModify [auditType]="modifiedAuditType"></app-auditTypeModify>
+<app-auditAssetModify [auditAsset]="modifiedAsset"></app-auditAssetModify>
+<app-auditThreatModify [auditThreat]="modifiedThreat"></app-auditThreatModify>

@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Usuario } from '../usuario/login/usuario';
-import { Empresa } from '../empresa/empresa';
+import { Empresa } from '../empresa/Empresa';
 import { DtoPassword } from '../dto/dtoPassword';
 
 import { PerfilUsuarioService } from './perfilUsuario.service';
 import { UsuarioService } from '../usuario/login/usuario.service';
 import { AuthService } from '../usuario/login/auth.service';
+
+/* Modals */
+import { ModalModifyCompany } from './perfilUsuarioModals/modalModifyCompany.service';
 
 @Component({
   selector: 'app-perfil',
@@ -21,6 +24,9 @@ export class PerfilUsuarioComponent {
   usuario: Usuario;
   empresas: Empresa[];
 
+  /* Company of the worker */
+  empresaModify: Empresa;
+
   /* Parameters for the password change */
   dtoPassword: DtoPassword;
   newPassword: string;
@@ -29,16 +35,30 @@ export class PerfilUsuarioComponent {
   /* Parameter for the company change */
   seleccionEmpresa: number;
 
-  constructor(private authService: AuthService, private perfilUsuarioService: PerfilUsuarioService, private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  constructor(private authService: AuthService, private perfilUsuarioService: PerfilUsuarioService, private usuarioService: UsuarioService, private router: Router, private modalModifyCompany: ModalModifyCompany) { //Este metodo constructor inicializa de forma normal
     this.usuario = authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
+    this.empresaModify = new Empresa;
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento
+    this.userCompany();
     this.perfilUsuarioService.getEmpresas().subscribe(
       empresas => {
         this.empresas = empresas;
       }
     );
+  }
+
+  userCompany(){
+    this.perfilUsuarioService.getCompany(this.usuario.id_company).subscribe(
+      company => {
+        this.empresaModify = company;
+      }
+    );
+  }
+
+  modifyCompany(){
+    this.modalModifyCompany.abrirModal();
   }
 
   updateUsuario(): void {

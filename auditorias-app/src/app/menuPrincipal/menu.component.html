@@ -15,7 +15,7 @@
 	-->
 		<br />
 		<!-- ./col -->
-		<div *ngIf="!authService.hasRole('ROLE_ADMIN')" class="col-xl-12 col-12">
+		<div *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()" class="col-xl-12 col-12">
 			<!-- small card -->
 			<div class="small-box bg-warning">
 				<div class="inner">

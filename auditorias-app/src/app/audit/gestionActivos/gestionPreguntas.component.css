@@ -31,6 +31,15 @@ h2 {
   text-align: right;
 }
 
+/* Modify and Delete */
+.fa-trash-alt:hover{
+  cursor:pointer;
+}
+
+.fa-edit:hover{
+  cursor:pointer;
+}
+
 /* Question mark info */
 .fa-question-circle {
   opacity: 0.6;

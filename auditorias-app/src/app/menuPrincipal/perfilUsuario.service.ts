@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 export class PerfilUsuarioService {
 
   private urlEndPointEmpresas: string = 'http://localhost:8080/api/empresasAuditing';
+  private urlEndPointGetCompany: string = 'http://localhost:8080/api/empresa';
 
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 
@@ -16,6 +17,11 @@ export class PerfilUsuarioService {
   /* Metodo que devuelve las empresas posibles para auditar*/
   getEmpresas(): Observable<Empresa[]> { //Para que las peticiones sean asincronas hay que implementar observable que hace que nuestro arreglo sea un stream
     return this.http.get<Empresa[]>(this.urlEndPointEmpresas); //El servicio rest devuelve un json de tipo any por lo que tendremos que castearlo al tipo que necesitamos
+  }
+
+  /* Get company info */
+  getCompany(id_company:number): Observable <Empresa>{
+    return this.http.get<Empresa>(this.urlEndPointGetCompany+"/"+id_company);
   }
 
 }

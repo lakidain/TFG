@@ -8,14 +8,6 @@
   z-index: 1000;
 }
 
-.btnSubmit {
-  width: 50%;
-  border-radius: 1rem;
-  padding: 1.5%;
-  border: none;
-  cursor: pointer;
-}
-
-h4{
-  text-align: center;
+.modal{
+  overflow: auto;
 }

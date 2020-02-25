@@ -21,10 +21,14 @@ import { CitaModifyComponent } from './audit/cita/citaMostrarModals/modifyCita.c
 import { MessageModifyComponent } from './audit/cita/citaMostrarModals/modifyMessage.component';
 import { EmployeeAddComponent } from './audit/cita/employeeAdd.component';
 import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.component';
+import { AuditTypeModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditType/modifyAuditType.component';
+import { AuditThreatModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditThreat/modifyAuditThreat.component';
+import { AuditAssetModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditAsset/modifyAuditAsset.component';
 import { GestionPersonalComponent } from './menuPrincipal/gestionPersonal.component';
 import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
 import { AuditModifyComponent } from './menuPrincipal/companyToAudit/modifyAudit.component';
 import { PerfilUsuarioComponent } from './menuPrincipal/perfilUsuario.component';
+import { CompanyModifyComponent } from './menuPrincipal/perfilUsuarioModals/modifyCompany.component';
 import { LoginComponent } from './usuario/login/login.component';
 import { RegistroComponent } from './usuario/registro/registro.component';
 import { HeaderComponent } from './header/header.component';
@@ -81,7 +85,11 @@ const routes: Routes = [
     CitaModifyComponent,
     EmployeeAddComponent,
     GestionPreguntas,
+    AuditTypeModifyComponent,
+    AuditThreatModifyComponent,
+    AuditAssetModifyComponent,
     GestionPersonalComponent,
+    CompanyModifyComponent,
     AuditModifyComponent,
     CompanyToAuditComponent,
     PerfilUsuarioComponent,

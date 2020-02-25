@@ -14,6 +14,11 @@ import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.serv
 import { GestionPreguntasService } from './gestionPreguntas.service';
 import { AuthService } from '../../usuario/login/auth.service';
 
+/* Import Modals */
+import { ModalModifyAuditType } from './gestionPreguntasModals/modifyAuditType/modalModifyAuditType.service';
+import { ModalModifyAuditAsset } from './gestionPreguntasModals/modifyAuditAsset/modalModifyAuditAsset.service';
+import { ModalModifyAuditThreat } from './gestionPreguntasModals/modifyAuditThreat/modalModifyAuditThreat.service';
+
 @Component({
   selector: 'app-questions',
   /*template: ` CODIGO ` TAMBIEN podemos gacer templateUrl y le creamos una vista*/
@@ -25,19 +30,26 @@ export class GestionPreguntas {
 
   auditAsset: AuditAsset;
   answerNumber: string;
+
   /* Type Management */
   auditType: AuditType;
+  modifiedAuditType: AuditType;
   tipoAuditorias: AuditType[];
 
   /* Assets Management */
   dtoAssetCreation: DtoAssetCreation;
   assetsToAudit: AuditAsset[];
+  assetsRelatedToType: AuditAsset[];
+  deleteAsset: DtoAssetCreation;
+  modifiedAsset: AuditAsset;
 
   /* Threats Management */
   newThreat: string;
   assetThreat: number;
   existingThreat: number;
   threatsToAudit: AuditThreat[];
+  threatsRelatedToAsset: AuditThreat[];
+  modifiedThreat: AuditThreat;
 
   /* Vulnerability Management */
   newVulnerability: string;
@@ -62,10 +74,12 @@ export class GestionPreguntas {
   questionsToAudit: AuditQuestion[];
   answersToAudit: AuditAnswer[];
 
-  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService:AuthService) {
+  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService:AuthService, private modalModifyAuditType:ModalModifyAuditType,
+  private modalModifyAuditThreat: ModalModifyAuditThreat, private modalModifyAuditAsset: ModalModifyAuditAsset) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();
+    this.deleteAsset = new DtoAssetCreation();
     this.answerNumber = "five";
     this.existingThreat = 0;
     this.existingVulnerability=0;
@@ -75,6 +89,7 @@ export class GestionPreguntas {
     this.existingNewThirdAnswer=0;
     this.existingNewFourthAnswer=0;
     this.existingNewFifthtAnswer=0;
+    this.assetsRelatedToType = [];
   }
 
   ngOnInit() {
@@ -89,6 +104,22 @@ export class GestionPreguntas {
     this.gestionPersonalService.getAuditTypes().subscribe(
       types => {
         this.tipoAuditorias = types;
+      }
+    );
+  }
+
+  updateAssetsRelatedToType(){
+    this.gestionPreguntasService.getAssetsRelatedToType(this.dtoAssetCreation.id_audit_type).subscribe(
+      assets => {
+        this.assetsRelatedToType = assets;
+      }
+    );
+  }
+
+  updateThreatsRelatedToAsset(){
+    this.gestionPreguntasService.updateThreatsRelatedToAsset(this.assetThreat).subscribe(
+      threats => {
+        this.threatsRelatedToAsset = threats;
       }
     );
   }
@@ -143,6 +174,27 @@ export class GestionPreguntas {
     );
   }
 
+  /* Modify of Audit Type */
+  modifyAuditType(auditType: AuditType){
+    this.modifiedAuditType = auditType;
+    this.modalModifyAuditType.abrirModal();
+  }
+
+  /* Delete of Audit Type */
+  deleteAuditType(auditType: AuditType){
+    if(confirm("Are you sure you want to delete the Audit type? Information can be lost in the process")){
+      this.gestionPreguntasService.deleteAuditType(auditType).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+        Swal.fire('Success deleting Audit Type', 'Audit Type deleted', 'success');
+        this.updateAuditTypes();
+      }, err => {
+        if (err.status == 400 || err.status == 401 || err.status == 500) {
+          Swal.fire('Error removing Audit Type', 'Try again later', 'error');
+        }
+      }
+      );
+    }
+  }
+
   /* Creation of Assets */
   assetSend() {
     if (!this.dtoAssetCreation.name_audit_asset) {
@@ -151,12 +203,36 @@ export class GestionPreguntas {
     this.gestionPreguntasService.createAsset(this.dtoAssetCreation).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       Swal.fire('Exito al crear el activo', 'El activo ha sido creado con exito', 'success');
       this.updateAuditAssets();
+      this.updateAssetsRelatedToType();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
         Swal.fire('Error al crear el tipo de activo', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
       }
     }
     );
+  }
+
+  /* Modify Asset */
+  modifyAuditAsset(asset: AuditAsset){
+    this.modifiedAsset = asset;
+    this.modalModifyAuditAsset.abrirModal();
+  }
+
+  /* Delete Asset relation */
+  deleteAuditAsset(asset: AuditAsset){
+    this.deleteAsset.id_audit_asset=asset.id_audit_asset;
+    this.deleteAsset.id_audit_type=this.dtoAssetCreation.id_audit_type;
+    if(confirm("Are you sure you want to delete the Audit Asset relation? Information can be lost in the process")){
+      this.gestionPreguntasService.deleteAuditAsset(this.deleteAsset).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+        Swal.fire('Success deleting Audit Type', 'Audit Type deleted', 'success');
+        this.updateAssetsRelatedToType();
+      }, err => {
+        if (err.status == 400 || err.status == 401 || err.status == 500) {
+          Swal.fire('Error removing Audit Type', 'Try again later', 'error');
+        }
+      }
+      );
+    }
   }
 
   /* Creation of threats */
@@ -167,12 +243,34 @@ export class GestionPreguntas {
     this.gestionPreguntasService.createThreat(this.newThreat, this.assetThreat, this.existingThreat).subscribe(response => {
       Swal.fire('Exito al crear la amenaza', 'La amenaza ha sido creada con exito', 'success');
       this.updateAuditThreats();
+      this.updateThreatsRelatedToAsset();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
         Swal.fire('Error al crear la amenaza', 'Vuelva a a crearla', 'error');
       }
     }
     );
+  }
+
+  /* Modify Threat */
+  modifyAuditThreat(threat: AuditThreat){
+    this.modifiedThreat = threat;
+    this.modalModifyAuditThreat.abrirModal();
+  }
+
+  /* Delete Threat Association */
+  deleteAuditThreat(threat: AuditThreat){
+    if(confirm("Are you sure you want to delete the Audit Threat relation? Information can be lost in the process")){
+      this.gestionPreguntasService.deleteAuditThreat(threat.id_audit_threat, this.assetThreat).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+        Swal.fire('Success deleting Audit Threat Relation', 'Audit Threat relation deleted', 'success');
+        this.updateThreatsRelatedToAsset();
+      }, err => {
+        if (err.status == 400 || err.status == 401 || err.status == 500) {
+          Swal.fire('Error removing Audit Threat Relation', 'Try again later', 'error');
+        }
+      }
+      );
+    }
   }
 
   /* Creation of vulnerability */

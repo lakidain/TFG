@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Message;
 
 @Mapper

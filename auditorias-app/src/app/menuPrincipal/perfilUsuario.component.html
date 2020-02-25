@@ -7,6 +7,19 @@
     <p><b><i class="fas fa-passport"></i> DNI:</b> {{usuario.username}} </p>
     <p><b><i class="fas fa-envelope"></i> Email:</b> {{usuario.email_user}}</p>
     <p><b><i class="fas fa-phone"></i> Phone:</b> {{usuario.phone_user}}</p>
+  </div> <br />
+  <div *ngIf="authService.hasRole('ROLE_AUDITORBOSS') || authService.hasRole('ROLE_AUDITEDBOSS')">
+    <hr class="thin">
+    <h4><span (click)="modifyCompany()"><i class="fas fa-edit floatRight"></i></span></h4>
+    <h2>Datos empresa</h2>
+    <div class="datosPersonales">
+      <p><b><i class="fas fa-signature"></i> Company Name:</b> {{empresaModify.name_company}}</p>
+      <p><b><i class="fas fa-id-badge"></i> CIF:</b> {{empresaModify.cif_company}} </p>
+      <p><b><i class="fas fa-fax"></i> Business Name:</b> {{empresaModify.business_name_company}}</p>
+      <p><b><i class="fas fa-map-marker-alt"></i> Adress:</b> {{empresaModify.adress_company}}</p>
+      <p><b><i class="fas fa-envelope"></i> Email:</b> {{empresaModify.email_company}}</p>
+      <p><b><i class="fas fa-phone"></i> Phone:</b> {{empresaModify.phone_company}}</p>
+    </div>
   </div>
 </div>
 
@@ -87,25 +100,29 @@
     </div>
   </form>
 
-  <hr class="thin">
+  <div *ngIf="authService.hasRole('ROLE_AUDITOR')">
+    <hr class=" thin">
 
-  <h3>Cambio de empresa</h3>
+    <h3>Cambio de empresa</h3>
 
-  <form (ngSubmit)="updateCompany()" #updateCompanyForm="ngForm">
-    <label><b><i class="fas fa-building"></i> Company</b></label>
-    <div class="form-group">
-      <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control" required #seleccionEmpresaError="ngModel">
-        <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
-      </select>
-      <!-- Error Company Change div-->
-      <div class="alert alert-danger" *ngIf="newPasswordError.invalid && (newPasswordError.dirty || newPasswordError.touched)">
-        <div *ngIf="newPasswordError.errors.required">
-          Company to change is required
+    <form (ngSubmit)="updateCompany()" #updateCompanyForm="ngForm">
+      <label><b><i class="fas fa-building"></i> Company</b></label>
+      <div class="form-group">
+        <select id="empresa" name="empresa" [(ngModel)]="seleccionEmpresa" class="form-control" required #seleccionEmpresaError="ngModel">
+          <option *ngFor="let empresa of empresas" value="{{empresa.id_company}}">{{empresa.name_company}}</option>
+        </select>
+        <!-- Error Company Change div-->
+        <div class="alert alert-danger" *ngIf="newPasswordError.invalid && (newPasswordError.dirty || newPasswordError.touched)">
+          <div *ngIf="newPasswordError.errors.required">
+            Company to change is required
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Cambio de empresa" /> <br />
-    </div>
-  </form>
+      <div class="form-group">
+        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Cambio de empresa" /> <br />
+      </div>
+    </form>
+  </div>
 </div>
+
+<app-CompanyModify [company]="empresaModify"></app-CompanyModify>

@@ -1,0 +1,22 @@
+<div class="abrirModal" *ngIf="modalModifyAuditThreat.modal">
+  <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modify Audit Threat</h5>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" [(ngModel)]="auditThreat.name_audit_threat" placeholder="New Name" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="modificarAuditThreat()" type="button" class="btn btn-warning">Save Changes</button>
+          <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

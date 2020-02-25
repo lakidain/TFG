@@ -14,7 +14,9 @@ import { DtoAssetCreation } from '../../dto/dtoAssetCreation';
 export class GestionPreguntasService {
 
   private urlEndPointAuditAssets: string = 'http://localhost:8080/api/assets';
+  private urlEndPointThreatsRelatedToAsset: string = 'http://localhost:8080/api/assetThreats';
   private urlEndPointCreateAuditType: string = 'http://localhost:8080/api/type';
+  private urlEndPointAssetsRelatedToType: string = 'http://localhost:8080/api/typeAssets';
   private urlEndPointAuditThreats: string = 'http://localhost:8080/api/threats';
   private urlEndPointAuditVulnerability: string = 'http://localhost:8080/api/vulnerabilities';
   private urlEndPointAuditQuestions: string = 'http://localhost:8080/api/questions';
@@ -29,9 +31,19 @@ export class GestionPreguntasService {
     return this.http.get<AuditAsset[]>(this.urlEndPointAuditAssets);
   }
 
+  /* Returns Assets associated with an Audit Type */
+  getAssetsRelatedToType(id_audit_type:number): Observable <AuditAsset[]>{
+    return this.http.get<AuditAsset[]>(this.urlEndPointAssetsRelatedToType+"/"+id_audit_type);
+  }
+
   /* Returns existing threats */
   getAuditThreats(): Observable<AuditThreat[]> {
     return this.http.get<AuditThreat[]>(this.urlEndPointAuditThreats);
+  }
+
+  /* Returns Threats associated with an Audit Asset*/
+  updateThreatsRelatedToAsset(id_audit_asset:number): Observable<AuditThreat[]>{
+    return this.http.get<AuditThreat[]>(this.urlEndPointThreatsRelatedToAsset+"/"+id_audit_asset);
   }
 
   /* Returns existing vulnerabilities */
@@ -54,9 +66,19 @@ export class GestionPreguntasService {
     return this.http.post<any>(this.urlEndPointCreateAuditType, auditType, { headers: this.httpHeaders });
   }
 
+  /* Delete Audit Type */
+  deleteAuditType(auditType: AuditType): Observable<any>{
+    return this.http.delete<any>(this.urlEndPointCreateAuditType+"/"+auditType.id_audit_type, {headers: this.httpHeaders});
+  }
+
   /* Creation Audit asset */
   createAsset(dtoAssetCreation: DtoAssetCreation): Observable<any> {
     return this.http.post<any>(this.urlEndPointAuditAssets, dtoAssetCreation, { headers: this.httpHeaders });
+  }
+
+  /* Delete Audit Asset Relation */
+  deleteAuditAsset(auditAsset: DtoAssetCreation): Observable<any>{
+    return this.http.delete<any>(this.urlEndPointAuditAssets+"/"+auditAsset.id_audit_asset+"/"+auditAsset.id_audit_type, {headers: this.httpHeaders});
   }
 
   /* Creation Audit Threat */
@@ -66,6 +88,11 @@ export class GestionPreguntasService {
     formData.append("assetThreat", assetThreat); /* Al no tipar el dato podemos pasarlo como si fuera un String aunque sea un numero */
     formData.append("existingThreat", existingThreat);
     return this.http.post<any>(this.urlEndPointAuditThreats, formData);
+  }
+
+  /* Delete Audit Threat */
+  deleteAuditThreat(id_audit_threat: number, id_audit_asset: number):Observable<any>{
+    return this.http.delete<any>(this.urlEndPointAuditThreats+"/"+id_audit_threat+"/"+id_audit_asset, {headers: this.httpHeaders});
   }
 
   /* Creation Audit Question with Answers */

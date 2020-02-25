@@ -33,7 +33,6 @@ public class QuestionRestController {
 	 */
 	@GetMapping("/questions") //Para generar el endpoint
 	public List <Audit_Question> getAllThreats() {	
-		System.out.print("Ejecutando");
 		return questionMapper.findAllQuestions();
 	}
 

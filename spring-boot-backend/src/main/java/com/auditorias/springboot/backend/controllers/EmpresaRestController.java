@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,6 +27,18 @@ public class EmpresaRestController {
 
 	public EmpresaRestController(EmpresaMapper empresaMapper) {
 		this.empresaMapper = empresaMapper;
+	}
+	
+	@GetMapping("/empresa/{id}") // Para generar el endpoint
+	public Empresa getCompany(@PathVariable Long id) {
+		return empresaMapper.getCompanyName(id).get(0);
+	}
+	
+	/* Modify a Company */
+	@PutMapping("/empresa/{id}")
+	public boolean updateMessage(@RequestBody Empresa empresa, @PathVariable Long id){
+		empresaMapper.updateEmpresa(empresa);
+		return true;
 	}
 
 	@GetMapping("/empresasAuditing") // Para generar el endpoint

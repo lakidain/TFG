@@ -12,7 +12,6 @@
           <div class="container login-container">
             <div class="row align-middle">
               <div class="col-md-8 register-form-1 mx-auto" align="center">
-                <h3>Registro de nueva empresa</h3>
                 <form (ngSubmit)="create()" #registerForm="ngForm">
                   <!-- Name company-->
                   <div class="form-group">
@@ -81,7 +80,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <input type="submit" class="btnSubmit btn" value="Crear" [disabled]="!registerForm.form.valid" />
+                    <input type="submit" class="btnSubmit btn btn-warning" value="Crear" [disabled]="!registerForm.form.valid" />
                   </div>
                 </form>
               </div>

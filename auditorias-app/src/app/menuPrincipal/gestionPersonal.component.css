@@ -53,3 +53,11 @@ h2 {
 .fa-trash-alt:hover{
   cursor:pointer;
 }
+
+.link{
+  color: #0000FF !important;
+}
+
+.link:hover{
+  cursor:pointer;
+}

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.auditorias.springboot.backend.model.Empresa;
+import com.auditorias.springboot.backend.model.Message;
 
 @Mapper
 public interface EmpresaMapper {
@@ -23,6 +24,12 @@ public interface EmpresaMapper {
 	
 	@Select("select * from asi_companies where id_company=#{id}")
 	List<Empresa> getCompanyName(Long id);
+	
+	/*
+	 * Updates a Company
+	 */
+	@Update("update asi_companies set cif_company=#{cif_company},business_name_company=#{business_name_company},adress_company=#{adress_company},email_company=#{email_company},phone_company=#{phone_company} where id_company=#{id_company}")
+	void updateEmpresa(Empresa empresa);
 	
 	@Insert("insert into asi_companies(name_company,cif_company,business_name_company,adress_company,email_company,phone_company,id_user_boss,type_company) values(#{name_company},'-','-','-','-','-',#{id},1)")
 	void insertAuditCompany(Long id, String name_company);

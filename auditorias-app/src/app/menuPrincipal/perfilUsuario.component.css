@@ -24,3 +24,12 @@ h2 {
 .datosPersonales {
   text-align: left;
 }
+
+.fa-edit:hover{
+  cursor:pointer;
+}
+
+.floatRight{
+  float:right;
+  margin-right: 1em;
+}
