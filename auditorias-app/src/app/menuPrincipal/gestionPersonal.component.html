@@ -79,7 +79,7 @@
   <div class="container">
     <div (click)="infoEmployeeTable()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Panel de Empleados </h2>
-    <table class="table table-bordered table-striped text-center"> <!-- table-responsive -->
+    <table *ngIf="empleados.length > 0" class="table table-bordered table-striped text-center"> <!-- table-responsive -->
       <thead>
         <tr>
           <th scope="col"><i class="fas fa-sort-numeric-down"></i> Id</th>
@@ -92,7 +92,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let empleado of empleados">
+        <tr *ngFor="let empleado of empleados | paginate: { itemsPerPage: 5, currentPage: pageEmployees , id:'first'}">
           <td scope="row">{{empleado.id}}</td>
           <td>{{empleado.name_user}}</td>
           <td>{{empleado.username}}</td>
@@ -107,10 +107,11 @@
           </td>
         </tr>
       </tbody>
-    </table> <br />
+    </table>
+    <pagination-controls *ngIf="empleados.length > 0" (pageChange)="pageEmployees = $event" id="first"></pagination-controls><br />
     <!-- Show every audit for the company -->
     <h2>Panel de Auditorias</h2>
-    <table class="table table-bordered table-striped text-center">
+    <table *ngIf="auditList.length > 0" class="table table-bordered table-striped text-center">
       <thead>
         <tr>
           <th scope="col"> Name employee </th>
@@ -121,7 +122,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let audit of auditList">
+        <tr *ngFor="let audit of auditList | paginate: { itemsPerPage: 5, currentPage: pageAudits , id:'second'}">
           <td scope="row">{{audit.name_user_manager}}</td>
           <td>{{audit.name_company}}</td>
           <td>{{audit.name_audit_type}}</td>
@@ -131,7 +132,8 @@
           <td><span (click)="deleteAudit(audit)"><i class="fas fa-trash-alt"></i></span></td>
         </tr>
       </tbody>
-    </table> <br />
+    </table>
+    <pagination-controls *ngIf="auditList.length > 0" (pageChange)="pageAudits = $event" id="second"></pagination-controls><br />
   </div>
 </div>
 <div *ngIf="!authService.hasRole('ROLE_AUDITORBOSS')">

@@ -42,11 +42,15 @@ export class CitaMostrarComponent implements OnInit {
   /* Message Modify Parameter */
   messageClicked: Message;
 
+  /* Pagination */
+  p: number = 1;
+
   constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent, private modalModifyCita: ModalModifyCita,
   private modalModifyMessage: ModalModifyMessage) {
     this.usuario = authService.usuario;
     this.message = new Message();
     this.messageClicked = new Message();
+    this.messagesList = [];
   }
 
   ngOnInit(): void {
@@ -100,6 +104,7 @@ export class CitaMostrarComponent implements OnInit {
   ngOnChanges() { //Este componente es cuando se inicia el evento
     this.updateMessages();
     this.mostrarFotos();
+    this.p=1;
   }
 
   modifyAppointment() {

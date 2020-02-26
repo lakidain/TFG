@@ -4,20 +4,21 @@
   <div class="container">
     <div (click)="infoAuditType()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Tipo de Auditoría</h2>
-    <table class="table table-bordered table-striped text-center">
+    <table *ngIf="tipoAuditorias.length > 0" class="table table-bordered table-striped text-center">
       <thead>
         <tr>
           <th scope="col"> Type name </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let auditType of tipoAuditorias">
+        <tr *ngFor="let auditType of tipoAuditorias | paginate: { itemsPerPage: 5, currentPage: pageAuditType , id:'first'}">
           <td scope="row">{{auditType.name_audit_type}}</td>
           <td><span (click)="modifyAuditType(auditType)"><i class="fas fa-edit"></i></span></td>
           <td><span (click)="deleteAuditType(auditType)"><i class="fas fa-trash-alt"></i></span></td>
         </tr>
       </tbody>
     </table>
+    <pagination-controls *ngIf="tipoAuditorias.length > 0" (pageChange)="pageAuditType = $event" id="first"></pagination-controls>
     <label>
       <p><i class="fas fa-file-signature"></i><b> Introducir nuevo tipo de Auditoría</b></p>
     </label>
@@ -48,13 +49,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let asset of assetsRelatedToType">
+        <tr *ngFor="let asset of assetsRelatedToType | paginate: { itemsPerPage: 5, currentPage: pageAssets , id:'second'}">
           <td scope="row">{{asset.name_audit_asset}}</td>
           <td><span (click)="modifyAuditAsset(asset)"><i class="fas fa-edit"></i></span></td>
           <td><span (click)="deleteAuditAsset(asset)"><i class="fas fa-trash-alt"></i></span></td>
         </tr>
       </tbody>
     </table>
+    <pagination-controls *ngIf="assetsRelatedToType?.length > 0" (pageChange)="pageAssets = $event" id="second"></pagination-controls>
     <form (ngSubmit)="assetSend()" #createAsset="ngForm">
       <label>
         <p><i class="fas fa-file-signature"></i><b> Seleccione el tipo de Auditoría</b></p>
@@ -99,13 +101,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let threat of threatsRelatedToAsset">
+        <tr *ngFor="let threat of threatsRelatedToAsset | paginate: { itemsPerPage: 5, currentPage: pageThreats , id:'third'}">
           <td scope="row">{{threat.name_audit_threat}}</td>
           <td><span (click)="modifyAuditThreat(threat)"><i class="fas fa-edit"></i></span></td>
           <td><span (click)="deleteAuditThreat(threat)"><i class="fas fa-trash-alt"></i></span></td>
         </tr>
       </tbody>
     </table>
+    <pagination-controls *ngIf="threatsRelatedToAsset?.length > 0" (pageChange)="pageThreats = $event" id="third"></pagination-controls>
     <form (ngSubmit)="threatSend()" #createAsset="ngForm">
       <label>
         <p><i class="fas fa-tools"></i><b> Select the Asset </b></p>

@@ -58,6 +58,10 @@ export class AuditoriasComponent {
     //{ title: 'event 1', date: '2020-01-01' } EJEMPLO FORMATO
   ];
 
+  /* Paginate inizialization */
+  pageAppointment: number = 1;
+  pageEmployees: number = 1;
+
   constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire:ModalQuestionnaire) {
     this.usuario = authService.usuario;
     this.auditEmployees = [];

@@ -37,14 +37,17 @@
             <th scope="col">Date</th>
             <th scope="col">State</th>
             <th scope="col">Delete</th>
-          <tr *ngFor="let appointment of auditAppointments">
+          <tr *ngFor="let appointment of auditAppointments | paginate: { itemsPerPage: 3, currentPage: pageAppointment , id:'first'}">
             <td class="appointmentRow" (click)="abrirModalCita(appointment)">{{appointment.name_appointment}}</td>
             <td>{{appointment.date_appointment | date}}</td>
-            <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td> <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
-            <td class="hoverable" (click)="deleteAppointment(appointment)" *ngIf="appointment.state_appointment===0"><i class="fas fa-trash-alt"></i> </td> <td *ngIf="appointment.state_appointment===1"> - </td>
+            <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td>
+            <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
+            <td class="hoverable" (click)="deleteAppointment(appointment)" *ngIf="appointment.state_appointment===0"><i class="fas fa-trash-alt"></i> </td>
+            <td *ngIf="appointment.state_appointment===1"> - </td>
           </tr>
         </tbody>
       </table>
+      <pagination-controls *ngIf="auditAppointments.length > 0" (pageChange)="pageAppointment = $event" id="first"></pagination-controls>
     </div>
   </div>
 
@@ -63,15 +66,19 @@
               <th scope="col">Questionnaire</th>
               <th scope="col">Report</th>
               <th scope="col">Eliminar</th>
-            <tr *ngFor="let employee of auditEmployees">
+            <tr *ngFor="let employee of auditEmployees | paginate: { itemsPerPage: 3, currentPage: pageEmployees , id:'second'}">
               <td>{{employee.username}}</td>
-              <td *ngIf="employee.appointment_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateAppointment(employee)"></td> <td *ngIf="employee.appointment_permit_audit_employees===1"><input type="checkbox" (click)="deActivateAppointment(employee)" checked></td>
-              <td *ngIf="employee.questionnaire_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateQuestionnaire(employee)"></td> <td *ngIf="employee.questionnaire_permit_audit_employees===1"><input type="checkbox" (click)="deActivateQuestionnaire(employee)" checked></td>
-              <td *ngIf="employee.report_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateReport(employee)"></td> <td *ngIf="employee.report_permit_audit_employees===1"><input type="checkbox" (click)="deActivateReport(employee)" checked></td>
+              <td *ngIf="employee.appointment_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateAppointment(employee)"></td>
+              <td *ngIf="employee.appointment_permit_audit_employees===1"><input type="checkbox" (click)="deActivateAppointment(employee)" checked></td>
+              <td *ngIf="employee.questionnaire_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateQuestionnaire(employee)"></td>
+              <td *ngIf="employee.questionnaire_permit_audit_employees===1"><input type="checkbox" (click)="deActivateQuestionnaire(employee)" checked></td>
+              <td *ngIf="employee.report_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateReport(employee)"></td>
+              <td *ngIf="employee.report_permit_audit_employees===1"><input type="checkbox" (click)="deActivateReport(employee)" checked></td>
               <td class="hoverable" (click)="deleteEmployeeFromAppointment(employee)"><i class="fas fa-trash-alt"></i></td>
             </tr>
           </tbody>
         </table>
+        <pagination-controls *ngIf="auditEmployees.length > 0" (pageChange)="pageEmployees = $event" id="second"></pagination-controls>
       </div>
     </div>
   </div>

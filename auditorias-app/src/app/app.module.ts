@@ -47,6 +47,7 @@ import { CitaService } from './audit/cita/cita.service';
 /* EXTRAS */
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 import { NgxGalleryModule } from 'ngx-gallery'; //for gallery
+import { NgxPaginationModule } from 'ngx-pagination'; //for pagination
 
 export class CustomHammerConfig extends HammerGestureConfig  {  /* Needed for Gallery */
    overrides = {
@@ -98,9 +99,10 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes), //Aqui le metemos el arreglo que creamos arriba que mapeaba
-    NgxGalleryModule,
+    NgxGalleryModule, //for Gallery
     FormsModule,
     FullCalendarModule, // for FullCalendar!
+    NgxPaginationModule, //for Pagination
   ],
   providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService, CitaService, DatePipe, { /* Needed for gallery */
         provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig
