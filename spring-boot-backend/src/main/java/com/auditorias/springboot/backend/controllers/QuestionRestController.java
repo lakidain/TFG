@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.mapper.QuestionMapper;
+import com.auditorias.springboot.backend.mapper.VulnerabilityMapper;
 import com.auditorias.springboot.backend.model.Audit_Question;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -22,10 +23,12 @@ public class QuestionRestController {
 
 	private QuestionMapper questionMapper;
 	private AnswerMapper answerMapper;
+	private VulnerabilityMapper vulnerabilityMapper;
 
-	private QuestionRestController(QuestionMapper questionMapper, AnswerMapper answerMapper) {
+	private QuestionRestController(QuestionMapper questionMapper, AnswerMapper answerMapper, VulnerabilityMapper vulnerabilityMapper) {
 		this.questionMapper = questionMapper;
 		this.answerMapper = answerMapper;
+		this.vulnerabilityMapper = vulnerabilityMapper;
 	}
 	
 	/*
@@ -41,13 +44,15 @@ public class QuestionRestController {
 	 */
 	@PostMapping("/questions")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean createThreat(@RequestParam("newQuestion") String newQuestion,
+	public boolean createThreat(@RequestParam("threatVulnerability") Long threatVulnerability,
+			@RequestParam("newVulnerability") String newVulnerability,
+			@RequestParam("newQuestion") String newQuestion,
 			@RequestParam("newFirstAnswer") String newFirstAnswer,
 			@RequestParam("newSecondAnswer") String newSecondAnswer,
 			@RequestParam("newThirdAnswer") String newThirdAnswer,
 			@RequestParam("newFourthAnswer") String newFourthAnswer,
 			@RequestParam("newFifthAnswer") String newFifthAnswer,
-			@RequestParam("vulnerabilityQuestion") Long vulnerabilityQuestion,
+			@RequestParam("existingVulnerability") Long existingVulnerability,
 			@RequestParam("existingQuestion") Long existingQuestion,
 			@RequestParam("existingNewFirstAnswer") Long existingNewFirstAnswer,
 			@RequestParam("existingNewSecondAnswer") Long existingNewSecondAnswer,
@@ -56,6 +61,10 @@ public class QuestionRestController {
 			@RequestParam("existingNewFifthtAnswer") Long existingNewFifthtAnswer) {
 
 		/* Para cada parametro que llega se debera crear */
+		if(!("".contentEquals(newVulnerability))) {	/* Just need to create the threat if it's new*/
+			vulnerabilityMapper.insertVulnerability(newVulnerability);
+			existingVulnerability = vulnerabilityMapper.findVulnerability(newVulnerability).get(0).getId_audit_vulnerability();
+		}
 		if (!("".contentEquals(newQuestion))) { /* Just need to create the threat if it's new */
 			questionMapper.insertQuestion(newQuestion);
 			existingQuestion = questionMapper.findQuestion(newQuestion).get(0)
@@ -87,7 +96,7 @@ public class QuestionRestController {
 					.getId_audit_answer();
 		}
 		/* For each Answer we should associate it with the question */
-		questionMapper.associateVulnerabilityQuestion(vulnerabilityQuestion,existingQuestion);
+		questionMapper.associateVulnerabilityQuestion(threatVulnerability,existingVulnerability,existingQuestion);
 		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFirstAnswer, 5);
 		answerMapper.associateQuestionAnswer(existingQuestion, existingNewSecondAnswer, 4);
 		answerMapper.associateQuestionAnswer(existingQuestion, existingNewThirdAnswer, 3);

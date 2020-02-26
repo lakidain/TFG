@@ -96,16 +96,18 @@ export class GestionPreguntasService {
   }
 
   /* Creation Audit Question with Answers */
-  createQuestion(newQuestion: string, newFirstAnswer: string, newSecondAnswer: string, newThirdAnswer: string, newFourthAnswer: string, newFifthAnswer: string,
-    vulnerabilityQuestion, existingQuestion, existingNewFirstAnswer, existingNewSecondtAnswer, existingNewThirdAnswer, existingNewFourthAnswer, existingNewFifthtAnswer): Observable<any> {
+  createQuestion(threatVulnerability,newVulnerability:string,newQuestion: string, newFirstAnswer: string, newSecondAnswer: string, newThirdAnswer: string, newFourthAnswer: string, newFifthAnswer: string,
+    existingVulnerability, existingQuestion, existingNewFirstAnswer, existingNewSecondtAnswer, existingNewThirdAnswer, existingNewFourthAnswer, existingNewFifthtAnswer): Observable<any> {
     let formData = new FormData();
+    formData.append("threatVulnerability", threatVulnerability);
+    formData.append("newVulnerability", newVulnerability);
     formData.append("newQuestion", newQuestion);
     formData.append("newFirstAnswer", newFirstAnswer);
     formData.append("newSecondAnswer", newSecondAnswer);
     formData.append("newThirdAnswer", newThirdAnswer);
     formData.append("newFourthAnswer", newFourthAnswer);
     formData.append("newFifthAnswer", newFifthAnswer);
-    formData.append("vulnerabilityQuestion", vulnerabilityQuestion);
+    formData.append("existingVulnerability", existingVulnerability);
     formData.append("existingQuestion", existingQuestion);
     formData.append("existingNewFirstAnswer", existingNewFirstAnswer);
     formData.append("existingNewSecondAnswer", existingNewSecondtAnswer);

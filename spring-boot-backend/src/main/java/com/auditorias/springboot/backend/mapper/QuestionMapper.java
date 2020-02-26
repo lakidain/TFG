@@ -25,7 +25,7 @@ public interface QuestionMapper {
 	/*
 	 * Associate a Vulnerability with a Question
 	 */
-	@Insert("insert into asi_audit_vulnerabilities_questions(id_audit_vulnerability,id_audit_question) values (#{id_audit_vulnerability},#{id_audit_question})")
-	void associateVulnerabilityQuestion(Long id_audit_vulnerability, Long id_audit_question);
+	@Insert("insert into asi_audit_threat_vulnerabilities_questions(id_audit_threat,id_audit_vulnerability,id_audit_question) values (#{id_audit_threat},#{id_audit_vulnerability},#{id_audit_question})")
+	void associateVulnerabilityQuestion(Long id_audit_threat, Long id_audit_vulnerability, Long id_audit_question);
 	
 }

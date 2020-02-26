@@ -51,14 +51,9 @@ export class GestionPreguntas {
   threatsRelatedToAsset: AuditThreat[];
   modifiedThreat: AuditThreat;
 
-  /* Vulnerability Management */
-  newVulnerability: string;
-  threatVulnerability: number;
-  existingVulnerability: number;
-  vulnerabilitiesToAudit: AuditVulnerability[];
-
   /* Questions Management */
-  vulnerabilityQuestion: number;
+  threatVulnerability: number;
+  newVulnerability: string;
   newQuestion: string;
   newFirstAnswer: string;
   newSecondAnswer: string;
@@ -66,11 +61,13 @@ export class GestionPreguntas {
   newFourthAnswer: string;
   newFifthAnswer: string;
   existingQuestion: number;
+  existingVulnerability: number;
   existingNewFirstAnswer: number;
   existingNewSecondAnswer: number;
   existingNewThirdAnswer: number;
   existingNewFourthAnswer: number;
   existingNewFifthtAnswer: number;
+  vulnerabilitiesToAudit: AuditVulnerability[];
   questionsToAudit: AuditQuestion[];
   answersToAudit: AuditAnswer[];
 
@@ -291,6 +288,9 @@ export class GestionPreguntas {
 
   /* Creation of a question with answers */
   questionSend(){
+    if (!this.newVulnerability) {
+      this.newVulnerability = "";
+    }
     if (!this.newQuestion) {
       this.newQuestion = "";
     }
@@ -309,7 +309,7 @@ export class GestionPreguntas {
     if (!this.newFifthAnswer) {
       this.newFifthAnswer = "";
     }
-    this.gestionPreguntasService.createQuestion(this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer,this.newFifthAnswer,this.vulnerabilityQuestion, this.existingQuestion,
+    this.gestionPreguntasService.createQuestion(this.threatVulnerability, this.newVulnerability, this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer,this.newFifthAnswer, this.existingVulnerability,this.existingQuestion,
       this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
       Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
       this.updateQuestionsAndAnswers();
