@@ -1,12 +1,15 @@
 package com.auditorias.springboot.backend.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auditorias.springboot.backend.dto.DtoQuestionnaire;
 import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.model.Audit_Answer;
 
@@ -27,6 +30,14 @@ public class AnswerRestController {
 	@GetMapping("/answers") //Para generar el endpoint
 	public List <Audit_Answer> getAllThreats() {	
 		return answerMapper.findAllAnswers();
+	}
+	
+	/*
+	 * Returns a List with all the questions
+	 */
+	@GetMapping("/answers/{id}") //Para generar el endpoint
+	public List <DtoQuestionnaire> getAssetAnswers(@PathVariable Long id) {	
+		return answerMapper.getAssetAnswers(id).stream().distinct().collect(Collectors.toList());	//Removing duplicates
 	}
 
 }

@@ -9,12 +9,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <div *ngFor="let threat of listaThreats">
-            <h4>Amenaza: {{threat.name_audit_threat}}</h4>
+          <div *ngFor="let question of listaQuestions; let i = index">
+            <h6>{{question.question_audit_question}}</h6>
+            <div *ngFor="let answer of listaAnswers">
+              <div *ngIf="question.id_audit_question===answer.id_audit_question && !(idAnswered.includes(answer.id_audit_answer))">
+                <input type="radio" name="{{question.id_audit_question}}" id="{{answer.id_audit_answer}}" (click)="eligio(i,answer)">
+                <label for="{{answer.id_audit_answer}}">{{answer.answer_audit_answer}}</label><br />
+              </div>
+              <div *ngIf="question.id_audit_question===answer.id_audit_question && (idAnswered.includes(answer.id_audit_answer))">
+                <input type="radio" name="{{question.id_audit_question}}" id="{{answer.id_audit_answer}}" (click)="eligio(i,answer)" checked>
+                <label for="{{answer.id_audit_answer}}">{{answer.answer_audit_answer}}</label><br />
+              </div>
+            </div>
           </div>
+          <br />
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning">Save changes</button>
+          <button (click)="saveChanges()" type="button" class="btn btn-warning">Save changes</button>
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

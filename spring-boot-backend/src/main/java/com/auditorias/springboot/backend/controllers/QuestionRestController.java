@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,14 @@ public class QuestionRestController {
 	@GetMapping("/questions") //Para generar el endpoint
 	public List <Audit_Question> getAllThreats() {	
 		return questionMapper.findAllQuestions();
+	}
+	
+	/*
+	 * Returns a List with all the questions for an asset related
+	 */
+	@GetMapping("/questions/{id}") //Para generar el endpoint
+	public List <Audit_Question> getQuestionsWithAsset(@PathVariable Long id) {	
+		return questionMapper.getQuestionsWithAsset(id);
 	}
 
 	/*
