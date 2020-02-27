@@ -26,12 +26,16 @@ public interface QuestionnaireMapper {
 	/*
 	 * Updates Questions Answers
 	 */
-	@Update("update asi_questionnaire_answers set id_questionnaire=#{id_questionnaire} where id_message=#{id_message}")
-	void updateMessage(Long id_questionnaire, Long id_pregunta, Long id_respuesta, Long id_vulnerability, Long id_threat, Long score);
+	@Update("update asi_questionnaire_answers set id_questionnaire=#{id_questionnaire},id_pregunta=#{id_pregunta},id_respuesta=#{id_respuesta},id_vulnerability=#{id_vulnerability},id_threat=#{id_threat},score=#{score} where id_questionnaire_answers=#{id_questionnaire_answers}")
+	void updateAnswers(Long id_questionnaire_answers, Long id_questionnaire, Long id_pregunta, Long id_respuesta, Long id_vulnerability, Long id_threat, Long score);
 	
 	/* Search a Questionnaire */
 	@Select("select * from asi_questionnaire where id_user=#{id_user} and id_audit=#{id_audit} and id_asset=#{id_asset}")
 	List<Questionnaire> findQuestionnaire(Long id_user, Long id_audit, Long id_asset);
+	
+	/* Search an Answer for a Questionnaire */
+	@Select("select * from asi_questionnaire_answers where id_questionnaire=#{id_questionnaire} and id_pregunta=#{id_pregunta}")
+	List<Questionnaire_Answers> findAnswer(Long id_questionnaire, Long id_pregunta);
 	
 	/* Search a Questionnaire */
 	@Select("select asi_questionnaire_answers.id_questionnaire_answers,asi_questionnaire_answers.id_questionnaire,asi_questionnaire_answers.id_pregunta,asi_questionnaire_answers.id_respuesta,asi_questionnaire_answers.id_vulnerability,asi_questionnaire_answers.id_threat,asi_questionnaire_answers.score from asi_questionnaire, asi_questionnaire_answers "

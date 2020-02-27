@@ -32,12 +32,15 @@ public class QuestionnaireRestController {
 	public QuestionnaireRestController(QuestionnaireMapper questionnaireMapper) {
 		this.questionnaireMapper = questionnaireMapper;
 	}
-	
+
 	/*
-	 * Returns a List with the Questions Answered by a person for a concrete Questionnaire
+	 * Returns a List with the Questions Answered by a person for a concrete
+	 * Questionnaire
 	 */
 	@GetMapping("/questionnaire/{id_audit}/{id_user}/{id_asset}")
-	public List<Questionnaire_Answers> getAnsweredQuestionnaire(@PathVariable Long id_audit, @PathVariable Long id_user, @PathVariable Long id_asset) {	
+	public List<Questionnaire_Answers> getAnsweredQuestionnaire(@PathVariable Long id_audit, @PathVariable Long id_user,
+			@PathVariable Long id_asset) {
+		System.out.println("IDAUDIT: " + id_audit);
 		return questionnaireMapper.getAnsweredQuestionnaire(id_audit, id_user, id_asset);
 	}
 
@@ -50,19 +53,20 @@ public class QuestionnaireRestController {
 		/* En primer lugar creamos el cuestionario */
 		questionnaireMapper.createQuestionnaire(answers.get(0).getId_user(), answers.get(0).getId_audit(),
 				answers.get(0).getId_asset());
-		
-		Long questionnaire_id = questionnaireMapper
-				.findQuestionnaire(answers.get(0).getId_user(), answers.get(0).getId_audit(), answers.get(0).getId_asset())
-				.get(0).getId_questionnaire();
+
+		Long questionnaire_id = questionnaireMapper.findQuestionnaire(answers.get(0).getId_user(),
+				answers.get(0).getId_audit(), answers.get(0).getId_asset()).get(0).getId_questionnaire();
 
 		/* A continuacion asociamos las respuestas con el cuestionario */
 		for (int i = 0; i < answers.size(); i++) {
-			questionnaireMapper.associateQuestions(questionnaire_id,answers.get(i).getId_audit_question(),answers.get(i).getId_audit_answer(),answers.get(i).getId_audit_vulnerability(), answers.get(i).getId_audit_threat(), answers.get(i).getScore_audit_question_answer());
+			questionnaireMapper.associateQuestions(questionnaire_id, answers.get(i).getId_audit_question(),
+					answers.get(i).getId_audit_answer(), answers.get(i).getId_audit_vulnerability(),
+					answers.get(i).getId_audit_threat(), answers.get(i).getScore_audit_question_answer());
 		}
-		
+
 		return true;
 	}
-	
+
 	/* Modify a Questionnaire */
 	@PutMapping("/questionnaire")
 	public boolean updateQuestionnaire(@RequestBody List<DtoQuestionnaireAnswers> answers){
@@ -71,10 +75,8 @@ public class QuestionnaireRestController {
 				.get(0).getId_questionnaire();
 		
 		for (int i = 0; i < answers.size(); i++) {
-			Long questionnaire_answer_id = questionnaireMapper
-					.findAnswer(answers.get(0).getId_user(), answers.get(0).getId_audit(), answers.get(0).getId_asset())
-					.get(0).getId_questionnaire();
-			questionnaireMapper.updateQuestions(questionnaire_id,answers.get(i).getId_audit_question(),answers.get(i).getId_audit_answer(),answers.get(i).getId_audit_vulnerability(), answers.get(i).getId_audit_threat(), answers.get(i).getScore_audit_question_answer());
+			Long questionnaire_answer_id = questionnaireMapper.findAnswer(questionnaire_id,answers.get(i).getId_audit_question()).get(0).getId_questionnaire_answers();
+			questionnaireMapper.updateAnswers(questionnaire_answer_id,questionnaire_id,answers.get(i).getId_audit_question(),answers.get(i).getId_audit_answer(),answers.get(i).getId_audit_vulnerability(), answers.get(i).getId_audit_threat(), answers.get(i).getScore_audit_question_answer());
 		}
 		return true;
 	}

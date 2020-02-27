@@ -45,6 +45,8 @@ export class Questionnaire {
     this.updateListaAnswers();
     this.updateAnsweredQuestionnaire();
     this.respuestas = [];
+    this.answeredQuestionnaire = [];
+    this.idAnswered = [];
   }
 
   updateListaQuestions() {
@@ -101,6 +103,7 @@ export class Questionnaire {
   }
 
   cerrarModal() {
+    this.updateAnsweredQuestionnaire();
     this.modalQuestionnaire.cerrarModal();
   }
 
