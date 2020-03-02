@@ -22,10 +22,10 @@ export class Questionnaire {
   usuario: Usuario;
 
   /* Lista Questions */
-  listaQuestions: AuditQuestion[];
+  listaQuestions: AuditQuestion[] =[];
 
   /* Lista Answers */
-  listaAnswers: DtoQuestionnaire[];
+  listaAnswers: DtoQuestionnaire[] =[];
 
   /* Respuestas */
   respuestas: DtoQuestionnaire[] = [];

@@ -24,9 +24,9 @@ import { ModalModifyAudit } from './companyToAudit/modalModifyAudit.service';
 
 export class GestionPersonalComponent {
 
-  empleados: Usuario[];
-  empresas: Empresa[];
-  tipoAuditorias: AuditType[];
+  empleados: Usuario[] = [];
+  empresas: Empresa[] = [];
+  tipoAuditorias: AuditType[] = [];
   audit: Audit;
   usuario: Usuario;
 
@@ -41,7 +41,7 @@ export class GestionPersonalComponent {
   mostrarModal: boolean;
 
   /* Lista de auditorias creadas */
-  auditList: DtoAuditList[];
+  auditList: DtoAuditList[] = [];
 
   /* Auditoria a Modificar */
   auditModify: DtoAuditList;

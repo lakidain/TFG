@@ -20,7 +20,6 @@ import com.auditorias.springboot.backend.mapper.AssetMapper;
 import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
-import com.auditorias.springboot.backend.model.Message;
 
 @CrossOrigin(origins= {"http://localhost:4200"}) //CrossOrigin es un porotocolo para comunicar peticiones que se realizan al navegador, desde aqui podemos controlar todo (metodos, direcciones)
 @RestController //Como no va a tener vista

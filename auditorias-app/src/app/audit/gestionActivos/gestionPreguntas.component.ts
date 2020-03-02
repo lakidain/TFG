@@ -34,12 +34,12 @@ export class GestionPreguntas {
   /* Type Management */
   auditType: AuditType;
   modifiedAuditType: AuditType;
-  tipoAuditorias: AuditType[];
+  tipoAuditorias: AuditType[] = [];
 
   /* Assets Management */
   dtoAssetCreation: DtoAssetCreation;
-  assetsToAudit: AuditAsset[];
-  assetsRelatedToType: AuditAsset[];
+  assetsToAudit: AuditAsset[] = [];
+  assetsRelatedToType: AuditAsset[] = [];
   deleteAsset: DtoAssetCreation;
   modifiedAsset: AuditAsset;
 
@@ -47,8 +47,8 @@ export class GestionPreguntas {
   newThreat: string;
   assetThreat: number;
   existingThreat: number;
-  threatsToAudit: AuditThreat[];
-  threatsRelatedToAsset: AuditThreat[];
+  threatsToAudit: AuditThreat[] = [];
+  threatsRelatedToAsset: AuditThreat[] = [];
   modifiedThreat: AuditThreat;
 
   /* Questions Management */
@@ -67,9 +67,9 @@ export class GestionPreguntas {
   existingNewThirdAnswer: number;
   existingNewFourthAnswer: number;
   existingNewFifthtAnswer: number;
-  vulnerabilitiesToAudit: AuditVulnerability[];
-  questionsToAudit: AuditQuestion[];
-  answersToAudit: AuditAnswer[];
+  vulnerabilitiesToAudit: AuditVulnerability[] = [];
+  questionsToAudit: AuditQuestion[] = [];
+  answersToAudit: AuditAnswer[] = [];
 
   constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService:AuthService, private modalModifyAuditType:ModalModifyAuditType,
   private modalModifyAuditThreat: ModalModifyAuditThreat, private modalModifyAuditAsset: ModalModifyAuditAsset) {

@@ -3,10 +3,12 @@ package com.auditorias.springboot.backend.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.auditorias.springboot.backend.model.Audit_Question;
 
+@Mapper
 public interface QuestionMapper {
 	/* Return a list with all the created answers */
 	@Select("select * from asi_audit_questions")

@@ -15,7 +15,8 @@
     <select id="seleccionAudit" name="seleccionAudit" (change)="actualizarListaCitas()" [(ngModel)]="seleccionAudit" class="form-control">
       <!-- ngValue permite el binding de objetos-->
       <option *ngFor="let audit of auditList" [ngValue]="audit">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
-    </select> <br />
+    </select>
+    <a class="nav-link float-right link" *ngIf="seleccionAudit" (click)="abrirModalCloseAudit()"> Cerrar Auditoría </a> <br />
     <div *ngIf="seleccionAudit">
       <h4>Cuestionarios</h4>
       <table *ngIf="questionnaireList.length > 0" class="table table-warning table-hover text-center">
@@ -86,4 +87,5 @@
   <app-citaCreation *ngIf="auditCitaCreation" [audit]="auditCitaCreation"></app-citaCreation>
   <app-employeeAdd *ngIf="auditEmployeeAdd" [audit]="auditEmployeeAdd"></app-employeeAdd>
   <app-citaMostrar *ngIf="appointmentSelected" [cita]="appointmentSelected"></app-citaMostrar>
+  <app-closeAudit *ngIf="seleccionAudit" [auditClose]="seleccionAudit"></app-closeAudit>
   <app-questionnaire *ngIf="assetSelection" [asset]="assetSelection" [audit]="seleccionAudit"></app-questionnaire>

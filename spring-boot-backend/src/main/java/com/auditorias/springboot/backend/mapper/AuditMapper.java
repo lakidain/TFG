@@ -41,7 +41,7 @@ public interface AuditMapper {
 	/*
 	 * Create an audit
 	 */
-	@Insert("insert into asi_audit(id_user_manager,id_company_audited, id_company_auditing,id_audit_type,date_start_audit,date_end_audit) values (#{id_user_manager},#{id_company_audited},#{id_company_auditing},#{id_audit_type},#{date_start_audit},#{date_end_audit})")
+	@Insert("insert into asi_audit(id_user_manager,id_company_audited, id_company_auditing,id_audit_type,date_start_audit,date_end_audit,state_audit) values (#{id_user_manager},#{id_company_audited},#{id_company_auditing},#{id_audit_type},#{date_start_audit},#{date_end_audit},0)")
 	void insert(Audit audit);
 	
 	/*

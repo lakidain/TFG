@@ -3,12 +3,14 @@ package com.auditorias.springboot.backend.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.auditorias.springboot.backend.model.Questionnaire;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 
+@Mapper
 public interface QuestionnaireMapper {
 	
 	/*

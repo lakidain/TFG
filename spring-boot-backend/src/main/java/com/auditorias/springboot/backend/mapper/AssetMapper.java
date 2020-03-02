@@ -12,7 +12,6 @@ import com.auditorias.springboot.backend.dto.DtoAssetCreation;
 import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
-import com.auditorias.springboot.backend.model.Message;
 
 @Mapper
 public interface AssetMapper {

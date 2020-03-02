@@ -106,11 +106,11 @@ public class QuestionRestController {
 		}
 		/* For each Answer we should associate it with the question */
 		questionMapper.associateVulnerabilityQuestion(threatVulnerability,existingVulnerability,existingQuestion);
-		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFirstAnswer, 5);
-		answerMapper.associateQuestionAnswer(existingQuestion, existingNewSecondAnswer, 4);
+		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFirstAnswer, 1);
+		answerMapper.associateQuestionAnswer(existingQuestion, existingNewSecondAnswer, 2);
 		answerMapper.associateQuestionAnswer(existingQuestion, existingNewThirdAnswer, 3);
-		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFourthAnswer, 2);
-		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFifthtAnswer, 1);
+		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFourthAnswer, 4);
+		answerMapper.associateQuestionAnswer(existingQuestion, existingNewFifthtAnswer, 5);
 		return true;
 	}
 }

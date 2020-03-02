@@ -18,6 +18,7 @@ import { ModalCrearCita } from '../cita/modalCrearCita.service';
 import { ModalEmployee } from '../cita/modalEmployee.service';
 import { ModalMostrarCita } from '../cita//modalMostrarCita.service';
 import { ModalQuestionnaire } from './modalQuestionnaire.service';
+import { ModalCloseAudit } from './modalCloseAudit.service';
 
 /* CALENDAR */
 import { Calendar } from '@fullcalendar/core';
@@ -62,7 +63,7 @@ export class AuditoriasComponent {
   pageAppointment: number = 1;
   pageEmployees: number = 1;
 
-  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire:ModalQuestionnaire) {
+  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire:ModalQuestionnaire, private modalCloseAudit: ModalCloseAudit) {
     this.usuario = authService.usuario;
     this.auditEmployees = [];
     this.questionnaireList = [];
@@ -138,6 +139,10 @@ export class AuditoriasComponent {
   abrirModalCita(appointment: Cita) {
     this.appointmentSelected = appointment;
     this.modalMostrarCita.abrirModal();
+  }
+
+  abrirModalCloseAudit(){
+    this.modalCloseAudit.abrirModal();
   }
 
   deleteAppointment(appointment: Cita){

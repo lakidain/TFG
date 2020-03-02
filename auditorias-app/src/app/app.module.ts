@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menuPrincipal/menu.component';
 import { AuditoriasComponent } from './audit/auditoria/auditorias.component';
+import { CloseAuditComponent } from './audit/auditoria/closeAudit.component';
 import { Questionnaire } from './audit/auditoria/questionnaire.component';
 import { CitaCreationComponent } from './audit/cita/citaCreation.component';
 import { CitaMostrarComponent } from './audit/cita/citaMostrar.component';
@@ -79,6 +80,7 @@ const routes: Routes = [
     FooterComponent,
     MenuComponent,
     AuditoriasComponent,
+    CloseAuditComponent,
     Questionnaire,
     CitaCreationComponent,
     CitaMostrarComponent,

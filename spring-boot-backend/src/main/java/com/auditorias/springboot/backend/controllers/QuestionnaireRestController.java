@@ -1,6 +1,5 @@
 package com.auditorias.springboot.backend.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -11,15 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auditorias.springboot.backend.dto.DtoAuditList;
 import com.auditorias.springboot.backend.dto.DtoQuestionnaireAnswers;
 import com.auditorias.springboot.backend.mapper.QuestionnaireMapper;
-import com.auditorias.springboot.backend.model.Audit;
-import com.auditorias.springboot.backend.model.Message;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -40,7 +35,6 @@ public class QuestionnaireRestController {
 	@GetMapping("/questionnaire/{id_audit}/{id_user}/{id_asset}")
 	public List<Questionnaire_Answers> getAnsweredQuestionnaire(@PathVariable Long id_audit, @PathVariable Long id_user,
 			@PathVariable Long id_asset) {
-		System.out.println("IDAUDIT: " + id_audit);
 		return questionnaireMapper.getAnsweredQuestionnaire(id_audit, id_user, id_asset);
 	}
 
