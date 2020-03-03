@@ -17,13 +17,13 @@ public interface AuditMapper {
 	/* 
 	 * Search a List of the Audits assigned to a worker
 	 */
-	@Select("select * from asi_audit where id_user_manager=#{id_user_manager}")
+	@Select("select * from asi_audit where id_user_manager=#{id_user_manager} and state_audit=0")
 	List<Audit> getAuditsAssigned(Long id_user_manager);
 	
 	/*
 	 * Search a List of the Audits assigned to a company
 	 */
-	@Select("select * from asi_audit where id_company_auditing=#{id_company_auditing}")
+	@Select("select * from asi_audit where id_company_auditing=#{id_company_auditing} and state_audit=0;")
 	List<Audit> getCompanyAudits(Long id_company_auditing);
 	
 	/* 
@@ -55,5 +55,11 @@ public interface AuditMapper {
 	 */
 	@Update("update asi_audit set id_user_manager=#{id_user_manager},date_start_audit=#{date_start_audit},date_end_audit=#{date_end_audit} where id_audit=#{id_audit}")
 	void updateAudit(Audit audit);
+	
+	/*
+	 * Close Audit
+	 */
+	@Update("update asi_audit set state_audit=1 where id_audit=#{id_audit}")
+	void closeAudit(Long id_audit);
 
 }

@@ -148,6 +148,9 @@ public class AssetRestController {
 			assetMapper.insertThreat(newThreat);
 			existingThreat = assetMapper.findThreat(newThreat).get(0).getId_audit_threat();
 		}
+		
+		/* Para un tipo de auditoria concreto una amenaza podra aparecer solo una vez, si ya existe lanzamos error*/
+		
 		/* If the field text is not completed we use the select, not need to create the asset, just the association */
 		assetMapper.associateAssetThreat(assetThreat, existingThreat);
 		return true;	

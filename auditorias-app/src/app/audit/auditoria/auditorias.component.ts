@@ -72,6 +72,10 @@ export class AuditoriasComponent {
 
   ngOnInit() { //Este componente es cuando se inicia el evento
     this.actualizarCalendarioCitas();
+    this.updateAuditsAssigned();
+  }
+
+  updateAuditsAssigned(){
     this.auditoriaService.getAuditsAssigned(this.usuario).subscribe(
       auditList => {
         this.auditList = auditList;

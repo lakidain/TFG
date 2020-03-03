@@ -1,0 +1,24 @@
+<h1>Informes generados</h1>
+<div class="container">
+  <table *ngIf="listaInformes.length > 0" class="table table-bordered table-striped text-center"> <!-- table-responsive -->
+    <thead>
+      <tr>
+        <th scope="col"> Compañia </th>
+        <th scope="col"> Tipo Auditoria </th>
+        <th scope="col"> Comienzo </th>
+        <th scope="col"> Fin </th>
+        <th scope="col"> PDF </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let informe of listaInformes | paginate: { itemsPerPage: 5, currentPage: page}">
+        <td scope="row">{{informe.name_company}}</td>
+        <td>{{informe.name_audit_type}}</td>
+        <td>{{informe.date_start_audit | date}}</td>
+        <td>{{informe.date_end_audit | date}}</td>
+        <td><span class="hoverable" (click)="downloadFile(informe.id_report)"><i class="fas fa-eye"></i></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls *ngIf="listaInformes.length > 0" (pageChange)="page = $event"></pagination-controls><br />
+</div>

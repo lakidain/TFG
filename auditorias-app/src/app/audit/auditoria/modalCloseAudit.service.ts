@@ -16,6 +16,7 @@ export class ModalCloseAudit {
   private urlEndPointCheckAnsweredQuestionnaire: string = 'http://localhost:8080/api/checkAnswered';
   private urlEndPointThreatsAndVulnerabilities: string = 'http://localhost:8080/api/prepareClose';
   private urlEndPointPostResults: string = 'http://localhost:8080/api/result';
+  private urlEndPointAnswers: string = 'http://localhost:8080/api/resultAnswers';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -34,10 +35,15 @@ export class ModalCloseAudit {
     return this.http.get<any>(this.urlEndPointCheckAnsweredQuestionnaire + "/" + id_audit);
   }
 
-  /* Check if at least a questionnaire for each Asset has been completed */
+  /* Get Threats And Vulnerabilities */
   updateThreatsVulnerabilities(id_audit: number): Observable<any> {
     return this.http.get<any>(this.urlEndPointThreatsAndVulnerabilities + "/" + id_audit);
   }
+
+  /*
+  updateAnswers(threatsVulnerabilities: any): Observable<any> {
+    return this.http.get<any>(this.urlEndPointAnswers, { headers: { 'Content-Type': 'application/json' }, params: { threatsVulnerabilities } });
+  }*/
 
   /* Post results and generate report */
   postResults(results: any): Observable<any> {

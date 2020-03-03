@@ -10,15 +10,34 @@ public class DtoCloseAudit {
 	private int legality_weight_audit_results;
 	private Long id_audit;
 	private Long id_audit_threat;
-	private Long audit_threat_probability_audit_results;
+	private int audit_threat_probability_audit_results;
 	private Long id_audit_vulnerability;
-	private Long security_probability_failure_audit_results;
-	private Long impact_level_audit_results;
-	private Long asset_risk_audit_results;
+	private float audit_vulnerability_probability_audit_results;
+	private float security_probability_failure_audit_results;
+	private int impact_level_audit_results;
+	private float asset_risk_audit_results;
+	private String recomendation_audit_results;
 
 	/* Aditional info */
 	private String name_audit_threat;
 	private String name_audit_vulnerability;
+
+	
+	public String getRecomendation_audit_results() {
+		return recomendation_audit_results;
+	}
+
+	public void setRecomendation_audit_results(String recomendation_audit_results) {
+		this.recomendation_audit_results = recomendation_audit_results;
+	}
+
+	public float getAudit_vulnerability_probability_audit_results() {
+		return audit_vulnerability_probability_audit_results;
+	}
+
+	public void setAudit_vulnerability_probability_audit_results(float audit_vulnerability_probability_audit_results) {
+		this.audit_vulnerability_probability_audit_results = audit_vulnerability_probability_audit_results;
+	}
 
 	public Long getId_audit_results() {
 		return id_audit_results;
@@ -68,35 +87,35 @@ public class DtoCloseAudit {
 		this.id_audit = id_audit;
 	}
 
-	public Long getAudit_threat_probability_audit_results() {
+	public int getAudit_threat_probability_audit_results() {
 		return audit_threat_probability_audit_results;
 	}
 
-	public void setAudit_threat_probability_audit_results(Long audit_threat_probability_audit_results) {
+	public void setAudit_threat_probability_audit_results(int audit_threat_probability_audit_results) {
 		this.audit_threat_probability_audit_results = audit_threat_probability_audit_results;
 	}
 
-	public Long getSecurity_probability_failure_audit_results() {
+	public float getSecurity_probability_failure_audit_results() {
 		return security_probability_failure_audit_results;
 	}
 
-	public void setSecurity_probability_failure_audit_results(Long security_probability_failure_audit_results) {
+	public void setSecurity_probability_failure_audit_results(float security_probability_failure_audit_results) {
 		this.security_probability_failure_audit_results = security_probability_failure_audit_results;
 	}
 
-	public Long getImpact_level_audit_results() {
+	public int getImpact_level_audit_results() {
 		return impact_level_audit_results;
 	}
 
-	public void setImpact_level_audit_results(Long impact_level_audit_results) {
+	public void setImpact_level_audit_results(int impact_level_audit_results) {
 		this.impact_level_audit_results = impact_level_audit_results;
 	}
 
-	public Long getAsset_risk_audit_results() {
+	public float getAsset_risk_audit_results() {
 		return asset_risk_audit_results;
 	}
 
-	public void setAsset_risk_audit_results(Long asset_risk_audit_results) {
+	public void setAsset_risk_audit_results(float asset_risk_audit_results) {
 		this.asset_risk_audit_results = asset_risk_audit_results;
 	}
 

@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 //Cuando creas un componente es necesario importarlo aqui
 import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menuPrincipal/menu.component';
+import { ReportComponent } from './report/report.component';
 import { AuditoriasComponent } from './audit/auditoria/auditorias.component';
 import { CloseAuditComponent } from './audit/auditoria/closeAudit.component';
 import { Questionnaire } from './audit/auditoria/questionnaire.component';
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
+  { path: 'report', component: ReportComponent},
   { path: 'cita', component: AuditoriasComponent },
   { path: 'gestionPreguntas', component: GestionPreguntas },
   { path: 'gestionPersonal', component: GestionPersonalComponent },
@@ -79,6 +81,7 @@ const routes: Routes = [
     NavbarComponent,
     FooterComponent,
     MenuComponent,
+    ReportComponent,
     AuditoriasComponent,
     CloseAuditComponent,
     Questionnaire,
