@@ -12,16 +12,26 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; //Ne
 export class AuditoriaService {
 
   private urlEndPointAuditList: string = 'http://localhost:8080/api/audit';
+  private urlEndPointAuditRelated: string = 'http://localhost:8080/api/auditAudited';
   private urlEndPointAuditEmployees: string = 'http://localhost:8080/api/clientesAssociate';
   private urlEndPointAuditAssets: string = 'http://localhost:8080/api/auditAssets';
   private urlEndPointAppointmentAssets: string = 'http://localhost:8080/api/cita';
 
+  /* Check Credentials */
+  private urlEndPointCheckQuestionnaireCredentials: string = 'http://localhost:8080/api/questionnaireCredentials';
+  private urlEndPointCheckAppointmentCredentials: string = 'http://localhost:8080/api/appointmentCredentials';
+
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 
-  /* Get Audit List */
+  /* Get Audit List for an Auditor */
   getAuditsAssigned(usuario: Usuario): Observable<DtoAuditList[]> {
     return this.http.get<DtoAuditList[]>(this.urlEndPointAuditList+ "/" + usuario.id);
+  }
+
+  /* Get Audit List for an employee for an audited company */
+  getAuditsRelated(usuario: Usuario): Observable<DtoAuditList[]> {
+    return this.http.get<DtoAuditList[]>(this.urlEndPointAuditRelated+ "/" + usuario.id);
   }
 
   /* Get Assets for an Audit Type */
@@ -47,5 +57,15 @@ export class AuditoriaService {
   /* Delete Employee Association with the actual appointment*/
   deleteEmployeeFromAppointment(id_audit_employees:number): Observable<any>{
     return this.http.delete<any>(this.urlEndPointAuditEmployees+"/"+id_audit_employees, {headers: this.httpHeaders});
+  }
+
+  /* Check Questionnaire credentials */
+  checkQuestionnaireCredentials(id,id_audit):Observable<any>{
+    return this.http.get<any>(this.urlEndPointCheckQuestionnaireCredentials+"/"+id_audit+"/"+id);
+  }
+
+  /* Check Appointment credentials */
+  checkAppointmentCredentials(id,id_audit):Observable<any>{
+    return this.http.get<any>(this.urlEndPointCheckAppointmentCredentials+"/"+id_audit+"/"+id);
   }
 }

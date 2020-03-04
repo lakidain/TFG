@@ -10,51 +10,57 @@
   <!-- First Half -->
 
   <div class="containerManage col">
-    <h3>Gestiona las auditorias</h3> <br />
+    <h3 *ngIf="authService.hasRole('ROLE_AUDITOR')">Gestiona las auditorias</h3>
+    <h3 *ngIf="authService.hasRole('ROLE_AUDITED')">Completa las auditorias</h3>
+    <br />
     <!-- Select Audit to work-->
-    <select id="seleccionAudit" name="seleccionAudit" (change)="actualizarListaCitas()" [(ngModel)]="seleccionAudit" class="form-control">
+    <select *ngIf="auditList.length > 0" id="seleccionAudit" name="seleccionAudit" (change)="actualizarListaCitas()" [(ngModel)]="seleccionAudit" class="form-control">
       <!-- ngValue permite el binding de objetos-->
       <option *ngFor="let audit of auditList" [ngValue]="audit">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
     </select>
-    <a class="nav-link float-right link" *ngIf="seleccionAudit" (click)="abrirModalCloseAudit()"> Cerrar Auditoría </a> <br />
+    <a class="nav-link float-right link" *ngIf="seleccionAudit && authService.hasRole('ROLE_AUDITOR')" (click)="abrirModalCloseAudit()"> Cerrar Auditoría </a> <br />
     <div *ngIf="seleccionAudit">
-      <h4>Cuestionarios</h4>
-      <table *ngIf="questionnaireList.length > 0" class="table table-warning table-hover text-center">
-        <tbody>
-          <tr>
-            <th scope="col">Asset Questionnaire</th>
-          <tr class="appointmentRow" *ngFor="let asset of questionnaireList" (click)="abrirModalAsset(asset)">
-            <td>{{asset.name_audit_asset}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <hr class="thin">
-      <h4>Citas</h4>
-      <a class="nav-link float-right" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
-      <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover text-center">
-        <tbody>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Date</th>
-            <th scope="col">State</th>
-            <th scope="col">Delete</th>
-          <tr *ngFor="let appointment of auditAppointments | paginate: { itemsPerPage: 3, currentPage: pageAppointment , id:'first'}">
-            <td class="appointmentRow" (click)="abrirModalCita(appointment)">{{appointment.name_appointment}}</td>
-            <td>{{appointment.date_appointment | date}}</td>
-            <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td>
-            <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
-            <td class="hoverable" (click)="deleteAppointment(appointment)" *ngIf="appointment.state_appointment===0"><i class="fas fa-trash-alt"></i> </td>
-            <td *ngIf="appointment.state_appointment===1"> - </td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls *ngIf="auditAppointments.length > 0" (pageChange)="pageAppointment = $event" id="first"></pagination-controls>
+      <div *ngIf="permisoCuestionario">
+        <h4>Cuestionarios</h4>
+        <table *ngIf="questionnaireList.length > 0" class="table table-warning table-hover text-center">
+          <tbody>
+            <tr>
+              <th scope="col">Asset Questionnaire</th>
+            <tr class="appointmentRow" *ngFor="let asset of questionnaireList" (click)="abrirModalAsset(asset)">
+              <td>{{asset.name_audit_asset}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr class="thin">
+      </div>
+      <div *ngIf="permisoCita">
+        <h4>Citas</h4>
+        <a class="nav-link float-right" *ngIf="authService.hasRole('ROLE_AUDITOR')" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
+        <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover text-center">
+          <tbody>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">State</th>
+              <th scope="col" *ngIf="authService.hasRole('ROLE_AUDITOR')">Delete</th>
+            <tr *ngFor="let appointment of auditAppointments | paginate: { itemsPerPage: 3, currentPage: pageAppointment , id:'first'}">
+              <td class="appointmentRow" (click)="abrirModalCita(appointment)">{{appointment.name_appointment}}</td>
+              <td>{{appointment.date_appointment | date}}</td>
+              <td *ngIf="appointment.state_appointment===0" style="color: green"> Abierta </td>
+              <td *ngIf="appointment.state_appointment===1" style="color: red"> Cerrada </td>
+              <td class="hoverable" (click)="deleteAppointment(appointment)" *ngIf="appointment.state_appointment===0 && authService.hasRole('ROLE_AUDITOR')"><i class="fas fa-trash-alt"></i> </td>
+              <td *ngIf="appointment.state_appointment===1 && authService.hasRole('ROLE_AUDITOR')"> - </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls *ngIf="auditAppointments.length > 0" (pageChange)="pageAppointment = $event" id="first"></pagination-controls>
+      </div>
     </div>
   </div>
 
   <!-- Second Half -->
 
-  <div class="containerEmployees col">
+  <div class="containerEmployees col" *ngIf="authService.hasRole('ROLE_AUDITOR')">
     <div *ngIf="seleccionAudit">
       <h3>Empleados añadidos</h3>
       <a class="nav-link float-right" (click)="abrirModalAddEmployee()"> Add employee </a> <br />

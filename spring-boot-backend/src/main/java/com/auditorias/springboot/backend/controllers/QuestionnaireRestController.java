@@ -63,16 +63,31 @@ public class QuestionnaireRestController {
 
 	/* Modify a Questionnaire */
 	@PutMapping("/questionnaire")
-	public boolean updateQuestionnaire(@RequestBody List<DtoQuestionnaireAnswers> answers){
-		Long questionnaire_id = questionnaireMapper
-				.findQuestionnaire(answers.get(0).getId_user(), answers.get(0).getId_audit(), answers.get(0).getId_asset())
-				.get(0).getId_questionnaire();
-		
+	public boolean updateQuestionnaire(@RequestBody List<DtoQuestionnaireAnswers> answers) {
+		Long questionnaire_id = questionnaireMapper.findQuestionnaire(answers.get(0).getId_user(),
+				answers.get(0).getId_audit(), answers.get(0).getId_asset()).get(0).getId_questionnaire();
+
 		for (int i = 0; i < answers.size(); i++) {
-			Long questionnaire_answer_id = questionnaireMapper.findAnswer(questionnaire_id,answers.get(i).getId_audit_question()).get(0).getId_questionnaire_answers();
-			questionnaireMapper.updateAnswers(questionnaire_answer_id,questionnaire_id,answers.get(i).getId_audit_question(),answers.get(i).getId_audit_answer(),answers.get(i).getId_audit_vulnerability(), answers.get(i).getId_audit_threat(), answers.get(i).getScore_audit_question_answer());
+			Long questionnaire_answer_id = questionnaireMapper
+					.findAnswer(questionnaire_id, answers.get(i).getId_audit_question()).get(0)
+					.getId_questionnaire_answers();
+			questionnaireMapper.updateAnswers(questionnaire_answer_id, questionnaire_id,
+					answers.get(i).getId_audit_question(), answers.get(i).getId_audit_answer(),
+					answers.get(i).getId_audit_vulnerability(), answers.get(i).getId_audit_threat(),
+					answers.get(i).getScore_audit_question_answer());
 		}
 		return true;
+	}
+
+	/* Check Questionnaire Credentials */
+	@GetMapping("/questionnaireCredentials/{id_audit}/{id_user}") // Para generar el endpoint
+	public boolean checkAppointmentCredentials(@PathVariable Long id_audit, @PathVariable Long id_user) {
+		if (questionnaireMapper.checkQuestionnaireCredentials(id_audit, id_user).get(0)
+				.getQuestionnaire_permit_audit_employees() == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

@@ -52,7 +52,6 @@ export class CloseAuditComponent {
           this.threatsVulnerabilities[i]['id_audit']=this.auditClose.id_audit;
           this.updateAnswers();
         }
-        console.log(this.threatsVulnerabilities);
       }
     );
   }

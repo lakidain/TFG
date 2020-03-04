@@ -66,6 +66,32 @@ public class AuditRestController {
 	}
 	
 	/*
+	 * Search a List of the Audits related to an employee for an audited company
+	 */
+	@GetMapping("/auditAudited/{id}")
+	public List<DtoAuditList> getAuditsRelated(@PathVariable Long id) {
+		List<DtoAuditList> auditList = new ArrayList<DtoAuditList>();
+
+		List<Audit> lista = auditMapper.getAuditsRelated(id);
+
+		for (int i = 0; i < lista.size(); i++) {
+			DtoAuditList element = new DtoAuditList();
+			element.setDate_end_audit(lista.get(i).getDate_end_audit());
+			element.setDate_start_audit(lista.get(i).getDate_start_audit());
+			element.setId_audit(lista.get(i).getId_audit());
+			element.setId_audit_type(lista.get(i).getId_audit_type());
+			element.setId_company_audited(lista.get(i).getId_company_audited());
+			element.setId_company_auditing(lista.get(i).getId_company_auditing());
+			element.setId_user_manager(lista.get(i).getId_user_manager());
+			element.setName_audit_type(auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
+			element.setName_company(empresaMapper.getCompanyName(lista.get(i).getId_company_auditing()).get(0).getName_company());
+			auditList.add(element);
+		}
+
+		return auditList;
+	}
+	
+	/*
 	 * Search a List of the Audits assigned to a worker
 	 */
 	@GetMapping("/auditCompany/{id}")

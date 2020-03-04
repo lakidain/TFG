@@ -22,7 +22,10 @@
         </ul>
       </li>
       -->
-      <li *ngIf="!authService.hasRole('ROLE_ADMIN')">
+      <li *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()">
+        <a routerLink='/report' class="small-box-footer">Informes</a>
+      </li>
+      <li *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()">
         <a routerLink='/cita' class="small-box-footer">Auditorias</a>
       </li>
       <li *ngIf="authService.hasRole('ROLE_AUDITORBOSS')">

@@ -35,9 +35,9 @@ import Swal from 'sweetalert2';
 
 export class AuditoriasComponent {
 
-  auditList: DtoAuditList[];
-  allAppointments: Cita[];
-  auditAppointments: Cita[];
+  auditList: DtoAuditList[] = [];
+  allAppointments: Cita[] = [];
+  auditAppointments: Cita[] = [];
   usuario: Usuario;
   seleccionAudit: DtoAuditList;
   auditCitaCreation: DtoAuditList;
@@ -46,11 +46,11 @@ export class AuditoriasComponent {
 
   /* Questionnaire */
   assetSelection: AuditAsset;
-  questionnaireList: AuditAsset[];
+  questionnaireList: AuditAsset[] = [];
 
 
   /* Parametros para los empleados */
-  auditEmployees: DtoAuditEmployee[];
+  auditEmployees: DtoAuditEmployee[] = [];
   auditEmployee: Audit_Employees;
 
   /* Calendar inicializations*/
@@ -59,11 +59,15 @@ export class AuditoriasComponent {
     //{ title: 'event 1', date: '2020-01-01' } EJEMPLO FORMATO
   ];
 
+  /* Comprobacion de permisos para la auditoria actual si es de la empresa auditada */
+  permisoCuestionario: boolean = true;
+  permisoCita: boolean = true;
+
   /* Paginate inizialization */
   pageAppointment: number = 1;
   pageEmployees: number = 1;
 
-  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire:ModalQuestionnaire, private modalCloseAudit: ModalCloseAudit) {
+  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire: ModalQuestionnaire, private modalCloseAudit: ModalCloseAudit) {
     this.usuario = authService.usuario;
     this.auditEmployees = [];
     this.questionnaireList = [];
@@ -75,12 +79,35 @@ export class AuditoriasComponent {
     this.updateAuditsAssigned();
   }
 
-  updateAuditsAssigned(){
-    this.auditoriaService.getAuditsAssigned(this.usuario).subscribe(
-      auditList => {
-        this.auditList = auditList;
-      }
-    );
+  updateAuditsAssigned() {
+    if (this.authService.hasRole('ROLE_AUDITOR')) {
+      this.auditoriaService.getAuditsAssigned(this.usuario).subscribe(
+        auditList => {
+          this.auditList = auditList;
+        }
+      );
+    } else if (this.authService.hasRole('ROLE_AUDITED')) {
+      this.auditoriaService.getAuditsRelated(this.usuario).subscribe(
+        auditList => {
+          this.auditList = auditList;
+        }
+      );
+    }
+  }
+
+  updateCredentials() {
+    if (this.authService.hasRole('ROLE_AUDITED')) {
+      this.auditoriaService.checkQuestionnaireCredentials(this.usuario.id, this.seleccionAudit.id_audit).subscribe(
+        cuestionario => {
+          this.permisoCuestionario = cuestionario;
+        }
+      );
+      this.auditoriaService.checkAppointmentCredentials(this.usuario.id, this.seleccionAudit.id_audit).subscribe(
+        cita => {
+          this.permisoCita = cita;
+        }
+      );
+    }
   }
 
   actualizarQuestionnaire() {
@@ -92,16 +119,27 @@ export class AuditoriasComponent {
   }
 
   actualizarCalendarioCitas() {
-    this.calendarEvents = [];
-    this.citaService.getAppointmentList(this.usuario).subscribe(
-      allAppointments => {
-        if (allAppointments.length > 0) {
-          this.calendarEvents = allAppointments.map(cita => {
-            return { title: cita.name_appointment, date: this.transformDate(cita.date_appointment) };
-          });
+    if (this.authService.hasRole('ROLE_AUDITED')) {
+      this.citaService.getAppointmentRelated(this.usuario).subscribe(
+        allAppointments => {
+          if (allAppointments.length > 0) {
+            this.calendarEvents = allAppointments.map(cita => {
+              return { title: cita.name_appointment, date: this.transformDate(cita.date_appointment) };
+            });
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.citaService.getAppointmentList(this.usuario).subscribe(
+        allAppointments => {
+          if (allAppointments.length > 0) {
+            this.calendarEvents = allAppointments.map(cita => {
+              return { title: cita.name_appointment, date: this.transformDate(cita.date_appointment) };
+            });
+          }
+        }
+      );
+    }
   }
 
   actualizarEmployees() {
@@ -118,6 +156,7 @@ export class AuditoriasComponent {
     this.auditAppointments = [];
     this.actualizarEmployees();
     this.actualizarQuestionnaire();
+    this.updateCredentials();
     this.citaService.getAuditAppointmentList(this.seleccionAudit).subscribe(
       allAppointments => {
         this.auditAppointments = allAppointments;
@@ -130,7 +169,7 @@ export class AuditoriasComponent {
     this.modalCrearCita.abrirModal();
   }
 
-  abrirModalAsset(asset: AuditAsset){
+  abrirModalAsset(asset: AuditAsset) {
     this.assetSelection = asset;
     this.modalQuestionnaire.abrirModal();
   }
@@ -145,17 +184,17 @@ export class AuditoriasComponent {
     this.modalMostrarCita.abrirModal();
   }
 
-  abrirModalCloseAudit(){
+  abrirModalCloseAudit() {
     this.modalCloseAudit.abrirModal();
   }
 
-  deleteAppointment(appointment: Cita){
-    if(confirm("¿Está seguro de que desea eliminar la cita? Podrá perderse información de importancia para el proceso de auditoría")){
+  deleteAppointment(appointment: Cita) {
+    if (confirm("¿Está seguro de que desea eliminar la cita? Podrá perderse información de importancia para el proceso de auditoría")) {
       this.auditoriaService.deleteAppointment(appointment.id_appointment).subscribe(
         reponse => {
-          Swal.fire('Cita correctamente eliminada','','success');
+          Swal.fire('Cita correctamente eliminada', '', 'success');
           this.actualizarListaCitas();
-        } , err => {
+        }, err => {
           if (err.status == 400 || err.status == 401) {
             Swal.fire('Error al eliminar la cita', 'Vuelva a intentarlo por favor', 'error');
           }
@@ -283,13 +322,13 @@ export class AuditoriasComponent {
     );
   }
 
-  deleteEmployeeFromAppointment(employee: DtoAuditEmployee){
-    if(confirm("¿Está seguro de que desea eliminar la asociación?")){
+  deleteEmployeeFromAppointment(employee: DtoAuditEmployee) {
+    if (confirm("¿Está seguro de que desea eliminar la asociación?")) {
       this.auditoriaService.deleteEmployeeFromAppointment(employee.id_audit_employees).subscribe(
         reponse => {
-          Swal.fire('Asociación correctamente eliminada','','success');
+          Swal.fire('Asociación correctamente eliminada', '', 'success');
           this.actualizarEmployees();
-        } , err => {
+        }, err => {
           if (err.status == 400 || err.status == 401) {
             Swal.fire('Error al eliminar la asociación', 'Vuelva a intentarlo por favor', 'error');
           }

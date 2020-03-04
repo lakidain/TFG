@@ -33,17 +33,40 @@ public class ReportRestController {
 	}
 
 	/*
-	 * Returns a List with all the reports associated
+	 * Returns a List with all the reports associated with AuditorBoss company
 	 */
 	@GetMapping("/reportAuditorBoss/{id}") // Para generar el endpoint
 	public List<DtoReport> reportAuditorBoss(@PathVariable Long id) {
 		return reportMapper.reportAuditorBoss(id);
 	}
+	
+	/*
+	 * Returns a List with all the reports associated with AuditedBoss company
+	 */
+	@GetMapping("/reportAuditedBoss/{id}") // Para generar el endpoint
+	public List<DtoReport> reportAuditedBoss(@PathVariable Long id) {
+		return reportMapper.reportAuditedBoss(id);
+	}
+	
+	/*
+	 * Returns a List with all the reports associated with an Auditor
+	 */
+	@GetMapping("/reportAuditor/{id}") // Para generar el endpoint
+	public List<DtoReport> reportAuditor(@PathVariable Long id) {
+		return reportMapper.reportAuditor(id);
+	}
+	
+	/*
+	 * Returns a List with all the reports associated with an employee from an Audited company
+	 */
+	@GetMapping("/reportAudited/{id}") // Para generar el endpoint
+	public List<DtoReport> reportAudited(@PathVariable Long id) {
+		return reportMapper.reportAudited(id);
+	}
 
-	@GetMapping("/report/{id}")
-	public ResponseEntity<Resource> download(@PathVariable Long id) throws IOException {
+	@GetMapping("/report/{nombreArchivo}")
+	public ResponseEntity<Resource> download(@PathVariable String nombreArchivo) throws IOException {
 
-		String nombreArchivo = reportMapper.getReport(id).get(0).getRoute_report();
 		Path rutaArchivo = Paths.get("results").resolve(nombreArchivo).toAbsolutePath();
 		
 		File file = new File(rutaArchivo.toString()+".pdf");

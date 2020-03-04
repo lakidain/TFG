@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.auditorias.springboot.backend.model.Audit_Employees;
 import com.auditorias.springboot.backend.model.Questionnaire;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 
@@ -44,5 +45,11 @@ public interface QuestionnaireMapper {
 			+ "where asi_questionnaire.id_user=#{id_user} and asi_questionnaire.id_audit=#{id_audit} "
 			+ "and asi_questionnaire.id_asset=#{id_asset}")
 	List<Questionnaire_Answers> getAnsweredQuestionnaire(Long id_audit, Long id_user, Long id_asset);
+	
+	/*
+	 * Check Questionnaire Credentials
+	 */
+	@Select("select * from asi_audit_employees where id_audit=#{id_audit} && id_user=#{id_user}")
+	List<Audit_Employees> checkQuestionnaireCredentials(Long id_audit, Long id_user);
 
 }

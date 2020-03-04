@@ -16,6 +16,9 @@ export class ReportComponent {
   listaInformes: any [] = [];
   usuario: Usuario;
 
+  /* Paginacion */
+  page: number = 1;
+
   constructor(private reportService: ReportService, private authService: AuthService) {
     this.usuario = authService.usuario;
   }
@@ -32,7 +35,7 @@ export class ReportComponent {
         }
       );
     } else if (this.authService.hasRole('ROLE_AUDITEDBOSS')) {
-      this.reportService.getCompanyAuditedBoss(this.usuario.id).subscribe(
+      this.reportService.getCompanyAuditedBoss(this.usuario.id_company).subscribe(
         listaInformes => {
           this.listaInformes = listaInformes;
         }
@@ -52,7 +55,7 @@ export class ReportComponent {
     }
   }
 
-  downloadFile(id_report){
-    window.open("http://localhost:8080/api/report/"+id_report, "_blank");
+  downloadFile(route_report){
+    window.open("http://localhost:8080/api/report/"+route_report, "_blank");
   }
 }

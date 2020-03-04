@@ -15,6 +15,7 @@ export class CitaService {
 
   private urlEndPointCitaCreate: string = 'http://localhost:8080/api/cita';
   private urlEndPointAppointmentsList: string = 'http://localhost:8080/api/allCitas';
+  private urlEndPointAppointmentsRelatedList: string = 'http://localhost:8080/api/allCitasRelated';
   private urlEndPointAuditAppointmentsList: string = 'http://localhost:8080/api/auditCitas';
   private urlEndPointPostMessage: string = 'http://localhost:8080/api/message';
   private urlEndPointGetMessages: string = 'http://localhost:8080/api/message';
@@ -27,6 +28,11 @@ export class CitaService {
   /* Create Appointment */
   createCita(cita: Cita): Observable<any> {
     return this.http.post<any>(this.urlEndPointCitaCreate, cita, { headers: this.httpHeaders });
+  }
+
+  /* Get Appointments related for an employee of an audited company */
+  getAppointmentRelated(usuario:Usuario): Observable<Cita[]>{
+    return this.http.get<Cita[]>(this.urlEndPointAppointmentsRelatedList + "/" + usuario.id);
   }
 
   /* Get ALL List of appointments for an auditor */
