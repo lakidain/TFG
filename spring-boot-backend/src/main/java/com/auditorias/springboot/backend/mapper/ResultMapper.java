@@ -33,7 +33,7 @@ public interface ResultMapper {
 			+ "and asi_audit_assets_threats.id_audit_threat=asi_audit_threat_vulnerabilities_questions.id_audit_threat "
 			+ "and asi_audit_threat_vulnerabilities_questions.id_audit_threat=asi_audit_threats.id_audit_threat "
 			+ "and asi_audit_threat_vulnerabilities_questions.id_audit_vulnerability = asi_audit_vulnerabilities.id_audit_vulnerability "
-			+ "order by asi_audit_threat_vulnerabilities_questions.id_audit_vulnerability")
+			+ "order by asi_audit_threat_vulnerabilities_questions.id_audit_threat")
 	List<DtoCloseAudit> prepareClose(Long id_audit);
 	
 	/* Return scores for the audit */

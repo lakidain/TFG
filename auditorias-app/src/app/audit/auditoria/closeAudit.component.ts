@@ -37,33 +37,34 @@ export class CloseAuditComponent {
     this.updateThreatsVulnerabilities();
   }
 
-  updateThreatsVulnerabilities(){
+  updateThreatsVulnerabilities() {
     this.modalCloseAudit.updateThreatsVulnerabilities(this.auditClose.id_audit).subscribe(
       threatsAndVulnerabilities => {
         this.threatsVulnerabilities = threatsAndVulnerabilities;
-        for(var i=0 ; i < this.threatsVulnerabilities.length; i++){
+        for (var i = 0; i < this.threatsVulnerabilities.length; i++) {
           this.threatsVulnerabilities[i]['availability_weight_audit_results'] = 0;
           this.threatsVulnerabilities[i]['confidentiality_weight_audit_results'] = 0;
           this.threatsVulnerabilities[i]['integrity_weight_audit_results'] = 0;
           this.threatsVulnerabilities[i]['legality_weight_audit_results'] = 0;
           this.threatsVulnerabilities[i]['audit_threat_probability_audit_results'] = 1;
           this.threatsVulnerabilities[i]['impact_level_audit_results'] = 1;
-          this.threatsVulnerabilities[i]['recomendation_audit_results']='';
-          this.threatsVulnerabilities[i]['id_audit']=this.auditClose.id_audit;
-          this.updateAnswers();
+          this.threatsVulnerabilities[i]['recomendation_audit_results'] = '';
+          this.threatsVulnerabilities[i]['id_audit'] = this.auditClose.id_audit;
         }
+        this.updateAnswers();
       }
     );
   }
 
   /* Show the Auditor Answers for Questionnaires */
-  updateAnswers(){
-    /*
-    this.modalCloseAudit.updateAnswers(this.threatsVulnerabilities).subscribe(
-      answered => {
-        this.answers = answered;
-      }
-    );*/
+  updateAnswers() {
+    for (var i = 0; i < this.threatsVulnerabilities.length; i++) {
+      this.modalCloseAudit.updateAnswers(this.threatsVulnerabilities[i]).subscribe(
+        answered => {
+          this.answers = this.answers.concat(answered);
+        }
+      );
+    }
   }
 
   checkAnsweredQuestionnaire() {
@@ -74,7 +75,7 @@ export class CloseAuditComponent {
     );
   }
 
-  closeAudit(){
+  closeAudit() {
     this.modalCloseAudit.postResults(this.threatsVulnerabilities).subscribe(
       response => {
         Swal.fire('Auditoria cerrada', `El cierre de la auditoria ha sido un exito, el informe ha sido generado`, 'success');

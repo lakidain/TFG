@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.auditorias.springboot.backend.dto.DtoAuditQuestionsAnswers;
 import com.auditorias.springboot.backend.dto.DtoQuestionnaire;
 import com.auditorias.springboot.backend.model.Audit_Answer;
 
@@ -27,6 +28,17 @@ public interface AnswerMapper {
 	/* Select a Threat searching with a name */
 	@Select("select * from asi_audit_answers where answer_audit_answer=#{answer_audit_answer}")
 	List<Audit_Answer> findAnswer(String answer_audit_answer);
+	
+	/* Select a Threat searching with a name */
+	@Select("select asi_questionnaire_answers.id_threat,asi_questionnaire_answers.id_vulnerability,asi_audit_answers.answer_audit_answer,asi_audit_questions.question_audit_question,asi_questionnaire_answers.score "
+			+ "from asi_questionnaire,asi_questionnaire_answers,asi_audit_questions,asi_audit_answers "
+			+ "where asi_questionnaire.id_audit=#{id_audit} "
+			+ "and asi_questionnaire.id_questionnaire=asi_questionnaire_answers.id_questionnaire "
+			+ "and asi_questionnaire_answers.id_threat=#{id_audit_threat} "
+			+ "and asi_questionnaire_answers.id_vulnerability=#{id_audit_vulnerability} "
+			+ "and asi_questionnaire_answers.id_pregunta=asi_audit_questions.id_audit_question "
+			+ "and asi_questionnaire_answers.id_respuesta=asi_audit_answers.id_audit_answer")
+	List<DtoAuditQuestionsAnswers> getAuditAnswers(Long id_audit, Long id_audit_threat, Long id_audit_vulnerability);
 
 	/*
 	 * Create an answer

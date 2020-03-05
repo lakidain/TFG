@@ -3,6 +3,7 @@ import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 import { AuditQuestion } from '../auditQuestion';
 import { DtoQuestionnaire } from '../../dto/dtoQuestionnaire';
+import { DtoCloseAudit } from '../../dto/dtoCloseAudit';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ModalCloseAudit {
   private urlEndPointCheckAnsweredQuestionnaire: string = 'http://localhost:8080/api/checkAnswered';
   private urlEndPointThreatsAndVulnerabilities: string = 'http://localhost:8080/api/prepareClose';
   private urlEndPointPostResults: string = 'http://localhost:8080/api/result';
-  private urlEndPointAnswers: string = 'http://localhost:8080/api/resultAnswers';
+  private urlEndPointAnswers: string = 'http://localhost:8080/api/auditAnswers';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -40,10 +41,9 @@ export class ModalCloseAudit {
     return this.http.get<any>(this.urlEndPointThreatsAndVulnerabilities + "/" + id_audit);
   }
 
-  /*
-  updateAnswers(threatsVulnerabilities: any): Observable<any> {
-    return this.http.get<any>(this.urlEndPointAnswers, { headers: { 'Content-Type': 'application/json' }, params: { threatsVulnerabilities } });
-  }*/
+  updateAnswers(threatsVulnerabilities: DtoCloseAudit): Observable<any> {
+    return this.http.get<any>(this.urlEndPointAnswers + "/" + threatsVulnerabilities.id_audit + "/" + threatsVulnerabilities.id_audit_threat + "/" + threatsVulnerabilities.id_audit_vulnerability);
+  }
 
   /* Post results and generate report */
   postResults(results: any): Observable<any> {
