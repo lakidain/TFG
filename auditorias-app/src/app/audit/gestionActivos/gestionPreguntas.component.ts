@@ -18,6 +18,9 @@ import { AuthService } from '../../usuario/login/auth.service';
 import { ModalModifyAuditType } from './gestionPreguntasModals/modifyAuditType/modalModifyAuditType.service';
 import { ModalModifyAuditAsset } from './gestionPreguntasModals/modifyAuditAsset/modalModifyAuditAsset.service';
 import { ModalModifyAuditThreat } from './gestionPreguntasModals/modifyAuditThreat/modalModifyAuditThreat.service';
+import { ModalModifyAuditAnswer } from './gestionPreguntasModals/modifyAuditAnswer/modalModifyAnswer.service';
+import { ModalModifyAuditQuestion } from './gestionPreguntasModals/modifyAuditQuestion/modalModifyAuditQuestion.service';
+import { ModalModifyAuditVulnerability } from './gestionPreguntasModals/modifyAuditVulnerability/modalModifyAuditVulnerability.service';
 
 @Component({
   selector: 'app-questions',
@@ -70,22 +73,36 @@ export class GestionPreguntas {
   vulnerabilitiesToAudit: AuditVulnerability[] = [];
   questionsToAudit: AuditQuestion[] = [];
   answersToAudit: AuditAnswer[] = [];
+  modifiedVulnerability: AuditVulnerability = new AuditVulnerability();
+  modifiedQuestion: AuditQuestion = new AuditQuestion();
+  modifiedAnswer: AuditAnswer;
 
-  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService:AuthService, private modalModifyAuditType:ModalModifyAuditType,
-  private modalModifyAuditThreat: ModalModifyAuditThreat, private modalModifyAuditAsset: ModalModifyAuditAsset) {
+  /* Gestion de Preguntas tablas update y delete */
+  questionsRelatedToThreat: any[] = [];
+  answersRelatedToQuestion: AuditAnswer[] = [];
+
+  /* Pages */
+  pageAuditType: number = 1;
+  pageAssets: number = 1;
+  pageThreats: number = 1;
+  pageQuestions: number = 1;
+
+  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService: AuthService, private modalModifyAuditType: ModalModifyAuditType,
+    private modalModifyAuditThreat: ModalModifyAuditThreat, private modalModifyAuditAsset: ModalModifyAuditAsset, private modalModifyAuditAnswer: ModalModifyAuditAnswer, private modalModifyAuditQuestion: ModalModifyAuditQuestion,
+    private modalModifyAuditVulnerability: ModalModifyAuditVulnerability) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();
     this.deleteAsset = new DtoAssetCreation();
     this.answerNumber = "five";
     this.existingThreat = 0;
-    this.existingVulnerability=0;
-    this.existingQuestion=0;
-    this.existingNewFirstAnswer=0;
-    this.existingNewSecondAnswer=0;
-    this.existingNewThirdAnswer=0;
-    this.existingNewFourthAnswer=0;
-    this.existingNewFifthtAnswer=0;
+    this.existingVulnerability = 0;
+    this.existingQuestion = 0;
+    this.existingNewFirstAnswer = 0;
+    this.existingNewSecondAnswer = 0;
+    this.existingNewThirdAnswer = 0;
+    this.existingNewFourthAnswer = 0;
+    this.existingNewFifthtAnswer = 0;
     this.assetsRelatedToType = [];
   }
 
@@ -105,7 +122,7 @@ export class GestionPreguntas {
     );
   }
 
-  updateAssetsRelatedToType(){
+  updateAssetsRelatedToType() {
     this.gestionPreguntasService.getAssetsRelatedToType(this.dtoAssetCreation.id_audit_type).subscribe(
       assets => {
         this.assetsRelatedToType = assets;
@@ -113,10 +130,26 @@ export class GestionPreguntas {
     );
   }
 
-  updateThreatsRelatedToAsset(){
+  updateThreatsRelatedToAsset() {
     this.gestionPreguntasService.updateThreatsRelatedToAsset(this.assetThreat).subscribe(
       threats => {
         this.threatsRelatedToAsset = threats;
+      }
+    );
+  }
+
+  updateQuestionsRelatedToThreat() {
+    this.gestionPreguntasService.updateQuestionsRelatedToThreat(this.threatVulnerability).subscribe(
+      questions => {
+        this.questionsRelatedToThreat = questions;
+      }
+    );
+  }
+
+  updateAnswersRelatedToQuestion() {
+    this.gestionPreguntasService.updateAnswersRelatedToQuestion(this.existingQuestion).subscribe(
+      answers => {
+        this.answersRelatedToQuestion = answers;
       }
     );
   }
@@ -129,7 +162,7 @@ export class GestionPreguntas {
     );
   }
 
-  updateAuditThreats(): void{
+  updateAuditThreats(): void {
     this.gestionPreguntasService.getAuditThreats().subscribe(
       threats => {
         this.threatsToAudit = threats;
@@ -137,7 +170,7 @@ export class GestionPreguntas {
     );
   }
 
-  updateVulnerabilities(): void{
+  updateVulnerabilities(): void {
     this.gestionPreguntasService.getAuditVulnerabilities().subscribe(
       vulnerabilities => {
         this.vulnerabilitiesToAudit = vulnerabilities;
@@ -145,7 +178,7 @@ export class GestionPreguntas {
     );
   }
 
-  updateQuestionsAndAnswers(): void{
+  updateQuestionsAndAnswers(): void {
     this.gestionPreguntasService.getAuditQuestions().subscribe(
       questions => {
         this.questionsToAudit = questions;
@@ -172,14 +205,14 @@ export class GestionPreguntas {
   }
 
   /* Modify of Audit Type */
-  modifyAuditType(auditType: AuditType){
+  modifyAuditType(auditType: AuditType) {
     this.modifiedAuditType = auditType;
     this.modalModifyAuditType.abrirModal();
   }
 
   /* Delete of Audit Type */
-  deleteAuditType(auditType: AuditType){
-    if(confirm("Are you sure you want to delete the Audit type? Information can be lost in the process")){
+  deleteAuditType(auditType: AuditType) {
+    if (confirm("Are you sure you want to delete the Audit type? Information can be lost in the process")) {
       this.gestionPreguntasService.deleteAuditType(auditType).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
         Swal.fire('Success deleting Audit Type', 'Audit Type deleted', 'success');
         this.updateAuditTypes();
@@ -210,16 +243,16 @@ export class GestionPreguntas {
   }
 
   /* Modify Asset */
-  modifyAuditAsset(asset: AuditAsset){
+  modifyAuditAsset(asset: AuditAsset) {
     this.modifiedAsset = asset;
-    this.modalModifyAuditAsset.abrirModal();
+    this.modalModifyAuditAnswer.abrirModal();
   }
 
   /* Delete Asset relation */
-  deleteAuditAsset(asset: AuditAsset){
-    this.deleteAsset.id_audit_asset=asset.id_audit_asset;
-    this.deleteAsset.id_audit_type=this.dtoAssetCreation.id_audit_type;
-    if(confirm("Are you sure you want to delete the Audit Asset relation? Information can be lost in the process")){
+  deleteAuditAsset(asset: AuditAsset) {
+    this.deleteAsset.id_audit_asset = asset.id_audit_asset;
+    this.deleteAsset.id_audit_type = this.dtoAssetCreation.id_audit_type;
+    if (confirm("Are you sure you want to delete the Audit Asset relation? Information can be lost in the process")) {
       this.gestionPreguntasService.deleteAuditAsset(this.deleteAsset).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
         Swal.fire('Success deleting Audit Type', 'Audit Type deleted', 'success');
         this.updateAssetsRelatedToType();
@@ -233,7 +266,7 @@ export class GestionPreguntas {
   }
 
   /* Creation of threats */
-  threatSend(){
+  threatSend() {
     if (!this.newThreat) {
       this.newThreat = "";
     }
@@ -250,14 +283,14 @@ export class GestionPreguntas {
   }
 
   /* Modify Threat */
-  modifyAuditThreat(threat: AuditThreat){
+  modifyAuditThreat(threat: AuditThreat) {
     this.modifiedThreat = threat;
     this.modalModifyAuditThreat.abrirModal();
   }
 
   /* Delete Threat Association */
-  deleteAuditThreat(threat: AuditThreat){
-    if(confirm("Are you sure you want to delete the Audit Threat relation? Information can be lost in the process")){
+  deleteAuditThreat(threat: AuditThreat) {
+    if (confirm("Are you sure you want to delete the Audit Threat relation? Information can be lost in the process")) {
       this.gestionPreguntasService.deleteAuditThreat(threat.id_audit_threat, this.assetThreat).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
         Swal.fire('Success deleting Audit Threat Relation', 'Audit Threat relation deleted', 'success');
         this.updateThreatsRelatedToAsset();
@@ -271,7 +304,7 @@ export class GestionPreguntas {
   }
 
   /* Creation of vulnerability */
-  vulnerabilitySend(){
+  vulnerabilitySend() {
     if (!this.newVulnerability) {
       this.newVulnerability = "";
     }
@@ -287,7 +320,7 @@ export class GestionPreguntas {
   }
 
   /* Creation of a question with answers */
-  questionSend(){
+  questionSend() {
     if (!this.newVulnerability) {
       this.newVulnerability = "";
     }
@@ -309,16 +342,34 @@ export class GestionPreguntas {
     if (!this.newFifthAnswer) {
       this.newFifthAnswer = "";
     }
-    this.gestionPreguntasService.createQuestion(this.threatVulnerability, this.newVulnerability, this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer,this.newFifthAnswer, this.existingVulnerability,this.existingQuestion,
+    this.gestionPreguntasService.createQuestion(this.threatVulnerability, this.newVulnerability, this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer, this.newFifthAnswer, this.existingVulnerability, this.existingQuestion,
       this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
-      Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
-      this.updateQuestionsAndAnswers();
-    }, err => {
-      if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla', 'error');
+        Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
+        this.updateQuestionsAndAnswers();
+      }, err => {
+        if (err.status == 400 || err.status == 401 || err.status == 500) {
+          Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla', 'error');
+        }
       }
-    }
-    );
+      );
+  }
+
+  modifyAuditVulnerability(pair: any) {
+    this.modifiedVulnerability.id_audit_vulnerability = pair.id_audit_vulnerability;
+    this.modifiedVulnerability.name_audit_vulnerability = pair.name_audit_vulnerability;
+    this.modalModifyAuditVulnerability.abrirModal();
+  }
+
+  modifyAuditQuestion(pair: any) {
+    this.modifiedQuestion.id_audit_question = pair.id_audit_question;
+    this.modifiedQuestion.question_audit_question = pair.question_audit_question;
+    this.modalModifyAuditQuestion.abrirModal();
+  }
+
+  /* Modify Answer */
+  modifyAuditAnswer(answer: AuditAnswer) {
+    this.modifiedAnswer = answer;
+    this.modalModifyAuditAnswer.abrirModal();
   }
 
   /* Info events when info button clicked*/
@@ -334,11 +385,11 @@ export class GestionPreguntas {
     Swal.fire('Information', 'A vulnerability is associated with a question, which can be selected or created. At the same time, one question can have up to four answers associated with a score. This will help to calculate the Audit Score', 'info');
   }
 
-  infoThreat(){
+  infoThreat() {
     Swal.fire('Information', 'An Asset have some threats Associated. Threat probability will be later filled. Example: User/Password have associated the thread Brute Force', 'info');
   }
 
-  infoVulnerability(){
+  infoVulnerability() {
     Swal.fire('Information', 'A threat have some vulnerabilities associated. As an example a logic intrusion could be done by an outdated DB or by some options bad configurated', 'info');
   }
 }

@@ -26,6 +26,9 @@ import { GestionPreguntas } from './audit/gestionActivos/gestionPreguntas.compon
 import { AuditTypeModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditType/modifyAuditType.component';
 import { AuditThreatModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditThreat/modifyAuditThreat.component';
 import { AuditAssetModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditAsset/modifyAuditAsset.component';
+import { AuditVulnerabilityModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditVulnerability/modifyAuditVulnerability.component';
+import { AuditQuestionModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditQuestion/modifyAuditQuestion.component';
+import { AuditAnswerModifyComponent } from './audit/gestionActivos/gestionPreguntasModals/modifyAuditAnswer/modifyAuditAnswer.component';
 import { GestionPersonalComponent } from './menuPrincipal/gestionPersonal.component';
 import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyToAudit.component';
 import { AuditModifyComponent } from './menuPrincipal/companyToAudit/modifyAudit.component';
@@ -94,6 +97,9 @@ const routes: Routes = [
     AuditTypeModifyComponent,
     AuditThreatModifyComponent,
     AuditAssetModifyComponent,
+    AuditVulnerabilityModifyComponent,
+    AuditQuestionModifyComponent,
+    AuditAnswerModifyComponent,
     GestionPersonalComponent,
     CompanyModifyComponent,
     AuditModifyComponent,

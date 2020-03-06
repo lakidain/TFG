@@ -4,7 +4,6 @@ public class Audit_Answer {
 	
 	Long id_audit_answer;
 	String answer_audit_answer;
-	int score;
 	
 	public Long getId_audit_answer() {
 		return id_audit_answer;
@@ -18,12 +17,5 @@ public class Audit_Answer {
 	public void setAnswer_audit_answer(String answer_audit_answer) {
 		this.answer_audit_answer = answer_audit_answer;
 	}
-	public int getScore() {
-		return score;
-	}
-	public void setScore(int score) {
-		this.score = score;
-	}
-	
 	
 }

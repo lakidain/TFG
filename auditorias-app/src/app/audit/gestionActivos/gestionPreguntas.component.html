@@ -140,13 +140,29 @@
   <div class="container">
     <div (click)="infoAnswer()"><i class="far fa-question-circle float-right"></i></div>
     <h2> Gestión de Preguntas </h2>
+    <table *ngIf="questionsRelatedToThreat?.length > 0" class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col"> Vulnerability </th>
+          <th scope="col"> Question </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pair of questionsRelatedToThreat | paginate: { itemsPerPage: 5, currentPage: pageQuestions , id:'fourth'}">
+          <td scope="row">{{pair.name_audit_vulnerability}}  <span (click)="modifyAuditVulnerability(pair)"><i class="fas fa-edit"></i></span></td>
+          <td scope="row">{{pair.question_audit_question}}  <span (click)="modifyAuditQuestion(pair)"><i class="fas fa-edit"></i></span></td>
+          <td><span (click)="deleteAuditAsset(asset)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls *ngIf="questionsRelatedToThreat?.length > 0" (pageChange)="pageQuestions = $event" id="fourth"></pagination-controls>
     <form (ngSubmit)="questionSend()">
       <!-- A QUESTION IS ASSOCIATED WITH AN ASSET. ASSET CREATION-->
       <label>
         <p><i class="fas fa-exclamation-triangle"></i><b> Select the Threat </b></p>
       </label>
       <div class="form-group">
-        <select id="auditAsset4" name="id_audit_threat" [(ngModel)]="threatVulnerability" class="form-control">
+        <select id="auditAsset4" name="id_audit_threat" (change)="updateQuestionsRelatedToThreat()" [(ngModel)]="threatVulnerability" class="form-control">
           <option *ngFor="let auditThreat of threatsToAudit" value="{{auditThreat.id_audit_threat}}">{{auditThreat.name_audit_threat}}</option>
         </select>
       </div>
@@ -163,12 +179,27 @@
         <input type="text" class="form-control" placeholder="New vulnerability" [(ngModel)]="newVulnerability" name="newVulnerability" /> <br />
       </div>
       <!-- QUESTION CREATION-->
+      <table *ngIf="answersRelatedToQuestion?.length > 0" class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th scope="col"> Answer name </th>
+            <th scope="col"> Riesgo </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let answer of answersRelatedToQuestion; let i = index">
+            <td scope="row">{{answer.answer_audit_answer}}</td>
+            <td scope="row">{{i+1}}</td>
+            <td><span (click)="modifyAuditAnswer(answer)"><i class="fas fa-edit"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
       <div class="sameQuestionContainer">
         <label>
           <p><i class="fas fa-question"></i><b> Asociar una pregunta</b></p>
         </label>
         <div class="form-group">
-          <select id="existingQuestion" name="existingQuestion" [(ngModel)]="existingQuestion" class="form-control">
+          <select id="existingQuestion" name="existingQuestion" (change)="updateAnswersRelatedToQuestion()" [(ngModel)]="existingQuestion" class="form-control">
             <option *ngFor="let auditQuestion of questionsToAudit" value="{{auditQuestion.id_audit_question}}">{{auditQuestion.question_audit_question}}</option>
           </select>
         </div>
@@ -272,3 +303,6 @@
 <app-auditTypeModify [auditType]="modifiedAuditType"></app-auditTypeModify>
 <app-auditAssetModify [auditAsset]="modifiedAsset"></app-auditAssetModify>
 <app-auditThreatModify [auditThreat]="modifiedThreat"></app-auditThreatModify>
+<app-auditAnswerModify [auditAnswer]="modifiedAnswer"></app-auditAnswerModify>
+<app-auditQuestionModify [auditQuestion]="modifiedQuestion"></app-auditQuestionModify>
+<app-auditVulnerabilityModify [auditVulnerability]="modifiedVulnerability"></app-auditVulnerabilityModify>

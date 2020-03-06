@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import com.auditorias.springboot.backend.model.Audit_Answer;
 import com.auditorias.springboot.backend.model.Audit_Question;
 
 @Mapper
@@ -35,5 +37,11 @@ public interface QuestionMapper {
 	 */
 	@Insert("insert into asi_audit_threat_vulnerabilities_questions(id_audit_threat,id_audit_vulnerability,id_audit_question) values (#{id_audit_threat},#{id_audit_vulnerability},#{id_audit_question})")
 	void associateVulnerabilityQuestion(Long id_audit_threat, Long id_audit_vulnerability, Long id_audit_question);
+	
+	/*
+	 * Updates a Question
+	 */
+	@Update("update asi_audit_questions set question_audit_question=#{question_audit_question} where id_audit_question=#{id_audit_question}")
+	void updateQuestion(Audit_Question question);
 	
 }
