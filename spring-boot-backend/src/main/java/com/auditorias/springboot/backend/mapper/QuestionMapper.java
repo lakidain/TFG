@@ -2,6 +2,7 @@ package com.auditorias.springboot.backend.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,6 +27,13 @@ public interface QuestionMapper {
 	@Select("select * from asi_audit_questions where question_audit_question=#{question_audit_question}")
 	List<Audit_Question> findQuestion(String question_audit_question);
 	
+	/* Check Association between audit type and audit asset */
+	@Select("select * from asi_audit_threat_vulnerabilities_questions "
+			+ "where id_audit_threat=#{threatVulnerability} "
+			+ "and id_audit_vulnerability=#{existingVulnerability} "
+			+ "and id_audit_question=#{existingQuestion} ")
+	List checkAssociationVulnerabilityQuestion(Long threatVulnerability,Long existingVulnerability,Long existingQuestion);
+	
 	/*
 	 * Create a question
 	 */
@@ -43,5 +51,14 @@ public interface QuestionMapper {
 	 */
 	@Update("update asi_audit_questions set question_audit_question=#{question_audit_question} where id_audit_question=#{id_audit_question}")
 	void updateQuestion(Audit_Question question);
+	
+	/*
+	 * Delete Threat-Vulnerability-Question Relation
+	 */
+	@Delete("delete from asi_audit_threat_vulnerabilities_questions "
+			+ "where id_audit_threat=#{id_audit_threat} "
+			+ "and id_audit_vulnerability=#{id_audit_vulnerability} "
+			+ "and id_audit_question=#{id_audit_question}")
+	void deleteQuestionRelation(Long id_audit_threat,Long id_audit_vulnerability,Long id_audit_question);
 	
 }

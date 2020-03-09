@@ -236,7 +236,7 @@ export class GestionPreguntas {
       this.updateAssetsRelatedToType();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear el tipo de activo', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
+        Swal.fire('Error al crear el tipo de activo', 'Una amenaza solo puede estar relacionada con un activo. Por ejemplo: Si el tipo de auditoria Informatica tiene los activos USUARIO y SGDB, al enlazar la amenaza Fuerza Bruta con USUARIOS no podra ser enlazada con SGDB', 'error');
       }
     }
     );
@@ -276,7 +276,7 @@ export class GestionPreguntas {
       this.updateThreatsRelatedToAsset();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear la amenaza', 'Vuelva a a crearla', 'error');
+        Swal.fire('Error al crear la amenaza', 'Una amenaza solo puede estar relacionada con un activo. Por ejemplo: Si el tipo de auditoria Informatica tiene los activos USUARIO y SGDB, al enlazar la amenaza Fuerza Bruta con USUARIOS no podra ser enlazada con SGDB', 'error');
       }
     }
     );
@@ -346,9 +346,10 @@ export class GestionPreguntas {
       this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
         Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
         this.updateQuestionsAndAnswers();
+        this.updateQuestionsRelatedToThreat();
       }, err => {
         if (err.status == 400 || err.status == 401 || err.status == 500) {
-          Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla', 'error');
+          Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla o compruebe que no existe ya', 'error');
         }
       }
       );
@@ -364,6 +365,20 @@ export class GestionPreguntas {
     this.modifiedQuestion.id_audit_question = pair.id_audit_question;
     this.modifiedQuestion.question_audit_question = pair.question_audit_question;
     this.modalModifyAuditQuestion.abrirModal();
+  }
+
+  deleteQuestionRelation(pair: any){
+    if (confirm("Are you sure you want to delete this relation? Information can be lost in the process")) {
+      this.gestionPreguntasService.deleteQuestionRelation(this.threatVulnerability, pair.id_audit_vulnerability, pair.id_audit_question).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+        Swal.fire('Success deleting Relation', 'Relation deleted', 'success');
+        this.updateQuestionsRelatedToThreat();
+      }, err => {
+        if (err.status == 400 || err.status == 401 || err.status == 500) {
+          Swal.fire('Error removing Relation', 'Try again later', 'error');
+        }
+      }
+      );
+    }
   }
 
   /* Modify Answer */

@@ -151,7 +151,7 @@
         <tr *ngFor="let pair of questionsRelatedToThreat | paginate: { itemsPerPage: 5, currentPage: pageQuestions , id:'fourth'}">
           <td scope="row">{{pair.name_audit_vulnerability}}  <span (click)="modifyAuditVulnerability(pair)"><i class="fas fa-edit"></i></span></td>
           <td scope="row">{{pair.question_audit_question}}  <span (click)="modifyAuditQuestion(pair)"><i class="fas fa-edit"></i></span></td>
-          <td><span (click)="deleteAuditAsset(asset)"><i class="fas fa-trash-alt"></i></span></td>
+          <td><span (click)="deleteQuestionRelation(pair)"><i class="fas fa-trash-alt"></i></span></td>
         </tr>
       </tbody>
     </table>
@@ -203,13 +203,15 @@
             <option *ngFor="let auditQuestion of questionsToAudit" value="{{auditQuestion.id_audit_question}}">{{auditQuestion.question_audit_question}}</option>
           </select>
         </div>
-        <p> <b>O Crea una nueva (Si rellena este campo es el que se usara)</b></p>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="newQuestion" name="newQuestion" />
+        <div *ngIf="!existingQuestion">
+          <p> <b>Crea una nueva pregunta</b></p>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Nueva Pregunta" [(ngModel)]="newQuestion" name="newQuestion" />
+          </div>
         </div>
       </div>
       <!-- ANSWERS ASSOCIATED-->
-      <div class="sameQuestionContainer">
+      <div *ngIf="!existingQuestion" class="sameQuestionContainer">
         <!--
       <div class="answerNumber">
         <b>Número Respuestas:</b> <br />

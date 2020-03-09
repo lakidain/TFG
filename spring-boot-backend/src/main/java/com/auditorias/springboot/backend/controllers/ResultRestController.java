@@ -25,8 +25,11 @@ import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 /* PDF Creation */
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.io.image.ImageDataFactory;
+
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController // Como no va a tener vista
@@ -151,16 +154,22 @@ public class ResultRestController {
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(rutaArchivo.toString() + ".pdf"));
 			document.open();
 			/* Portada */
+			Paragraph header = new Paragraph();
+			header.setAlignment(Element.ALIGN_CENTER);
+			Path rutaUpaudit = Paths.get("resources").resolve("Upaudit.png").toAbsolutePath();
+			Path rutaIndex = Paths.get("resources").resolve("index.jpg").toAbsolutePath();
+			Image fox = new Image(ImageDataFactory.create(FOX));
+			
 			document.add(new Paragraph("INFORME AUDITORIA" + "" + "TIPO" + ""));
 			document.add(new Paragraph("\r\nREALIZADO POR UPAUDIT"));
 			document.newPage();
 
 			/* Introduccion */
 			document.add(new Paragraph(
-					"La palabra auditoría tiene su origen en el verbo latino audire, que significa oír, que a su vez tiene origen en los primeros auditores que juzgaban la verdad o falsedad de algo. Nació de la necesidad del Estado de mantener controladas a las entidades que operan, por lo que se podría decir que es la acción de verificar que las circunstancias o hechos ocurran de acuerdo con lo planeado.\r\n"
-							+ "Trasladado al ámbito de la organización es un análisis exhaustivo que realiza una persona o un grupo de personas sobre las operaciones financieras, de operación y de administración realizadas en la empresa, asegurándose que estas cumplen todas las obligaciones, tanto internas, como externas y cuyo objetivo es emitir una opinión competente acerca de los datos recogidos\r\n"
+					"La palabra auditoría tiene su origen en el verbo latino audire, que significa oír, que a su vez tiene origen en los primeros auditores que juzgaban la verdad o falsedad de algo. Nació de la necesidad del Estado de mantener controladas a las entidades que operan, por lo que se podría decir que es la acción de verificar que las circunstancias o hechos ocurran de acuerdo con lo planeado.\r\n\n"
+							+ "Trasladado al ámbito de la organización es un análisis exhaustivo que realiza una persona o un grupo de personas sobre las operaciones financieras, de operación y de administración realizadas en la empresa, asegurándose que estas cumplen todas las obligaciones, tanto internas, como externas y cuyo objetivo es emitir una opinión competente acerca de los datos recogidos.\r\n\n"
 							+ "El siguiente informe contiene las conclusiones obtenidas según los resultados llevados a cabo en nuestra investigación de la auditoría de tipo \r\n"
-							+ "La empresa auditada se trata de "));
+							+ "La empresa auditada se trata de: "));
 
 			/* Creamos el contenido del PDF */
 

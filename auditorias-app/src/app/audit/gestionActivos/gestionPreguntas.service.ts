@@ -20,6 +20,7 @@ export class GestionPreguntasService {
   private urlEndPointAuditThreats: string = 'http://localhost:8080/api/threats';
   private urlEndPointAuditVulnerability: string = 'http://localhost:8080/api/vulnerabilities';
   private urlEndPointAuditQuestions: string = 'http://localhost:8080/api/questions';
+  private urlEndPointAuditDeleteQuestionsRelation: string = 'http://localhost:8080/api/questionsRelation';
   private urlEndPointAuditAnswers: string = 'http://localhost:8080/api/answers';
   private urlEndPointQuestionsRelatedToThreat: string = 'http://localhost:8080/api/threatQuestions';
   private urlEndPointAnswersRelatedToQuestion: string = 'http://localhost:8080/api/questionAnswers';
@@ -126,6 +127,10 @@ export class GestionPreguntasService {
     formData.append("existingNewFourthAnswer", existingNewFourthAnswer);
     formData.append("existingNewFifthtAnswer", existingNewFifthtAnswer);
     return this.http.post<any>(this.urlEndPointAuditQuestions, formData);
+  }
+
+  deleteQuestionRelation(id_audit_threat: number, id_audit_vulnerability: number, id_audit_question: number){
+    return this.http.delete<any>(this.urlEndPointAuditDeleteQuestionsRelation + "/" + id_audit_threat + "/" + id_audit_vulnerability+"/"+id_audit_question, { headers: this.httpHeaders });
   }
 
   /* Creation Audit Vulnerability */

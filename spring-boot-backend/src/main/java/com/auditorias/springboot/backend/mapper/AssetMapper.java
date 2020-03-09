@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.auditorias.springboot.backend.dto.DtoAssetCreation;
 import com.auditorias.springboot.backend.model.Audit_Asset;
+import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
 
@@ -23,6 +24,10 @@ public interface AssetMapper {
 	/* Return a list with all the created threaths */
 	@Select("select * from asi_audit_threats")
 	List<Audit_Threat> findAllThreats();
+	
+	/* Return a list with all the created threaths */
+	@Select("select * from asi_audit_types")
+	List<Audit_Type> findAllTypes();
 	
 	/* Return a list with the Assets for the concrete Audit type*/
 	@Select("select asi_audit_assets.id_audit_asset,asi_audit_assets.name_audit_asset from asi_audit,asi_audit_types_assets,asi_audit_assets where asi_audit.id_audit=#{id} and asi_audit.id_audit_type=asi_audit_types_assets.id_audit_type and asi_audit_types_assets.id_audit_asset=asi_audit_assets.id_audit_asset")
@@ -45,6 +50,28 @@ public interface AssetMapper {
 	@Select("select * from asi_audit_assets_threats,asi_audit_threats where id_audit_asset=#{id_audit_asset} "
 			+ "and asi_audit_assets_threats.id_audit_threat=asi_audit_threats.id_audit_threat")
 	List<Audit_Threat> assetThreats(Long id_audit_asset);
+	
+	/* Check Association between audit type and audit asset */
+	@Select("select * from asi_audit_types_assets where id_audit_type=#{id_audit_type} and id_audit_asset=#{id_audit_asset}")
+	List checkAssociationTypeAsset(Long id_audit_type, Long id_audit_asset);
+	
+	/* For a concrete type returns assets and threats associated */
+	@Select("select asi_audit_assets_threats.id_audit_asset,asi_audit_assets_threats.id_audit_threat from "
+			+ "asi_audit_types_assets,asi_audit_assets_threats "
+			+ "where asi_audit_types_assets.id_audit_type=#{id_audit_type} "
+			+ "and asi_audit_types_assets.id_audit_asset=asi_audit_assets_threats.id_audit_asset")
+	List<Audit_Asset_Threat> findTypeAssetThreats(Long id_audit_type);
+	
+	/* For a concrete asset returns assets and threats associated */
+	@Select("select asi_audit_assets_threats.id_audit_asset,asi_audit_assets_threats.id_audit_threat from "
+			+ "asi_audit_types_assets,asi_audit_assets_threats "
+			+ "where asi_audit_types_assets.id_audit_asset=#{id_audit_asset} "
+			+ "and asi_audit_types_assets.id_audit_asset=asi_audit_assets_threats.id_audit_asset")
+	List<Audit_Asset_Threat> findAssetAssetsTheats(Long id_audit_asset);
+	
+	/* Check if an asset is already created in asi_audit_assets_threats */
+	@Select("select * from asi_audit_assets_threats where id_audit_asset=#{id_audit_asset}")
+	List findAssetInAssetThreat(Long id_audit_asset);
 	
 	/*
 	 * Create an audit type
