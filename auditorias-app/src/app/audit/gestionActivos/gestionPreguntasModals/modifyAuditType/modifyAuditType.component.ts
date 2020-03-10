@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuditType } from 'src/app/audit/auditType';
 import Swal from 'sweetalert2';
 
-import {  ModalModifyAuditType } from './modalModifyAuditType.service';
+import { ModalModifyAuditType } from './modalModifyAuditType.service';
 import { GestionPreguntas } from '../../gestionPreguntas.component';
 
 @Component({
@@ -15,9 +15,9 @@ export class AuditTypeModifyComponent {
 
   @Input() auditType: AuditType;
 
-  constructor(private modalModifyAuditType: ModalModifyAuditType, private gestionPreguntas: GestionPreguntas){}
+  constructor(private modalModifyAuditType: ModalModifyAuditType, private gestionPreguntas: GestionPreguntas) { }
 
-  modificarAuditType(){
+  modificarAuditType() {
     this.modalModifyAuditType.updateAuditType(this.auditType).subscribe(
       response => {
         Swal.fire('Type updated', 'Type correct update', 'success');
@@ -30,7 +30,7 @@ export class AuditTypeModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.gestionPreguntas.updateAuditTypes();
     this.modalModifyAuditType.cerrarModal();
   }

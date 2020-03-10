@@ -189,14 +189,14 @@ export class AuditoriasComponent {
   }
 
   deleteAppointment(appointment: Cita) {
-    if (confirm("¿Está seguro de que desea eliminar la cita? Podrá perderse información de importancia para el proceso de auditoría")) {
+    if (confirm("Are you you sure you want to remove the Appointment? Information can be lost in the process")) {
       this.auditoriaService.deleteAppointment(appointment.id_appointment).subscribe(
         reponse => {
-          Swal.fire('Cita correctamente eliminada', '', 'success');
+          Swal.fire('Appointment succesfully removed', '', 'success');
           this.actualizarListaCitas();
         }, err => {
           if (err.status == 400 || err.status == 401) {
-            Swal.fire('Error al eliminar la cita', 'Vuelva a intentarlo por favor', 'error');
+            Swal.fire('Error removing Appointment', 'Try again later', 'error');
           }
         }
       );
@@ -217,11 +217,11 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = employee.report_permit_audit_employees;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuelva a intentarlo', 'error');
+          Swal.fire('Error updating permissions', 'Try again', 'error');
         }
       }
     );
@@ -236,11 +236,11 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = employee.report_permit_audit_employees;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error updating permissions ', 'Try again', 'error');
         }
       }
     );
@@ -255,11 +255,11 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = 1;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error updating permissions', 'Try again', 'error');
         }
       }
     );
@@ -274,11 +274,11 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = employee.report_permit_audit_employees;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error updating permissions', 'Try again', 'error');
         }
       }
     );
@@ -293,11 +293,11 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = employee.report_permit_audit_employees;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuela a intentarlo', 'error');
+          Swal.fire('Error updating permissions', 'Try again', 'error');
         }
       }
     );
@@ -312,25 +312,25 @@ export class AuditoriasComponent {
     this.auditEmployee.report_permit_audit_employees = 0;
     this.auditoriaService.updateEmployeesAssigned(this.auditEmployee).subscribe(
       response => {
-        Swal.fire('Permisos actualizados', 'Permisos actualizados correctamente', 'success');
+        Swal.fire('Permissions updated', 'Permissions succesfully updated', 'success');
         this.actualizarEmployees();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar permisos', 'Vuelva a intentarlo', 'error');
+          Swal.fire('Error updating permissions', 'Try again', 'error');
         }
       }
     );
   }
 
   deleteEmployeeFromAppointment(employee: DtoAuditEmployee) {
-    if (confirm("¿Está seguro de que desea eliminar la asociación?")) {
+    if (confirm("Are you sure you want to remove the association?")) {
       this.auditoriaService.deleteEmployeeFromAppointment(employee.id_audit_employees).subscribe(
         reponse => {
-          Swal.fire('Asociación correctamente eliminada', '', 'success');
+          Swal.fire('Association succesfully removed', '', 'success');
           this.actualizarEmployees();
         }, err => {
           if (err.status == 400 || err.status == 401) {
-            Swal.fire('Error al eliminar la asociación', 'Vuelva a intentarlo por favor', 'error');
+            Swal.fire('Error removing association', 'Try again later', 'error');
           }
         }
       );

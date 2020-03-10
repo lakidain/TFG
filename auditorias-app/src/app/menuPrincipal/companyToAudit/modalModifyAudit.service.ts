@@ -15,11 +15,11 @@ export class ModalModifyAudit {
 
   constructor(private http: HttpClient) { }
 
-  updateAudit(audit: Audit):Observable<any>{
+  updateAudit(audit: Audit): Observable<any> {
     return this.http.put<any>(this.urlEndPoint + "/" + audit.id_audit, audit, { headers: this.httpHeaders })
   }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 

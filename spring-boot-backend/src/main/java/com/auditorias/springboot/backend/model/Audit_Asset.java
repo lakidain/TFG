@@ -1,8 +1,14 @@
 package com.auditorias.springboot.backend.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Audit_Asset {
 
 	Long id_audit_asset;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	String name_audit_asset;
 	
 	public Long getId_audit_asset() {

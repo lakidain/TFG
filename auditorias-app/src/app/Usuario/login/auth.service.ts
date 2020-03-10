@@ -61,9 +61,9 @@ export class AuthService {
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
 
-  changeEmailAndPhone(usuario: Usuario): void{
-    this._usuario.email_user=usuario.email_user;
-    this._usuario.phone_user=usuario.phone_user;
+  changeEmailAndPhone(usuario: Usuario): void {
+    this._usuario.email_user = usuario.email_user;
+    this._usuario.phone_user = usuario.phone_user;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario)); /* When changes made is important to save in session! */
   }
 
@@ -87,8 +87,8 @@ export class AuthService {
     return false;
   }
 
-  hasRole(role:string):boolean{
-    if(this.usuario.roles.includes(role)){
+  hasRole(role: string): boolean {
+    if (this.usuario.roles.includes(role)) {
       return true;
     }
     return false;

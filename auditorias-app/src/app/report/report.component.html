@@ -1,13 +1,14 @@
-<h1>Informes generados</h1>
+<h1>Reports generated</h1>
 <div class="container">
-  <table *ngIf="listaInformes.length > 0" class="table table-bordered table-striped text-center"> <!-- table-responsive -->
+  <table *ngIf="listaInformes.length > 0" class="table table-bordered table-striped text-center">
+    <!-- table-responsive -->
     <thead>
       <tr>
-        <th scope="col" *ngIf="authService.hasRole('ROLE_AUDITEDBOSS') || authService.hasRole('ROLE_AUDITED')"> Compañia Auditoria </th>
-        <th scope="col" *ngIf="authService.hasRole('ROLE_AUDITORBOSS') || authService.hasRole('ROLE_AUDITOR')"> Compañia Auditada </th>
-        <th scope="col"> Tipo Auditoria </th>
-        <th scope="col"> Comienzo </th>
-        <th scope="col"> Fin </th>
+        <th scope="col" *ngIf="authService.hasRole('ROLE_AUDITEDBOSS') || authService.hasRole('ROLE_AUDITED')"> Auditing Company </th>
+        <th scope="col" *ngIf="authService.hasRole('ROLE_AUDITORBOSS') || authService.hasRole('ROLE_AUDITOR')"> Audited Company </th>
+        <th scope="col"> Audit Type </th>
+        <th scope="col"> Start Date </th>
+        <th scope="col"> End Date </th>
         <th scope="col"> PDF </th>
       </tr>
     </thead>

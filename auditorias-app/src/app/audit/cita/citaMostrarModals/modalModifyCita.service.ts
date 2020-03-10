@@ -14,7 +14,7 @@ export class ModalModifyCita {
 
   constructor(private http: HttpClient) { }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 
@@ -22,7 +22,7 @@ export class ModalModifyCita {
     this.modal = false;
   }
 
-  updateAppointment(cita: Cita):Observable<any>{
+  updateAppointment(cita: Cita): Observable<any> {
     return this.http.put<any>(this.urlEndPoint + "/" + cita.id_appointment, cita, { headers: this.httpHeaders })
   }
 }

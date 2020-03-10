@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Cita } from '../cita';
 import Swal from 'sweetalert2';
 
-import {  ModalModifyCita } from './modalModifyCita.service';
+import { ModalModifyCita } from './modalModifyCita.service';
 import { AuditoriasComponent } from '../../auditoria/auditorias.component';
 
 @Component({
@@ -15,9 +15,9 @@ export class CitaModifyComponent {
 
   @Input() cita: Cita;
 
-  constructor(private modalModifyCita: ModalModifyCita, private auditoriasComponent: AuditoriasComponent){}
+  constructor(private modalModifyCita: ModalModifyCita, private auditoriasComponent: AuditoriasComponent) { }
 
-  modificarCita(){
+  modificarCita() {
     this.modalModifyCita.updateAppointment(this.cita).subscribe(
       response => {
         Swal.fire('Appointment updated', 'Appointment correct update', 'success');
@@ -30,7 +30,7 @@ export class CitaModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.auditoriasComponent.actualizarListaCitas();
     this.auditoriasComponent.actualizarCalendarioCitas();
     this.modalModifyCita.cerrarModal();

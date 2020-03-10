@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Cierre Auditoria</h5>
+          <h5 class="modal-title">Audit Close</h5>
           <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,37 +11,37 @@
         <div class="modal-body">
           <div *ngIf="answered">
             <form (ngSubmit)="closeAudit()" #registerForm="ngForm">
-              <p> Por cada amenaza y vulnerabilidad se presentan las respuestas dadas por las distintas personas que han rellenado los cuestionarios. <b> La puntuación de 1 es de mínimo peligro y 5 es una situación de máximo peligro</b></p>
+              <p> For each threat and vulnerability, the answers given by the different people who have filled out the questionnaires are presented. <b> The score of 1 is of minimum danger and 5 is a situation of maximum danger</b></p>
               <div *ngFor="let pair of threatsVulnerabilities; let i = index">
-                <h3>Amenaza: {{pair.name_audit_threat}} </h3>
-                <h6>Vulnerabilidad: {{pair.name_audit_vulnerability}}</h6><br />
+                <h3>Threat: {{pair.name_audit_threat}} </h3>
+                <h6>Vulnerability: {{pair.name_audit_vulnerability}}</h6><br />
                 <table *ngIf="answers.length > 0" class="table table-bordered table-warning table-striped text-center">
                   <tbody>
                     <tr>
-                      <th scope="col">Pregunta</th>
-                      <th scope="col">Respuesta</th>
+                      <th scope="col">Question</th>
+                      <th scope="col">Answer</th>
                       <th scope="col">Score</th>
                     </tr>
                     <tr *ngFor="let answer of answers">
-                        <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.question_audit_question}}</td>
-                        <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.answer_audit_answer}}</td>
-                        <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.score}}</td>
+                      <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.question_audit_question}}</td>
+                      <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.answer_audit_answer}}</td>
+                      <td *ngIf="pair.id_audit_threat===answer.id_threat && pair.id_audit_vulnerability===answer.id_vulnerability">{{answer.score}}</td>
                     </tr>
                   </tbody>
                 </table>
-                <b>Disponibilidad:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.availability_weight_audit_results" name="availability_weight_audit_results" onkeydown="return false" /> <br />
-                <b>Confidencialidad:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.confidentiality_weight_audit_results" name="confidentiality_weight_audit_results" onkeydown="return false" /> <br />
-                <b>Integridad:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.integrity_weight_audit_results" name="integrity_weight_audit_results" onkeydown="return false" /> <br />
-                <b>Legalidad:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.legality_weight_audit_results" name="legality_weight_audit_results" onkeydown="return false" /> <br />
-                <b>Probabilidad de Amenaza</b><input class="form-control" type="number" min="1" max="5" [(ngModel)]="pair.audit_threat_probability_audit_results" name="audit_threat_probability_audit_results" onkeydown="return false" /> <br />
-                <b>Nivel de Impacto</b><input class="form-control" type="number" min="1" max="5" [(ngModel)]="pair.impact_level_audit_results" name="impact_level_audit_results" onkeydown="return false" /> <br />
-                <b>Recomendación</b><textarea name="name" class="form-control" rows="3" [(ngModel)]="pair.recomendation_audit_results" name="recomendation_audit_results" placeholder="Recomendacion"></textarea><br />
+                <b>Availability:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.availability_weight_audit_results" name="availability_weight_audit_results" onkeydown="return false" /> <br />
+                <b>Confidentiality:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.confidentiality_weight_audit_results" name="confidentiality_weight_audit_results" onkeydown="return false" /> <br />
+                <b>Integrity:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.integrity_weight_audit_results" name="integrity_weight_audit_results" onkeydown="return false" /> <br />
+                <b>Legality:</b> <input class="form-control" type="number" min="0" max="5" [(ngModel)]="pair.legality_weight_audit_results" name="legality_weight_audit_results" onkeydown="return false" /> <br />
+                <b>Threat Probability</b><input class="form-control" type="number" min="1" max="5" [(ngModel)]="pair.audit_threat_probability_audit_results" name="audit_threat_probability_audit_results" onkeydown="return false" /> <br />
+                <b>Impact Level</b><input class="form-control" type="number" min="1" max="5" [(ngModel)]="pair.impact_level_audit_results" name="impact_level_audit_results" onkeydown="return false" /> <br />
+                <b>Recomendation</b><textarea name="name" class="form-control" rows="3" [(ngModel)]="pair.recomendation_audit_results" name="recomendation_audit_results" placeholder="Recomendation"></textarea><br />
               </div>
-              <button type="submit" class="btn btn-warning">Terminar Auditoria</button>
+              <button type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn">End Audit</button>
             </form>
           </div>
           <div *ngIf="!answered">
-            <h2> Debe rellenarse un cuestionario de cada tipo </h2>
+            <h2> A questionnaire of each tipe must be filled </h2>
           </div>
         </div>
         <div class="modal-footer">

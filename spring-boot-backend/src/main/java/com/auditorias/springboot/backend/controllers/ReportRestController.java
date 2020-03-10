@@ -39,7 +39,7 @@ public class ReportRestController {
 	public List<DtoReport> reportAuditorBoss(@PathVariable Long id) {
 		return reportMapper.reportAuditorBoss(id);
 	}
-	
+
 	/*
 	 * Returns a List with all the reports associated with AuditedBoss company
 	 */
@@ -47,7 +47,7 @@ public class ReportRestController {
 	public List<DtoReport> reportAuditedBoss(@PathVariable Long id) {
 		return reportMapper.reportAuditedBoss(id);
 	}
-	
+
 	/*
 	 * Returns a List with all the reports associated with an Auditor
 	 */
@@ -55,9 +55,10 @@ public class ReportRestController {
 	public List<DtoReport> reportAuditor(@PathVariable Long id) {
 		return reportMapper.reportAuditor(id);
 	}
-	
+
 	/*
-	 * Returns a List with all the reports associated with an employee from an Audited company
+	 * Returns a List with all the reports associated with an employee from an
+	 * Audited company
 	 */
 	@GetMapping("/reportAudited/{id}") // Para generar el endpoint
 	public List<DtoReport> reportAudited(@PathVariable Long id) {
@@ -68,8 +69,8 @@ public class ReportRestController {
 	public ResponseEntity<Resource> download(@PathVariable String nombreArchivo) throws IOException {
 
 		Path rutaArchivo = Paths.get("results").resolve(nombreArchivo).toAbsolutePath();
-		
-		File file = new File(rutaArchivo.toString()+".pdf");
+
+		File file = new File(rutaArchivo.toString() + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -78,11 +79,8 @@ public class ReportRestController {
 
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-		return ResponseEntity.ok()
-				.headers(headers)
-				.contentLength(file.length())
-				.contentType(MediaType.parseMediaType("application/pdf"))
-				.body(resource);
+		return ResponseEntity.ok().headers(headers).contentLength(file.length())
+				.contentType(MediaType.parseMediaType("application/pdf")).body(resource);
 	}
 
 }

@@ -20,8 +20,8 @@ export class PerfilUsuarioService {
   }
 
   /* Get company info */
-  getCompany(id_company:number): Observable <Empresa>{
-    return this.http.get<Empresa>(this.urlEndPointGetCompany+"/"+id_company);
+  getCompany(id_company: number): Observable<Empresa> {
+    return this.http.get<Empresa>(this.urlEndPointGetCompany + "/" + id_company);
   }
 
 }

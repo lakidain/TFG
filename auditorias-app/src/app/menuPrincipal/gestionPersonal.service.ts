@@ -28,8 +28,8 @@ export class GestionPersonalService {
   }
 
   /* Dada la empresa devuelve las auditorias relacionadas con esta */
-  getAudits(id_company:number): Observable <DtoAuditList[]>{
-    return this.http.get<DtoAuditList[]>(this.urlEndPointCompanyAuditList+"/"+id_company);
+  getAudits(id_company: number): Observable<DtoAuditList[]> {
+    return this.http.get<DtoAuditList[]>(this.urlEndPointCompanyAuditList + "/" + id_company);
   }
 
   /* Metodo que devuelve las empresas posibles para auditar*/
@@ -48,7 +48,7 @@ export class GestionPersonalService {
   }
 
   /* Delete an Audit */
-  deleteAudit(id_audit: number): Observable<any>{
-    return this.http.delete<any>(this.urlEndPointAudit+"/"+id_audit, {headers: this.httpHeaders});
+  deleteAudit(id_audit: number): Observable<any> {
+    return this.http.delete<any>(this.urlEndPointAudit + "/" + id_audit, { headers: this.httpHeaders });
   }
 }

@@ -3,50 +3,50 @@
 		<!-- small card -->
 		<div class="small-box bg-danger">
 			<div class="inner">
-				<p class="text-truncate cardLetters"> INFORMES </p>
+				<p class="text-truncate cardLetters"> REPORTS </p>
 			</div>
 			<div class="icon">
 				<i class="fas fa-chart-pie"></i>
 			</div>
-			<a routerLink='/report' class="small-box-footer">Entrar</a>
+			<a routerLink='/report' class="small-box-footer">Enter</a>
 		</div>
 	</div>
-		<br />
-		<!-- ./col -->
-		<div *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()" class="col-xl-12 col-12">
-			<!-- small card -->
-			<div class="small-box bg-warning">
-				<div class="inner">
-					<p class="text-truncate cardLetters"> AUDITORIAS </p>
-				</div>
-				<div class="icon">
-					<i class="far fa-calendar-alt"></i>
-				</div>
-				<a routerLink='/cita' class="small-box-footer">Entrar</a>
+	<br />
+	<!-- ./col -->
+	<div *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()" class="col-xl-12 col-12">
+		<!-- small card -->
+		<div class="small-box bg-warning">
+			<div class="inner">
+				<p class="text-truncate cardLetters"> AUDITS </p>
 			</div>
-		</div>
-		<div *ngIf="authService.hasRole('ROLE_AUDITORBOSS')" class="col-xl-12 col-12">
-			<!-- small card -->
-			<div class="small-box bg-success">
-				<div class="inner">
-					<p class="text-truncate cardLetters"> GESTIÓN DE PERSONAL </p>
-				</div>
-				<div class="icon">
-					<i class="fas fa-users"></i>
-				</div>
-				<a routerLink='/gestionPersonal' class="small-box-footer">Entrar</a>
+			<div class="icon">
+				<i class="far fa-calendar-alt"></i>
 			</div>
-		</div>
-		<div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-xl-12 col-12">
-			<!-- small card -->
-			<div class="small-box bg-info">
-				<div class="inner">
-					<p class="text-truncate cardLetters"> GESTIÓN DE PREGUNTAS </p>
-				</div>
-				<div class="icon">
-					<i class="fas fa-question"></i>
-				</div>
-				<a routerLink='/gestionPreguntas' class="small-box-footer">Entrar</a>
-			</div>
+			<a routerLink='/cita' class="small-box-footer">Enter</a>
 		</div>
 	</div>
+	<div *ngIf="authService.hasRole('ROLE_AUDITORBOSS')" class="col-xl-12 col-12">
+		<!-- small card -->
+		<div class="small-box bg-success">
+			<div class="inner">
+				<p class="text-truncate cardLetters"> PERSONAL MANAGEMENT </p>
+			</div>
+			<div class="icon">
+				<i class="fas fa-users"></i>
+			</div>
+			<a routerLink='/gestionPersonal' class="small-box-footer">Enter</a>
+		</div>
+	</div>
+	<div *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-xl-12 col-12">
+		<!-- small card -->
+		<div class="small-box bg-info">
+			<div class="inner">
+				<p class="text-truncate cardLetters"> ASSETS MANAGEMENT </p>
+			</div>
+			<div class="icon">
+				<i class="fas fa-question"></i>
+			</div>
+			<a routerLink='/gestionPreguntas' class="small-box-footer">Enter</a>
+		</div>
+	</div>
+</div>

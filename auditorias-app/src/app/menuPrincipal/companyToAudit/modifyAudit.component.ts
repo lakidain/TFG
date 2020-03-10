@@ -20,11 +20,11 @@ export class AuditModifyComponent {
 
   modifiedAudit: Audit;
 
-  constructor(private modalModifyAudit: ModalModifyAudit, private gestionPersonalComponent: GestionPersonalComponent){
+  constructor(private modalModifyAudit: ModalModifyAudit, private gestionPersonalComponent: GestionPersonalComponent) {
     this.modifiedAudit = new Audit();
   }
 
-  modificarAudit(){
+  modificarAudit() {
     this.modifiedAudit.date_end_audit = this.audit.date_end_audit;
     this.modifiedAudit.date_start_audit = this.audit.date_start_audit;
     this.modifiedAudit.id_audit = this.audit.id_audit;
@@ -45,7 +45,7 @@ export class AuditModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.gestionPersonalComponent.updateAudits();
     this.modalModifyAudit.cerrarModal();
   }

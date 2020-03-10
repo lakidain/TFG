@@ -2,7 +2,8 @@ package com.auditorias.springboot.backend.controllers;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Update;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +21,6 @@ import com.auditorias.springboot.backend.dto.DtoAnswersRelatedToThreat;
 import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.mapper.QuestionMapper;
 import com.auditorias.springboot.backend.mapper.VulnerabilityMapper;
-import com.auditorias.springboot.backend.model.Audit_Answer;
 import com.auditorias.springboot.backend.model.Audit_Question;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -89,7 +89,10 @@ public class QuestionRestController {
 			existingVulnerability = vulnerabilityMapper.findVulnerability(newVulnerability).get(0)
 					.getId_audit_vulnerability();
 		}
-		if (existingQuestion == 0) {	/* Si la pregunta ya existe no sera necesario crear la pregunta ni las respuestas, tampoco habra que asociarlas */
+		if (existingQuestion == 0) { /*
+										 * Si la pregunta ya existe no sera necesario crear la pregunta ni las
+										 * respuestas, tampoco habra que asociarlas
+										 */
 			if (!("".contentEquals(newQuestion))) { /* Just need to create the threat if it's new */
 				questionMapper.insertQuestion(newQuestion);
 				existingQuestion = questionMapper.findQuestion(newQuestion).get(0).getId_audit_question();
@@ -116,6 +119,10 @@ public class QuestionRestController {
 			}
 		}
 		/* For each Answer we should associate it with the question */
+		if (threatVulnerability == 0 || existingVulnerability == 0 || existingQuestion == 0) {
+			throw new Exception("Parameters Needed");
+		}
+
 		if (questionMapper
 				.checkAssociationVulnerabilityQuestion(threatVulnerability, existingVulnerability, existingQuestion)
 				.size() == 0) {
@@ -123,7 +130,7 @@ public class QuestionRestController {
 		} else {
 			throw new Exception("Relation already existing");
 		}
-		if(existingQuestion == 0) {
+		if (existingQuestion == 0) {
 			answerMapper.associateQuestionAnswer(existingQuestion, existingNewFirstAnswer, 1);
 			answerMapper.associateQuestionAnswer(existingQuestion, existingNewSecondAnswer, 2);
 			answerMapper.associateQuestionAnswer(existingQuestion, existingNewThirdAnswer, 3);
@@ -135,16 +142,17 @@ public class QuestionRestController {
 
 	/* Modify a Question */
 	@PutMapping("/questions/{id}")
-	public boolean updateQuestion(@RequestBody Audit_Question answer, @PathVariable Long id) {
+	public boolean updateQuestion(@Valid @RequestBody Audit_Question answer, @PathVariable Long id) {
 		questionMapper.updateQuestion(answer);
 		return true;
 	}
-	
+
 	/* Delete a Question Relation */
 	@DeleteMapping("/questionsRelation/{id_audit_threat}/{id_audit_vulnerability}/{id_audit_question}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public boolean deleteQuestionRelation(@PathVariable Long id_audit_threat, @PathVariable Long id_audit_vulnerability, @PathVariable Long id_audit_question) {
-		questionMapper.deleteQuestionRelation(id_audit_threat,id_audit_vulnerability,id_audit_question);
+	public boolean deleteQuestionRelation(@PathVariable Long id_audit_threat, @PathVariable Long id_audit_vulnerability,
+			@PathVariable Long id_audit_question) {
+		questionMapper.deleteQuestionRelation(id_audit_threat, id_audit_vulnerability, id_audit_question);
 		return true;
 	}
 }

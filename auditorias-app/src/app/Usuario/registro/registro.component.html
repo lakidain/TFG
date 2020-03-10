@@ -1,21 +1,25 @@
 <div class="container login-container">
   <div class="row align-middle">
     <div class="col-md-6 register-form-1 mx-auto" align="center">
-      <h3>Registro</h3>
+      <h3>Registry</h3>
       <form (ngSubmit)="create()" #registerForm="ngForm">
         <!-- Name And Surname field -->
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="dtoRegistro.name_user" name="name_user" required #name_user="ngModel" />
+          <input type="text" class="form-control" placeholder="Name and Surname" [(ngModel)]="dtoRegistro.name_user" name="name_user" required maxlength="100" #name_user="ngModel" />
           <!-- Error name div-->
           <div class="alert alert-danger" *ngIf="name_user.invalid && (name_user.dirty || name_user.touched)">
             <div *ngIf="name_user.errors.required">
               Name is required
             </div>
+            <div *ngIf="name_user.errors.maxlength">
+              Username maximum length 100 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
           <!-- Regex for NIF ^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$ AND for NIE ^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$-->
-          <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" required pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$|^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$" #username="ngModel" />
+          <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" required maxlength="9" pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$|^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$"
+            #username="ngModel" />
           <!-- Error DNI div-->
           <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
             <div *ngIf="username.errors.required">
@@ -27,7 +31,7 @@
           </div>
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" required email #email_user="ngModel" />
+          <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" required maxlength="100" email #email_user="ngModel" />
           <!-- Error email div-->
           <div class="alert alert-danger" *ngIf="email_user.invalid && (email_user.dirty || email_user.touched)">
             <div *ngIf="email_user.errors.required">
@@ -36,10 +40,13 @@
             <div *ngIf="email_user.errors.email">
               The email must have a correct format
             </div>
+            <div *ngIf="email_user.errors.maxlength">
+              Email maximum length 100 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
+          <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" required maxlength="12" pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
           <!-- Error phone div-->
           <div class="alert alert-danger" *ngIf="phone_user.invalid && (phone_user.dirty || phone_user.touched)">
             <div *ngIf="phone_user.errors.required">
@@ -48,10 +55,13 @@
             <div *ngIf="phone_user.errors.pattern">
               The phone must have spanish format
             </div>
+            <div *ngIf="phone_user.errors.maxlength">
+              Phone maximum length 100 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" placeholder="Password" [(ngModel)]="dtoRegistro.password" name="password" required minlength="6" #password="ngModel" />
+          <input type="password" class="form-control" placeholder="Password" [(ngModel)]="dtoRegistro.password" name="password" required minlength="6" maxlength="15" #password="ngModel" />
           <!-- Error password div-->
           <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
             <div *ngIf="password.errors.required">
@@ -60,19 +70,25 @@
             <div *ngIf="password.errors.minlength">
               The password must be at least 6 characters
             </div>
+            <div *ngIf="password.errors.maxlength">
+              The password must have 15 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nombre Empresa" [(ngModel)]="dtoRegistro.name_company" name="name_company" required #name_company="ngModel" />
+          <input type="text" class="form-control" placeholder="Company Name" [(ngModel)]="dtoRegistro.name_company" name="name_company" required maxlength="100" #name_company="ngModel" />
           <!-- Error name company div-->
           <div class="alert alert-danger" *ngIf="name_company.invalid && (name_company.dirty || name_company.touched)">
             <div *ngIf="name_company.errors.required">
               Company name is required
             </div>
+            <div *ngIf="name_company.errors.maxlength">
+              The password must be at least 15 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btnSubmit btn" value="Crear" [disabled]="!registerForm.form.valid" />
+          <input type="submit" class="btnSubmit btn" value="Create" [disabled]="!registerForm.form.valid" />
         </div>
         <div class="form-group">
           <a routerLink='/login' class="ForgetPwd">Login</a>

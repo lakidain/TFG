@@ -9,7 +9,7 @@ export class ModalCrearCita {
 
   constructor() { }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 

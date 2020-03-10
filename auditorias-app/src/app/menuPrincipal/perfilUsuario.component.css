@@ -25,11 +25,11 @@ h2 {
   text-align: left;
 }
 
-.fa-edit:hover{
-  cursor:pointer;
+.fa-edit:hover {
+  cursor: pointer;
 }
 
-.floatRight{
-  float:right;
+.floatRight {
+  float: right;
   margin-right: 1em;
 }

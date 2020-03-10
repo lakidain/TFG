@@ -22,10 +22,10 @@ export class Questionnaire {
   usuario: Usuario;
 
   /* Lista Questions */
-  listaQuestions: AuditQuestion[] =[];
+  listaQuestions: AuditQuestion[] = [];
 
   /* Lista Answers */
-  listaAnswers: DtoQuestionnaire[] =[];
+  listaAnswers: DtoQuestionnaire[] = [];
 
   /* Respuestas */
   respuestas: DtoQuestionnaire[] = [];
@@ -88,7 +88,7 @@ export class Questionnaire {
           }
         }
       );
-    } else{
+    } else {
       this.modalQuestionnaire.updateAnswers(this.respuestas).subscribe(
         answers => {
           Swal.fire('Success updating the form', 'Form has been updated', 'success');

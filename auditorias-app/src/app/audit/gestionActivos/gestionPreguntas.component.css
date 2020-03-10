@@ -32,12 +32,12 @@ h2 {
 }
 
 /* Modify and Delete */
-.fa-trash-alt:hover{
-  cursor:pointer;
+.fa-trash-alt:hover {
+  cursor: pointer;
 }
 
-.fa-edit:hover{
-  cursor:pointer;
+.fa-edit:hover {
+  cursor: pointer;
 }
 
 /* Question mark info */

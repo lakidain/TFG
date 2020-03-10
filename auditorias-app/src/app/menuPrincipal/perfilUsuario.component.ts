@@ -49,7 +49,7 @@ export class PerfilUsuarioComponent {
     );
   }
 
-  userCompany(){
+  userCompany() {
     this.perfilUsuarioService.getCompany(this.usuario.id_company).subscribe(
       company => {
         this.empresaModify = company;
@@ -57,7 +57,7 @@ export class PerfilUsuarioComponent {
     );
   }
 
-  modifyCompany(){
+  modifyCompany() {
     this.modalModifyCompany.abrirModal();
   }
 
@@ -65,7 +65,7 @@ export class PerfilUsuarioComponent {
     this.usuarioService.updateUsuario(this.usuario).subscribe(
       response => {
         this.authService.changeEmailAndPhone(this.usuario);
-        Swal.fire('Actualizado', `Sus datos han sido actualizados correctamente`, 'success');
+        Swal.fire('Updated', `Your data has been updated`, 'success');
         this.router.navigate(['/perfil']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       }
     )
@@ -79,25 +79,25 @@ export class PerfilUsuarioComponent {
     this.usuarioService.updatePassword(this.usuario, this.dtoPassword).subscribe(
       response => {
         if (response) {
-          Swal.fire('Password', 'Actualizada correctamente, vuelva a logearse para continuar el servicio', 'success');
+          Swal.fire('Password updated', 'Log again to continue using the service', 'success');
           this.authService.logout();
           this.router.navigate(['/index']);
         } else {
-          Swal.fire('Error', 'Error al actualizar la password, compruebe que la password antigua es correcta', 'error');
+          Swal.fire('Error', 'Error updating password, check both passwords are the same', 'error');
         }
       }
     )
   }
 
   updateCompany(): void {
-    if (confirm("Estas seguro de cambiar de compañia, tendrás que ser aceptado de nuevo por el jefe de tu nueva compañia y no podrás acceder al sistema hasta entonces")) {
+    if (confirm("Are you sure you cant to change company? You will have to be accepted by your new boss, you'll lose acces until been accepted")) {
       this.usuarioService.updateCompany(this.usuario, this.seleccionEmpresa).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-        Swal.fire('Empresa actualizada', 'Empresa actualizada, espere a ser aceptado por su nuevo jefe para poder logearse', 'success');
+        Swal.fire('Company updated', 'Wait to be accepted by your new boss', 'success');
         this.authService.logout();
         this.router.navigate(['/index']);
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al actualizar la empresa', 'Pruebe a volver a actualizarla', 'error');
+          Swal.fire('Error updating company', 'Try again later', 'error');
         }
       }
       )

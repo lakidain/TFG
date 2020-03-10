@@ -12,6 +12,6 @@ h1 {
   opacity: 1;
 }
 
-.hoverable:hover{
-  cursor:pointer;
+.hoverable:hover {
+  cursor: pointer;
 }

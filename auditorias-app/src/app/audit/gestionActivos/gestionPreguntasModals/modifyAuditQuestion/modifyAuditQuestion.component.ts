@@ -15,9 +15,9 @@ export class AuditQuestionModifyComponent {
 
   @Input() auditQuestion: AuditQuestion;
 
-  constructor(private modalModifyAuditQuestion: ModalModifyAuditQuestion, private gestionPreguntas: GestionPreguntas){}
+  constructor(private modalModifyAuditQuestion: ModalModifyAuditQuestion, private gestionPreguntas: GestionPreguntas) { }
 
-  modificarAuditAsset(){
+  modificarAuditAsset() {
     this.modalModifyAuditQuestion.updateAuditQuestion(this.auditQuestion).subscribe(
       response => {
         Swal.fire('Question updated', 'Question correct update', 'success');
@@ -30,7 +30,7 @@ export class AuditQuestionModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.gestionPreguntas.updateQuestionsAndAnswers();
     this.gestionPreguntas.updateQuestionsRelatedToThreat();
     this.modalModifyAuditQuestion.cerrarModal();

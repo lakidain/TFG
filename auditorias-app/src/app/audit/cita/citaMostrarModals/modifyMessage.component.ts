@@ -16,10 +16,10 @@ export class MessageModifyComponent {
 
   @Input() message: Message;
 
-  constructor(private modalModifyMessage: ModalModifyMessage, private auditoriasComponent: AuditoriasComponent, private citaMostrarComponent:CitaMostrarComponent){
+  constructor(private modalModifyMessage: ModalModifyMessage, private auditoriasComponent: AuditoriasComponent, private citaMostrarComponent: CitaMostrarComponent) {
   }
 
-  modificarMessage(){
+  modificarMessage() {
     this.modalModifyMessage.updateMessage(this.message).subscribe(
       response => {
         Swal.fire('Message updated', 'Message updated correctly', 'success');
@@ -32,7 +32,7 @@ export class MessageModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.citaMostrarComponent.updateMessages();
     this.modalModifyMessage.cerrarModal();
   }

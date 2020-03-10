@@ -31,7 +31,7 @@ export class CitaService {
   }
 
   /* Get Appointments related for an employee of an audited company */
-  getAppointmentRelated(usuario:Usuario): Observable<Cita[]>{
+  getAppointmentRelated(usuario: Usuario): Observable<Cita[]> {
     return this.http.get<Cita[]>(this.urlEndPointAppointmentsRelatedList + "/" + usuario.id);
   }
 
@@ -72,17 +72,17 @@ export class CitaService {
   }
 
   /* Get all photos related to an appointment*/
-  getFotos(idAppointment: number): Observable <Gallery[]>{
-    return this.http.get<Gallery[]>(this.urlEndPointGetGallery+"/"+idAppointment);
+  getFotos(idAppointment: number): Observable<Gallery[]> {
+    return this.http.get<Gallery[]>(this.urlEndPointGetGallery + "/" + idAppointment);
   }
 
   /* Delete message with an id*/
-  deleteMessage(id_message: number): Observable<any>{
-    return this.http.delete<any>(this.urlEndPointGetMessages+"/"+id_message, {headers: this.httpHeaders});
+  deleteMessage(id_message: number): Observable<any> {
+    return this.http.delete<any>(this.urlEndPointGetMessages + "/" + id_message, { headers: this.httpHeaders });
   }
 
   /* Update Appointment to state 1 (closed) */
-  cerrarCita(id_appointment: number): Observable<any>{
-      return this.http.put<any>(this.urlEndPointCitaCreate + "/" + id_appointment, { headers: this.httpHeaders })
+  cerrarCita(id_appointment: number): Observable<any> {
+    return this.http.put<any>(this.urlEndPointCitaCreate + "/" + id_appointment, { headers: this.httpHeaders })
   }
 }

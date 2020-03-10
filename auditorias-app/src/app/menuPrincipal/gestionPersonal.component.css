@@ -41,23 +41,23 @@ h2 {
   cursor: pointer;
 }
 
-.fa-edit:hover{
-  cursor:pointer;
+.fa-edit:hover {
+  cursor: pointer;
 }
 
-.floatRight{
-  float:right;
+.floatRight {
+  float: right;
   margin-right: 1em;
 }
 
-.fa-trash-alt:hover{
-  cursor:pointer;
+.fa-trash-alt:hover {
+  cursor: pointer;
 }
 
-.link{
+.link {
   color: #0000FF !important;
 }
 
-.link:hover{
-  cursor:pointer;
+.link:hover {
+  cursor: pointer;
 }

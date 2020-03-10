@@ -11,18 +11,18 @@
         <div class="modal-body">
           <div class="thin">
             <div class="textoCentrar">
-              <p><b>Fecha:</b> <br />
+              <p><b>Date:</b> <br />
                 {{cita.date_appointment | date:'short'}}</p>
             </div>
             <hr />
             <div class="textoCentrar">
-              <p><b>Descripción:</b> <br />
+              <p><b>Description:</b> <br />
                 {{cita.description_appointment}}</p>
             </div>
           </div>
           <hr class="thin" />
           <div>
-            <p class="textoCentrar"><b>Mensajes</b></p>
+            <p class="textoCentrar"><b>Messages</b></p>
             <div class="messageCard">
               <hr class="style5">
               <div *ngFor="let message of messagesList | paginate: { itemsPerPage: 2, currentPage: p }">
@@ -33,33 +33,39 @@
               </div>
               <pagination-controls *ngIf="messagesList.length > 0" (pageChange)="p = $event"></pagination-controls>
             </div>
-            <form *ngIf="cita.state_appointment===0" (ngSubmit)="createMessage()" #registerForm="ngForm">
+            <form *ngIf="cita.state_appointment===0" (ngSubmit)="createMessage()" #messageForm="ngForm">
               <div class="form-group">
-                <textarea name="name" class="form-control" rows="8" [(ngModel)]="message.text_message" placeholder="New Message"></textarea>
+                <textarea name="name" class="form-control" rows="8" [(ngModel)]="message.text_message" placeholder="New Message" required maxlength="10000" #appointment_message="ngModel"></textarea>
+                <!-- Error Name Appointment div-->
+                <div class="alert alert-danger" *ngIf="appointment_message.invalid && (appointment_message.dirty || appointment_message.touched)">
+                  <div *ngIf="appointment_message.errors.required">
+                    Message is required
+                  </div>
+                </div>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-warning float-right rounded font-weight-bold">New Message</button>
+                <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" value="New Message" [disabled]="!messageForm.form.valid" />
               </div>
             </form>
           </div> <br />
           <hr class="thin" />
           <div>
-            <p class="textoCentrar"><b>Evidencias</b></p>
+            <p class="textoCentrar"><b>Evidences</b></p>
             <div class="col-xs-1" align="center">
               <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
             </div>
             <div *ngIf="cita.state_appointment===0">
-              <p class="textoCentrar"><b>Nueva evidencia</b></p>
+              <p class="textoCentrar"><b>New evidence</b></p>
               <div class="form-group">
-                <input class="form-control" type="text" [(ngModel)]="textoEvidencia" placeholder="Tipo Evidencia">
+                <input class="form-control" type="text" [(ngModel)]="textoEvidencia" placeholder="Evidence Type">
               </div>
               <div class="input-group">
                 <div class="custom-file">
                   <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input" id="inputGroupFile04">
-                  <label class="custom-file-label" for="inputGroupFile04">Seleccionar foto</label>
+                  <label class="custom-file-label" for="inputGroupFile04">Select photo</label>
                 </div>
                 <div class="input-group-append">
-                  <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Subir</button>
+                  <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Upload</button>
                 </div>
               </div>
             </div>
@@ -70,7 +76,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="cita.state_appointment===0 && authService.hasRole('ROLE_AUDITOR')" (click)="cerrarCita()" type="button" class="btn btn-danger">Cerrar Cita</button>
+          <button *ngIf="cita.state_appointment===0 && authService.hasRole('ROLE_AUDITOR')" (click)="cerrarCita()" type="button" class="btn btn-danger">Close Appointment</button>
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -47,7 +49,7 @@ public class CitaRestController {
 
 	@PostMapping("/cita")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean create(@RequestBody Cita cita) { // Como viene en formato JSON es necesario convertirlo
+	public boolean create(@Valid @RequestBody Cita cita) { // Como viene en formato JSON es necesario convertirlo
 		citaMapper.insert(cita); // Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;
 	}

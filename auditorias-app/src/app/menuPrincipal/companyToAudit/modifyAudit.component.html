@@ -6,23 +6,39 @@
           <h5 class="modal-title">Modify Audit</h5>
         </div>
         <div class="modal-body">
-          <div class="modal-body">
+          <form (ngSubmit)="modificarAudit()" #modifyAudit="ngForm">
             <div class="form-group">
               <select id="empleado" name="empleado" [(ngModel)]="audit.id_user_manager" class="form-control" required #selectionUserError="ngModel">
                 <!-- Antes en ngModel seleccionUsuario-->
                 <option *ngFor="let empleado of empleados" value="{{empleado.id}}">{{empleado.name_user}}</option>
               </select>
+              <!-- Error User Selection div-->
+              <div class="alert alert-danger" *ngIf="selectionUserError.invalid && (selectionUserError.dirty || selectionUserError.touched)">
+                <div *ngIf="selectionUserError.errors.required">
+                  Employee is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="date" class="form-control" id="start" name="audit-start" [ngModel]="audit.date_start_audit | date:'yyyy-MM-dd'" (ngModelChange)="audit.date_start_audit=$event" required />
+              <input type="date" class="form-control" id="start" name="audit-start" [ngModel]="audit.date_start_audit | date:'yyyy-MM-dd'" (ngModelChange)="audit.date_start_audit=$event" required #seleccionFechaInicioError="ngModel" />
+              <div class="alert alert-danger" *ngIf="seleccionFechaInicioError.invalid && (seleccionFechaInicioError.dirty || seleccionFechaInicioError.touched)">
+                <div *ngIf="seleccionFechaInicioError.errors.required">
+                  Audit start is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="date" class="form-control" id="start" name="audit-start" [ngModel]="audit.date_end_audit | date:'yyyy-MM-dd'" (ngModelChange)="audit.date_end_audit=$event" required />
+              <input type="date" class="form-control" id="end" name="audit-end" [ngModel]="audit.date_end_audit | date:'yyyy-MM-dd'" (ngModelChange)="audit.date_end_audit=$event" required #seleccionFechaFinError="ngModel" />
+              <div class="alert alert-danger" *ngIf="seleccionFechaFinError.invalid && (seleccionFechaFinError.dirty || seleccionFechaFinError.touched)">
+                <div *ngIf="seleccionFechaFinError.errors.required">
+                  Audit end is required
+                </div>
+              </div>
             </div>
-          </div>
+            <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!modifyAudit.form.valid" value="Save Changes" />
+          </form>
         </div>
         <div class="modal-footer">
-          <button (click)="modificarAudit()" type="button" class="btn btn-warning">Save Changes</button>
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

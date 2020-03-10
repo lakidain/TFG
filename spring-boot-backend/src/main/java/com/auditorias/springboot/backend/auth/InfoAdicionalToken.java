@@ -14,16 +14,16 @@ import com.auditorias.springboot.backend.mapper.UsuarioMapper;
 import com.auditorias.springboot.backend.model.Usuario;
 
 @Component
-public class InfoAdicionalToken implements TokenEnhancer{
+public class InfoAdicionalToken implements TokenEnhancer {
 
 	@Autowired
-	private UsuarioMapper usuarioMapper ;
-	
+	private UsuarioMapper usuarioMapper;
+
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		
+
 		Usuario usuario = usuarioMapper.findByUsername(authentication.getName()).get(0);
-		
+
 		Map<String, Object> info = new HashMap<>();
 
 		info.put("id", usuario.getId());
@@ -31,8 +31,8 @@ public class InfoAdicionalToken implements TokenEnhancer{
 		info.put("email", usuario.getEmail_user());
 		info.put("phone", usuario.getPhone_user());
 		info.put("companyId", usuario.getId_company());
-		
-		((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(info);
+
+		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
 		return accessToken;
 	}
 

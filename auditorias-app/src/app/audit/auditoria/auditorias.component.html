@@ -10,18 +10,18 @@
   <!-- First Half -->
 
   <div class="containerManage col">
-    <h3 *ngIf="authService.hasRole('ROLE_AUDITOR')">Gestiona las auditorias</h3>
-    <h3 *ngIf="authService.hasRole('ROLE_AUDITED')">Completa las auditorias</h3>
+    <h3 *ngIf="authService.hasRole('ROLE_AUDITOR')">Manage audits</h3>
+    <h3 *ngIf="authService.hasRole('ROLE_AUDITED')">Complete the audits</h3>
     <br />
     <!-- Select Audit to work-->
     <select *ngIf="auditList.length > 0" id="seleccionAudit" name="seleccionAudit" (change)="actualizarListaCitas()" [(ngModel)]="seleccionAudit" class="form-control">
       <!-- ngValue permite el binding de objetos-->
       <option *ngFor="let audit of auditList" [ngValue]="audit">{{audit.name_company}} - {{audit.name_audit_type}}. {{audit.date_start_audit | date}} - {{audit.date_end_audit | date}}</option>
     </select>
-    <a class="nav-link float-right link" *ngIf="seleccionAudit && authService.hasRole('ROLE_AUDITOR')" (click)="abrirModalCloseAudit()"> Cerrar Auditoría </a> <br />
+    <a class="nav-link float-right link" *ngIf="seleccionAudit && authService.hasRole('ROLE_AUDITOR')" (click)="abrirModalCloseAudit()"> Close Audit </a> <br />
     <div *ngIf="seleccionAudit">
       <div *ngIf="permisoCuestionario">
-        <h4>Cuestionarios</h4>
+        <h4>Questionnaires</h4>
         <table *ngIf="questionnaireList.length > 0" class="table table-warning table-hover text-center">
           <tbody>
             <tr>
@@ -34,7 +34,7 @@
         <hr class="thin">
       </div>
       <div *ngIf="permisoCita">
-        <h4>Citas</h4>
+        <h4>Appointments</h4>
         <a class="nav-link float-right" *ngIf="authService.hasRole('ROLE_AUDITOR')" (click)="abrirModalAddAppointment()"> Add appointment </a> <br />
         <table *ngIf="auditAppointments.length > 0" class="table table-warning table-hover text-center">
           <tbody>
@@ -62,7 +62,7 @@
 
   <div class="containerEmployees col" *ngIf="authService.hasRole('ROLE_AUDITOR')">
     <div *ngIf="seleccionAudit">
-      <h3>Empleados añadidos</h3>
+      <h3>Added Employees</h3>
       <a class="nav-link float-right" (click)="abrirModalAddEmployee()"> Add employee </a> <br />
       <div *ngIf="seleccionAudit">
         <table *ngIf="auditEmployees.length > 0" class="table table-warning table-hover text-center">
@@ -72,7 +72,7 @@
               <th scope="col">Appointment</th>
               <th scope="col">Questionnaire</th>
               <th scope="col">Report</th>
-              <th scope="col">Eliminar</th>
+              <th scope="col">Remove</th>
             <tr *ngFor="let employee of auditEmployees | paginate: { itemsPerPage: 3, currentPage: pageEmployees , id:'second'}">
               <td>{{employee.username}}</td>
               <td *ngIf="employee.appointment_permit_audit_employees===0"><input class="hoverable" type="checkbox" (click)="activateAppointment(employee)"></td>

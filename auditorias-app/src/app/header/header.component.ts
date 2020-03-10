@@ -25,12 +25,12 @@ export class HeaderComponent {
 
   logout(): void {
     this.authService.logout();
-    Swal.fire('Logout', 'Adios, esperemos que tenga un buen día', 'success');
+    Swal.fire('Logout', 'Goodbye, we hope you have a good day!', 'success');
     this.router.navigate(['/index']);
   }
 
   /* Hide Menu */
-  hide(){
+  hide() {
     navBarHide();
   }
 }

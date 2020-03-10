@@ -18,10 +18,10 @@ export class CompanyModifyComponent {
 
   @Input() company: Empresa;
 
-  constructor(private modalModifyCompany: ModalModifyCompany, private perfilUsuarioComponent: PerfilUsuarioComponent){
+  constructor(private modalModifyCompany: ModalModifyCompany, private perfilUsuarioComponent: PerfilUsuarioComponent) {
   }
 
-  modificarCompany(){
+  modificarCompany() {
     this.modalModifyCompany.updateCompany(this.company).subscribe(
       response => {
         Swal.fire('Company updated', 'Company correct update', 'success');
@@ -34,7 +34,7 @@ export class CompanyModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.perfilUsuarioComponent.userCompany();
     this.modalModifyCompany.cerrarModal();
   }

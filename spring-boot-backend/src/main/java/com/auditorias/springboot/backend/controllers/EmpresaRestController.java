@@ -2,6 +2,8 @@ package com.auditorias.springboot.backend.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +38,7 @@ public class EmpresaRestController {
 	
 	/* Modify a Company */
 	@PutMapping("/empresa/{id}")
-	public boolean updateMessage(@RequestBody Empresa empresa, @PathVariable Long id){
+	public boolean updateMessage(@Valid @RequestBody Empresa empresa, @PathVariable Long id){
 		empresaMapper.updateEmpresa(empresa);
 		return true;
 	}
@@ -53,7 +55,7 @@ public class EmpresaRestController {
 	
 	@PostMapping("/empresas" )
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean create(@RequestBody Empresa empresa) {	//Como viene en formato JSON es necesario convertirlo	
+	public boolean create(@Valid @RequestBody Empresa empresa) {	//Como viene en formato JSON es necesario convertirlo	
 		empresaMapper.insert(empresa);	//Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;	
 	}

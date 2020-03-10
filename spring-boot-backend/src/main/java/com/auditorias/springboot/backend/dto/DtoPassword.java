@@ -1,8 +1,16 @@
 package com.auditorias.springboot.backend.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class DtoPassword {
 
+	@NotNull
+	@Size(min = 6, max = 15)
 	private String oldPassword;
+	
+	@NotNull
+	@Size(min = 6, max = 15)
 	private String newPassword;
 	
 	public String getOldPassword() {

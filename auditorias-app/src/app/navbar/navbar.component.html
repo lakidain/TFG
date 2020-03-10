@@ -23,16 +23,16 @@
       </li>
       -->
       <li *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()">
-        <a routerLink='/report' class="small-box-footer">Informes</a>
+        <a routerLink='/report' class="small-box-footer">Reports</a>
       </li>
       <li *ngIf="!authService.hasRole('ROLE_ADMIN') && authService.isAuthenticated()">
-        <a routerLink='/cita' class="small-box-footer">Auditorias</a>
+        <a routerLink='/cita' class="small-box-footer">Audits</a>
       </li>
       <li *ngIf="authService.hasRole('ROLE_AUDITORBOSS')">
-        <a routerLink='/gestionPersonal' class="small-box-footer">Gestion de Personal</a>
+        <a routerLink='/gestionPersonal' class="small-box-footer">Personal Management</a>
       </li>
       <li *ngIf="authService.hasRole('ROLE_ADMIN')">
-        <a routerLink='/gestionPreguntas' class="small-box-footer">Gestion de Preguntas</a>
+        <a routerLink='/gestionPreguntas' class="small-box-footer">Assets Management</a>
       </li>
       <!--
       <li>

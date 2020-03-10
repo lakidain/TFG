@@ -15,30 +15,30 @@ export class ReportService {
   private urlEndPointAuditedReports: string = 'http://localhost:8080/api/reportAudited';
   private urlEndPointDownloadReport: string = 'http://localhost:8080/api/report';
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) { }
 
   /* Get All company Reports if your Auditor Boss or Audited Boss*/
-  getCompanyAuditorBoss(id_company: number):Observable<any>{
+  getCompanyAuditorBoss(id_company: number): Observable<any> {
     return this.http.get<any>(this.urlEndPointReportAuditorBoss + "/" + id_company);
   }
 
   /* Get All company Reports if your Auditor Boss or Audited Boss*/
-  getCompanyAuditedBoss(id_company: number):Observable<any>{
+  getCompanyAuditedBoss(id_company: number): Observable<any> {
     return this.http.get<any>(this.urlEndPointReportAuditedBoss + "/" + id_company);
   }
 
   /* Get Reports Assigned to an auditor */
-  getReportsAuditor(id: number):Observable<any>{
+  getReportsAuditor(id: number): Observable<any> {
     return this.http.get<any>(this.urlEndPointAuditorReports + "/" + id);
   }
 
   /* Get Reports Assigned to an audited employee with permissions */
-  getReportsAudited(id: number):Observable<any>{
+  getReportsAudited(id: number): Observable<any> {
     return this.http.get<any>(this.urlEndPointAuditedReports + "/" + id);
   }
 
   /* Download final report */
-  downloadFile(id_report):Observable<any>{
+  downloadFile(id_report): Observable<any> {
     return this.http.get<any>(this.urlEndPointDownloadReport + "/" + id_report);
   }
 

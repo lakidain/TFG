@@ -1,13 +1,34 @@
 package com.auditorias.springboot.backend.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Empresa {
 
 	private Long id_company;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	private String name_company;
+	
+	@NotNull
+	@Size(min=1, max = 9)
 	private String cif_company;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	private String business_name_company;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	private String adress_company;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	private String email_company;
+	
+	@NotNull
+	@Size(min=1, max = 12)
 	private String phone_company;
 	
 	public String getCif_company() {

@@ -3,6 +3,8 @@ package com.auditorias.springboot.backend.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -129,11 +131,11 @@ public class AuditRestController {
 	}
 
 	/*
-	 * 
+	 * Create Audit
 	 */
 	@PostMapping("/audit")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean create(@RequestBody Audit audit) { // Como viene en formato JSON es necesario convertirlo
+	public boolean create(@Valid @RequestBody Audit audit) { // Como viene en formato JSON es necesario convertirlo
 		auditMapper.insert(audit); // Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;
 	}
@@ -146,7 +148,7 @@ public class AuditRestController {
 	
 	/* Modify an Audit */
 	@PutMapping("/audit/{id}")
-	public boolean updateAudit(@RequestBody Audit audit, @PathVariable Long id){
+	public boolean updateAudit(@Valid @RequestBody Audit audit, @PathVariable Long id){
 		auditMapper.updateAudit(audit);
 		return true;
 	}

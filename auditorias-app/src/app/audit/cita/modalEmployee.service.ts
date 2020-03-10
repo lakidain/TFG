@@ -17,7 +17,7 @@ export class ModalEmployee {
 
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 
@@ -25,26 +25,26 @@ export class ModalEmployee {
     this.modal = false;
   }
 
-  getEmployees(id_audit:number):Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(this.urlEndPointCreateEmployee+"/"+id_audit);
+  getEmployees(id_audit: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.urlEndPointCreateEmployee + "/" + id_audit);
   }
 
-  createEmployee(dtoRegistro: DtoRegistro, companyAudited, id_audit):Observable<any>{
+  createEmployee(dtoRegistro: DtoRegistro, companyAudited, id_audit): Observable<any> {
     let formData = new FormData();
     formData.append("email_user", dtoRegistro.email_user);
     formData.append("name_user", dtoRegistro.name_user);
     formData.append("password", dtoRegistro.password);
-    formData.append("phone_user",dtoRegistro.phone_user);
-    formData.append("username",dtoRegistro.username);
-    formData.append("companyAudited",companyAudited);
-    formData.append("id_audit",id_audit);
+    formData.append("phone_user", dtoRegistro.phone_user);
+    formData.append("username", dtoRegistro.username);
+    formData.append("companyAudited", companyAudited);
+    formData.append("id_audit", id_audit);
     return this.http.post<any>(this.urlEndPointCreateEmployee, formData);
   }
 
-  associateEmployee(selectedEmployee,id_audit):Observable<any>{
-    let formData= new FormData();
-    formData.append("selectedEmployee",selectedEmployee);
-    formData.append("id_audit",id_audit);
+  associateEmployee(selectedEmployee, id_audit): Observable<any> {
+    let formData = new FormData();
+    formData.append("selectedEmployee", selectedEmployee);
+    formData.append("id_audit", id_audit);
     return this.http.post<any>(this.urlEndPointAssociateEmployee, formData);
   }
 }

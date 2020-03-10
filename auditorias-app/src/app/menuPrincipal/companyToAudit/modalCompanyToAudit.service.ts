@@ -10,7 +10,7 @@ export class ModalCompanyToAudit {
 
   constructor() { }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 

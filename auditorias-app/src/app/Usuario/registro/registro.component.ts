@@ -24,10 +24,10 @@ export class RegistroComponent implements OnInit {
   public create(): void {
     this.usuarioService.create(this.dtoRegistro).subscribe(
       response => {
-        Swal.fire('Registrado', `El registro ha sido un exito`, 'success');
+        Swal.fire('Registered', `Success in Registration, try to log in!`, 'success');
         this.router.navigate(['/login']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       }, err => {
-        Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
+        Swal.fire('Error', `Register failed, try again`, 'error');
       }
     )
   }

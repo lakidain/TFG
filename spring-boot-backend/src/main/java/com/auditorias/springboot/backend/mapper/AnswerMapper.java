@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Update;
 import com.auditorias.springboot.backend.dto.DtoAnswersRelatedToThreat;
 import com.auditorias.springboot.backend.dto.DtoAuditQuestionsAnswers;
 import com.auditorias.springboot.backend.dto.DtoQuestionnaire;
-import com.auditorias.springboot.backend.model.Audit;
 import com.auditorias.springboot.backend.model.Audit_Answer;
 
 @Mapper

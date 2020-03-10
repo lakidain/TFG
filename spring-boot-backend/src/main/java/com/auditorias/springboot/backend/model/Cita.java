@@ -2,13 +2,29 @@ package com.auditorias.springboot.backend.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Cita {
 	
 	private Long id_appointment;
+	
+	@NotNull
+	@Min(1)
 	private Long id_audit;
+	
+	@NotNull
+	@Size(min=1, max = 100)
 	private String name_appointment;
+	
+	@NotNull
+	@Size(min=1, max = 2000)
 	private String description_appointment;
+	
+	@NotNull
 	private Date date_appointment;
+	
 	private int state_appointment;
 	
 	public Long getId_appointment() {

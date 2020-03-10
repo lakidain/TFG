@@ -10,5 +10,5 @@ import { AuthService } from '../usuario/login/auth.service';
 
 export class MenuComponent {
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService) { }
 }

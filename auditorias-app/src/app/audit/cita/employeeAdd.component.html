@@ -9,11 +9,11 @@
           </button>
         </div>
         <div class="modal-body">
-          <h6>Crea un empleado</h6>
+          <h6>Create an Employee</h6>
           <form (ngSubmit)="createEmployee()" #registerForm="ngForm">
             <!-- Name And Surname field -->
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Nombre y Apellidos" [(ngModel)]="dtoRegistro.name_user" name="name_user" required #name_user="ngModel" />
+              <input type="text" class="form-control" placeholder="Name and Surname" [(ngModel)]="dtoRegistro.name_user" name="name_user" required maxlength="100" #name_user="ngModel" />
               <!-- Error name div-->
               <div class="alert alert-danger" *ngIf="name_user.invalid && (name_user.dirty || name_user.touched)">
                 <div *ngIf="name_user.errors.required">
@@ -23,7 +23,8 @@
             </div>
             <div class="form-group">
               <!-- Regex for NIF ^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$ AND for NIE ^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$-->
-              <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" required pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$|^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$" #username="ngModel" />
+              <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dtoRegistro.username" name="username" required maxlength="9" pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$|^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$"
+                #username="ngModel" />
               <!-- Error DNI div-->
               <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
                 <div *ngIf="username.errors.required">
@@ -35,7 +36,7 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" required email #email_user="ngModel" />
+              <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="dtoRegistro.email_user" name="email_user" required maxlength="100" email #email_user="ngModel" />
               <!-- Error email div-->
               <div class="alert alert-danger" *ngIf="email_user.invalid && (email_user.dirty || email_user.touched)">
                 <div *ngIf="email_user.errors.required">
@@ -47,7 +48,7 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Teléfono" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
+              <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="dtoRegistro.phone_user" name="phone_user" required maxlength="12" pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" #phone_user="ngModel" />
               <!-- Error phone div-->
               <div class="alert alert-danger" *ngIf="phone_user.invalid && (phone_user.dirty || phone_user.touched)">
                 <div *ngIf="phone_user.errors.required">
@@ -71,25 +72,31 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Crear y asociar" [disabled]="!registerForm.form.valid" />
+              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Create and Associate" [disabled]="!registerForm.form.valid" />
             </div>
           </form><br />
-          <h6>o asocia uno ya existente</h6>
-          <form (ngSubmit)="addEmployee()">
+          <h6>or associate an existing employee</h6>
+          <form (ngSubmit)="addEmployee()" #associateForm="ngForm">
             <div class="form-group">
-              <select id="selectedEmployee" name="selectedEmployee" [(ngModel)]="selectedEmployee" class="form-control">
+              <select id="selectedEmployee" name="selectedEmployee" [(ngModel)]="selectedEmployee" class="form-control" required #associate_user="ngModel">
                 <option *ngFor="let employee of employees" value="{{employee.id}}">{{employee.username}} - {{employee.name_user}}</option>
               </select>
+              <!-- Error DNI div-->
+              <div class="alert alert-danger" *ngIf="associate_user.invalid && (associate_user.dirty || associate_user.touched)">
+                <div *ngIf="associate_user.errors.required">
+                  DNI is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Asociar" />
-          </div>
+              <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Associate" [disabled]="!associateForm.form.valid" />
+            </div>
           </form>
         </div>
         <div class=" modal-footer">
-              <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+          <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
+</div>

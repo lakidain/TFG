@@ -2,11 +2,27 @@ package com.auditorias.springboot.backend.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Message {
+	
 	private Long id_message;
+	
+	@NotNull
+	@Min(1)
 	private Long id_appointment;
+	
+	@NotNull
+	@Min(1)
 	private Long id_user;
+	
+	@NotNull
+	@Size(min=1, max = 10000)
 	private String text_message;
+	
+	@NotNull
 	private Date timestamp_message;
 	
 	public Long getId_message() {

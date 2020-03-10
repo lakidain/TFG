@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
-      Swal.fire('Login', 'Ya estás identificado', 'info')
+      Swal.fire('Login', 'Already logged', 'info')
       this.router.navigate(['/menu']);
     }
   }
@@ -33,11 +33,11 @@ export class LoginComponent implements OnInit {
       this.authService.guardarUsuario(response.access_token);
       this.authService.guardarToken(response.access_token);
       let usuario = this.authService.usuario;
-      Swal.fire('Bienvenido al sistema', `Se ha logeado como ${usuario.username}`, 'success');
+      Swal.fire('Welcome to Upaudit', `You've been logged as ${usuario.username}`, 'success');
       this.router.navigate(['/menu']);
     }, err => {
       if (err.status == 400 || err.status == 401) {
-        Swal.fire('Error al logearse', 'Pruebe a volver a introducir sus credenciales o espere a ser autentificado por su jefe', 'error');
+        Swal.fire('Error logging in', 'Try to log in again or wait to be accepted by your boss', 'error');
       }
     }
     )

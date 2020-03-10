@@ -31,12 +31,12 @@ export class CitaCreationComponent {
     this.cita.id_audit = this.audit.id_audit;
     this.citaService.createCita(this.cita).subscribe(
       response => {
-        Swal.fire('Cita Registrada', `La creacion de la nueva cita ha sido ha un exito`, 'success');
+        Swal.fire('Appointment Registered', `New appointment created succesfully`, 'success');
         this.auditoriasComponent.actualizarCalendarioCitas();
         this.auditoriasComponent.actualizarListaCitas();
         this.cerrarModal();
       }, err => {
-        Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
+        Swal.fire('Error', `Creation failed, try again later`, 'error');
       }
     )
   }

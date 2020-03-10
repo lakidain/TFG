@@ -8,20 +8,42 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form (ngSubmit)="create()" #registerForm="ngForm">
+        <form (ngSubmit)="create()" #citaCreation="ngForm">
           <div class="modal-body">
             <div class="form-group">
-              <input type="text" class="form-control" id="name_appointment" name="name_appointment" [(ngModel)]="cita.name_appointment" placeholder="Appointment Name" />
+              <input type="text" class="form-control" id="name_appointment" name="name_appointment" [(ngModel)]="cita.name_appointment" placeholder="Appointment Name" required maxlength="100" #appointment_name="ngModel" />
+              <!-- Error Name Appointment div-->
+              <div class="alert alert-danger" *ngIf="appointment_name.invalid && (appointment_name.dirty || appointment_name.touched)">
+                <div *ngIf="appointment_name.errors.required">
+                  Appointment name is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <textarea name="name" rows="8" cols="80" id="description_appointment" name="description_appointment" [(ngModel)]="cita.description_appointment" class="form-control" placeholder="Description"></textarea>
+              <textarea name="name" rows="8" cols="80" id="description_appointment" name="description_appointment" [(ngModel)]="cita.description_appointment" class="form-control" placeholder="Description" required maxlength="2000"
+                #description="ngModel"></textarea>
+              <!-- Error Description div-->
+              <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+                <div *ngIf="description.errors.required">
+                  Description is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="datetime-local" class="form-control" id="date_appointment" name="date_appointment" [(ngModel)]="cita.date_appointment" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+              <input type="datetime-local" class="form-control" id="date_appointment" name="date_appointment" [(ngModel)]="cita.date_appointment" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required #appointment_date="ngModel">
+              <!-- Error Date div-->
+              <div class="alert alert-danger" *ngIf="appointment_date.invalid && (appointment_date.dirty || appointment_date.touched)">
+                <div *ngIf="appointment_date.errors.required">
+                  Date Appointment is required
+                </div>
+                <div *ngIf="appointment_name.errors.pattern">
+                  Date time local needed
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-warning">Create Appointment</button>
+            <input type="submit" class="btn btn-warning" value="Create Appointment" [disabled]="!citaCreation.form.valid" />
             <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </form>

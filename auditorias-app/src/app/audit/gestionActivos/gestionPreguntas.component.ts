@@ -194,11 +194,11 @@ export class GestionPreguntas {
   /* Creation of Audit types */
   typeSend() {
     this.gestionPreguntasService.createAuditType(this.auditType).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      Swal.fire('Exito al crear el tipo de aditoria', 'El tipo de auditoria ha sido creado con exito', 'success');
+      Swal.fire('Success creating audit type', 'Audit type has been created', 'success');
       this.updateAuditTypes();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear el tipo de auditoria', 'Vuelva a intentar crearla o compruebe que no existe', 'error');
+        Swal.fire('Error creating audit type', 'Try again or check it doesn\'t exist', 'error');
       }
     }
     );
@@ -231,12 +231,12 @@ export class GestionPreguntas {
       this.dtoAssetCreation.name_audit_asset = "";
     }
     this.gestionPreguntasService.createAsset(this.dtoAssetCreation).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      Swal.fire('Exito al crear el activo', 'El activo ha sido creado con exito', 'success');
+      Swal.fire('Success creating the asset', 'The asset has been succesfully created', 'success');
       this.updateAuditAssets();
       this.updateAssetsRelatedToType();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear el tipo de activo', 'Una amenaza solo puede estar relacionada con un activo. Por ejemplo: Si el tipo de auditoria Informatica tiene los activos USUARIO y SGDB, al enlazar la amenaza Fuerza Bruta con USUARIOS no podra ser enlazada con SGDB', 'error');
+        Swal.fire('Error creating asset', 'A threat can only be related to one asset. For example: If the type of IT audit has the assets USER and SGDB, by linking the threat Brute Force with USER it cannot be linked to SGDB', 'error');
       }
     }
     );
@@ -245,7 +245,7 @@ export class GestionPreguntas {
   /* Modify Asset */
   modifyAuditAsset(asset: AuditAsset) {
     this.modifiedAsset = asset;
-    this.modalModifyAuditAnswer.abrirModal();
+    this.modalModifyAuditAsset.abrirModal();
   }
 
   /* Delete Asset relation */
@@ -271,12 +271,12 @@ export class GestionPreguntas {
       this.newThreat = "";
     }
     this.gestionPreguntasService.createThreat(this.newThreat, this.assetThreat, this.existingThreat).subscribe(response => {
-      Swal.fire('Exito al crear la amenaza', 'La amenaza ha sido creada con exito', 'success');
+      Swal.fire('Success creating threat', 'Threat has been successfully created', 'success');
       this.updateAuditThreats();
       this.updateThreatsRelatedToAsset();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear la amenaza', 'Una amenaza solo puede estar relacionada con un activo. Por ejemplo: Si el tipo de auditoria Informatica tiene los activos USUARIO y SGDB, al enlazar la amenaza Fuerza Bruta con USUARIOS no podra ser enlazada con SGDB', 'error');
+        Swal.fire('Error creating threat', 'A threat can only be related to one asset. For example: If the type of IT audit has the assets USER and SGDB, by linking the threat Brute Force with USER it cannot be linked to SGDB', 'error');
       }
     }
     );
@@ -309,11 +309,11 @@ export class GestionPreguntas {
       this.newVulnerability = "";
     }
     this.gestionPreguntasService.createVulnerability(this.newVulnerability, this.threatVulnerability, this.existingVulnerability).subscribe(response => {
-      Swal.fire('Exito al crear la vulnerabilidad', 'La vulnerabilidad ha sido creada con exito', 'success');
+      Swal.fire('Success creating vulnerability', 'The vulnerability has been created successfully', 'success');
       this.updateVulnerabilities();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear la vulnerabilidad', 'Vuelva a a crearla', 'error');
+        Swal.fire('Error creating vulnerability', 'Try again later', 'error');
       }
     }
     );
@@ -344,12 +344,12 @@ export class GestionPreguntas {
     }
     this.gestionPreguntasService.createQuestion(this.threatVulnerability, this.newVulnerability, this.newQuestion, this.newFirstAnswer, this.newSecondAnswer, this.newThirdAnswer, this.newFourthAnswer, this.newFifthAnswer, this.existingVulnerability, this.existingQuestion,
       this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
-        Swal.fire('Exito al crear la pregunta', 'La pregunta ha sido creada con exito', 'success');
+        Swal.fire('Success creating question', 'Question has been created succesfully', 'success');
         this.updateQuestionsAndAnswers();
         this.updateQuestionsRelatedToThreat();
       }, err => {
         if (err.status == 400 || err.status == 401 || err.status == 500) {
-          Swal.fire('Error al crear la pregunta', 'Vuelva a a crearla o compruebe que no existe ya', 'error');
+          Swal.fire('Error creating the question', 'Try again or check it doesn\'t exist', 'error');
         }
       }
       );
@@ -367,7 +367,7 @@ export class GestionPreguntas {
     this.modalModifyAuditQuestion.abrirModal();
   }
 
-  deleteQuestionRelation(pair: any){
+  deleteQuestionRelation(pair: any) {
     if (confirm("Are you sure you want to delete this relation? Information can be lost in the process")) {
       this.gestionPreguntasService.deleteQuestionRelation(this.threatVulnerability, pair.id_audit_vulnerability, pair.id_audit_question).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
         Swal.fire('Success deleting Relation', 'Relation deleted', 'success');

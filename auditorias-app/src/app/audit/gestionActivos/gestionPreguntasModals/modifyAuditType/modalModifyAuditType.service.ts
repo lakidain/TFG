@@ -15,7 +15,7 @@ export class ModalModifyAuditType {
 
   constructor(private http: HttpClient) { }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 
@@ -23,7 +23,7 @@ export class ModalModifyAuditType {
     this.modal = false;
   }
 
-  updateAuditType(auditType: AuditType):Observable<any>{
+  updateAuditType(auditType: AuditType): Observable<any> {
     return this.http.put<any>(this.urlEndPoint + "/" + auditType.id_audit_type, auditType, { headers: this.httpHeaders })
   }
 }

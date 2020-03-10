@@ -78,11 +78,11 @@ export class CloseAuditComponent {
   closeAudit() {
     this.modalCloseAudit.postResults(this.threatsVulnerabilities).subscribe(
       response => {
-        Swal.fire('Auditoria cerrada', `El cierre de la auditoria ha sido un exito, el informe ha sido generado`, 'success');
+        Swal.fire('Audit closed', `Report has been generated`, 'success');
         this.cerrarModal();
         this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
       }, err => {
-        Swal.fire('Error', `La creacion ha fallado, vuelta a intentarlo`, 'error');
+        Swal.fire('Error', `Try again later`, 'error');
       }
     )
   }

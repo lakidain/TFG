@@ -15,11 +15,11 @@ export class ModalModifyCompany {
 
   constructor(private http: HttpClient) { }
 
-  updateCompany(company: Empresa):Observable<any>{
+  updateCompany(company: Empresa): Observable<any> {
     return this.http.put<any>(this.urlEndPoint + "/" + company.id_company, company, { headers: this.httpHeaders })
   }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 

@@ -15,9 +15,9 @@ export class AuditAssetModifyComponent {
 
   @Input() auditAsset: AuditAsset;
 
-  constructor(private modalModifyAuditAsset: ModalModifyAuditAsset, private gestionPreguntas: GestionPreguntas){}
+  constructor(private modalModifyAuditAsset: ModalModifyAuditAsset, private gestionPreguntas: GestionPreguntas) { }
 
-  modificarAuditAsset(){
+  modificarAuditAsset() {
     this.modalModifyAuditAsset.updateAuditAsset(this.auditAsset).subscribe(
       response => {
         Swal.fire('Asset updated', 'Asset correct update', 'success');
@@ -30,7 +30,7 @@ export class AuditAssetModifyComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.gestionPreguntas.updateAssetsRelatedToType();
     this.gestionPreguntas.updateAuditAssets();
     this.modalModifyAuditAsset.cerrarModal();

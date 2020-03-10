@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.catalina.startup.SetAllPropertiesRule;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,6 @@ import com.auditorias.springboot.backend.mapper.AuditMapper;
 import com.auditorias.springboot.backend.mapper.ResultMapper;
 import com.auditorias.springboot.backend.model.Audit;
 import com.auditorias.springboot.backend.model.Audit_Asset;
-import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
-import com.auditorias.springboot.backend.model.Audit_Type;
 import com.auditorias.springboot.backend.model.Empresa;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 import com.auditorias.springboot.backend.model.Usuario;
@@ -369,7 +366,7 @@ public class ResultRestController {
 			resultMapper.saveReport(results.get(0).getId_audit(), nombreArchivo);
 
 			/* Cerramos la auditoria */
-			// auditMapper.closeAudit(results.get(0).getId_audit());
+			auditMapper.closeAudit(results.get(0).getId_audit());
 
 		} catch (DocumentException e) {
 			e.printStackTrace();

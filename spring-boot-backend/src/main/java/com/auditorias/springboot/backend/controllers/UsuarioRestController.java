@@ -2,6 +2,8 @@ package com.auditorias.springboot.backend.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,7 +57,7 @@ public class UsuarioRestController {
 	/* Update phone and email */
 	@PutMapping("/usuario/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario update(@RequestBody Usuario user, @PathVariable Long id) {
+	public Usuario update(@Valid @RequestBody Usuario user, @PathVariable Long id) {
 		usuarioMapper.update(user);
 		return usuarioMapper.findByUsername(user.getUsername()).get(0);
 	}
@@ -63,7 +65,7 @@ public class UsuarioRestController {
 	/* Password change request method */
 	@PutMapping("/usuarioPassword/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean updatePassword(@RequestBody DtoPassword dtoPassword, @PathVariable Long id) {
+	public boolean updatePassword(@Valid @RequestBody DtoPassword dtoPassword, @PathVariable Long id) {
 		/* The method matches is used to compare the equality of both passwords */
 		if (passwordEncoder.matches(dtoPassword.getOldPassword(),
 				usuarioMapper.getOldPassword(id).get(0).getPassword())) {
@@ -87,7 +89,7 @@ public class UsuarioRestController {
 	/* METODO CORRESPONDIENTE A LA CREACION DE USUARIO */
 	@PostMapping("/usuario")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean create(@RequestBody DtoRegistro dtoRegistro) { // Como viene en formato JSON es necesario convertirlo
+	public boolean create(@Valid @RequestBody DtoRegistro dtoRegistro) { // Como viene en formato JSON es necesario convertirlo
 		Usuario usuario = new Usuario();
 		usuario.setUsername(dtoRegistro.getUsername());
 		usuario.setName_user(dtoRegistro.getName_user());

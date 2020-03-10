@@ -1,17 +1,17 @@
-<h1>Panel de Usuario</h1>
+<h1>User Panel</h1>
 
 <div class="container">
-  <h2>Datos personales</h2>
+  <h2>Personal Data</h2>
   <div class="datosPersonales">
-    <p><b><i class="fas fa-signature"></i> Nombre:</b> {{usuario.name_user}}</p>
+    <p><b><i class="fas fa-signature"></i> Name:</b> {{usuario.name_user}}</p>
     <p><b><i class="fas fa-passport"></i> DNI:</b> {{usuario.username}} </p>
-    <p><b><i class="fas fa-envelope"></i> Email:</b> {{usuario.email_user}}</p>
+    <p><b><i class="fas fa-envelope"></i> E-mail:</b> {{usuario.email_user}}</p>
     <p><b><i class="fas fa-phone"></i> Phone:</b> {{usuario.phone_user}}</p>
   </div> <br />
   <div *ngIf="authService.hasRole('ROLE_AUDITORBOSS') || authService.hasRole('ROLE_AUDITEDBOSS')">
     <hr class="thin">
     <h4><span (click)="modifyCompany()"><i class="fas fa-edit floatRight"></i></span></h4>
-    <h2>Datos empresa</h2>
+    <h2>Company Data</h2>
     <div class="datosPersonales">
       <p><b><i class="fas fa-signature"></i> Company Name:</b> {{empresaModify.name_company}}</p>
       <p><b><i class="fas fa-id-badge"></i> CIF:</b> {{empresaModify.cif_company}} </p>
@@ -26,10 +26,10 @@
 <hr class="thin">
 
 <div class="container">
-  <h2> Modificar Datos Personales </h2> <br />
+  <h2> Modify Personal Data </h2> <br />
   <!-- FORM CAMBIO DE EMAIL-->
   <!-- Text input-->
-  <h3>Modificar correo electrónico/teléfono</h3>
+  <h3>Modify E-mail/Phone</h3>
   <form (ngSubmit)="updateUsuario()" #updateUsuarioForm="ngForm">
     <div class="form-group">
       <label><b><i class="fas fa-envelope"></i> E-mail</b></label>
@@ -58,17 +58,17 @@
           </div>
         </div>
       </div>
-      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateUsuarioForm.form.valid" value="Actualizar Campos" /> <br />
+      <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateUsuarioForm.form.valid" value="Fields update" /> <br />
     </div>
   </form>
 
   <hr class="thin">
 
-  <h3>Cambio de password</h3>
+  <h3>Password Change</h3>
 
   <form (ngSubmit)="updatePassword()" #updatePasswordForm="ngForm">
     <div class="form-group">
-      <label><b><i class="fas fa-unlock-alt"></i> Password Antigua</b></label>
+      <label><b><i class="fas fa-unlock-alt"></i> Old Password</b></label>
       <div class="form-group">
         <input type="password" class="form-control" placeholder="Password Antigua" [(ngModel)]="oldPassword" name="oldPassword" required minlength="6" #oldPasswordError="ngModel" />
         <!-- Error Old password div-->
@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>
-      <label><b><i class="fas fa-key"></i> Password Nueva</b></label>
+      <label><b><i class="fas fa-key"></i> New Password</b></label>
       <div class="form-group">
         <input type="password" class="form-control" placeholder="Password Nueva" [(ngModel)]="newPassword" name="newPassword" required minlength="6" #newPasswordError="ngModel" />
         <!-- Error New password div-->
@@ -95,7 +95,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updatePasswordForm.form.valid" value="Cambiar Password" /> <br />
+        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updatePasswordForm.form.valid" value="Password change" /> <br />
       </div>
     </div>
   </form>
@@ -103,7 +103,7 @@
   <div *ngIf="authService.hasRole('ROLE_AUDITOR')">
     <hr class=" thin">
 
-    <h3>Cambio de empresa</h3>
+    <h3>Company Change</h3>
 
     <form (ngSubmit)="updateCompany()" #updateCompanyForm="ngForm">
       <label><b><i class="fas fa-building"></i> Company</b></label>
@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Cambio de empresa" /> <br />
+        <input type="submit" class="btnSubmit btn-warning float-right rounded font-weight-bold btn" [disabled]="!updateCompanyForm.form.valid" value="Company change" /> <br />
       </div>
     </form>
   </div>

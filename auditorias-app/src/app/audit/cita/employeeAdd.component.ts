@@ -21,7 +21,7 @@ export class EmployeeAddComponent {
   /* Employees of this company */
   employees: Usuario[];
 
-  constructor(private modalEmployee:ModalEmployee,private auditoriasComponent : AuditoriasComponent) {
+  constructor(private modalEmployee: ModalEmployee, private auditoriasComponent: AuditoriasComponent) {
     this.dtoRegistro = new DtoRegistro();
   }
 
@@ -29,7 +29,7 @@ export class EmployeeAddComponent {
     this.updateEmployees();
   }
 
-  updateEmployees(){
+  updateEmployees() {
     this.modalEmployee.getEmployees(this.audit.id_audit).subscribe(
       employees => {
         this.employees = employees;
@@ -37,32 +37,32 @@ export class EmployeeAddComponent {
     );
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.modalEmployee.cerrarModal();
   }
 
   /* Primero crearemos el empleado, luego lo asociaremos con esta cita */
-  createEmployee(){
+  createEmployee() {
     this.modalEmployee.createEmployee(this.dtoRegistro, this.audit.id_company_audited, this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      Swal.fire('Exito al crear el empleado', 'El empleado ha sido creado con exito', 'success');
+      Swal.fire('Success creating employee', 'Thre employee has been created and related', 'success');
       this.auditoriasComponent.actualizarEmployees();
       this.modalEmployee.cerrarModal();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al crear el usuario', 'Vuelva a intentar crearlo o compruebe que no existe', 'error');
+        Swal.fire('Error creating the employee', 'Try again later', 'error');
       }
     }
     );
   }
 
-  addEmployee(){
-    this.modalEmployee.associateEmployee(this.selectedEmployee,this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      Swal.fire('Exito al asociar el empleado', 'El empleado ha sido asociado con exito', 'success');
+  addEmployee() {
+    this.modalEmployee.associateEmployee(this.selectedEmployee, this.audit.id_audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
+      Swal.fire('Success associating employee', 'The employee has been successfully associated', 'success');
       this.auditoriasComponent.actualizarEmployees();
       this.modalEmployee.cerrarModal();
     }, err => {
       if (err.status == 400 || err.status == 401 || err.status == 500) {
-        Swal.fire('Error al asociar el usuario', 'Compruebe que no está ya asociado', 'error');
+        Swal.fire('Error associating employee', 'Check it\'s not already associated', 'error');
       }
     }
     );

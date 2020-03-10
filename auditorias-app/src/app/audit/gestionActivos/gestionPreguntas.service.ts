@@ -49,7 +49,7 @@ export class GestionPreguntasService {
     return this.http.get<AuditThreat[]>(this.urlEndPointThreatsRelatedToAsset + "/" + id_audit_asset);
   }
 
-  updateQuestionsRelatedToThreat(id_audit_threat: number): Observable<any[]>{
+  updateQuestionsRelatedToThreat(id_audit_threat: number): Observable<any[]> {
     return this.http.get<any[]>(this.urlEndPointQuestionsRelatedToThreat + "/" + id_audit_threat);
   }
 
@@ -129,8 +129,8 @@ export class GestionPreguntasService {
     return this.http.post<any>(this.urlEndPointAuditQuestions, formData);
   }
 
-  deleteQuestionRelation(id_audit_threat: number, id_audit_vulnerability: number, id_audit_question: number){
-    return this.http.delete<any>(this.urlEndPointAuditDeleteQuestionsRelation + "/" + id_audit_threat + "/" + id_audit_vulnerability+"/"+id_audit_question, { headers: this.httpHeaders });
+  deleteQuestionRelation(id_audit_threat: number, id_audit_vulnerability: number, id_audit_question: number) {
+    return this.http.delete<any>(this.urlEndPointAuditDeleteQuestionsRelation + "/" + id_audit_threat + "/" + id_audit_vulnerability + "/" + id_audit_question, { headers: this.httpHeaders });
   }
 
   /* Creation Audit Vulnerability */

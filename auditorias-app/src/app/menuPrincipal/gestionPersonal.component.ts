@@ -66,7 +66,7 @@ export class GestionPersonalComponent {
     );
   }
 
-  updateCompanies(){
+  updateCompanies() {
     this.gestionPersonalService.getEmpresas().subscribe(
       empresas => {
         this.empresas = empresas;
@@ -100,17 +100,17 @@ export class GestionPersonalComponent {
     this.audit.date_end_audit = this.seleccionFechaFin;
 
     this.gestionPersonalService.setAudit(this.audit).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      Swal.fire('Exito al crear la auditoría', 'La auditoria ha sido creada', 'success');
+      Swal.fire('Success creating the audit', 'Audit has been created', 'success');
       this.updateAudits();
     }, err => {
       if (err.status == 400 || err.status == 401) {
-        Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
+        Swal.fire('Error creating the audit', 'Try again later', 'error');
       }
     }
     )
   }
 
-  modifyAudit(audit:DtoAuditList){
+  modifyAudit(audit: DtoAuditList) {
     this.auditModify = audit;
     this.modalModifyAudit.abrirModal();
   }
@@ -122,7 +122,7 @@ export class GestionPersonalComponent {
         this.updateAudits();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al crear la auditoria', 'Vuelva a intentar crearla', 'error');
+          Swal.fire('Error removing audit', 'Try again later', 'error');
         }
       });
     }
@@ -140,7 +140,7 @@ export class GestionPersonalComponent {
   aceptarPersona(empleado: Usuario): void {
     this.usuarioService.enableUsuario(empleado).subscribe(
       response => {
-        Swal.fire('Usuario Aceptado', `Ha aceptado al empleado con DNI ${empleado.username}`, 'success');
+        Swal.fire('User accepted', `You've accepted user with DNI: ${empleado.username}`, 'success');
         this.updateEmpleados();
       }
     );

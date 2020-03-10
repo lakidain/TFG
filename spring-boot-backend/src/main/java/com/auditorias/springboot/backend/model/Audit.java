@@ -2,14 +2,34 @@ package com.auditorias.springboot.backend.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Audit {
 
+	/* No lo validamos porque al crear no se usa */
 	private Long id_audit;
+	
+	@NotNull
+	@Min(1)
 	private Long id_user_manager;
+	
+	@NotNull
+	@Min(1)
 	private Long id_company_auditing;
+	
+	@NotNull
+	@Min(1)
 	private Long id_company_audited;
+	
+	@NotNull
+	@Min(1)
 	private Long id_audit_type;
+	
+	@NotNull
 	private Date date_start_audit;
+	
+	@NotNull
 	private Date date_end_audit;
 	
 	public Long getId_audit() {

@@ -54,11 +54,11 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 import { NgxGalleryModule } from 'ngx-gallery'; //for gallery
 import { NgxPaginationModule } from 'ngx-pagination'; //for pagination
 
-export class CustomHammerConfig extends HammerGestureConfig  {  /* Needed for Gallery */
-   overrides = {
-       pinch: { enable: false },
-       rotate: { enable: false }
-   };
+export class CustomHammerConfig extends HammerGestureConfig {  /* Needed for Gallery */
+  overrides = {
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
 }
 
 const routes: Routes = [
@@ -66,7 +66,7 @@ const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
-  { path: 'report', component: ReportComponent},
+  { path: 'report', component: ReportComponent },
   { path: 'cita', component: AuditoriasComponent },
   { path: 'gestionPreguntas', component: GestionPreguntas },
   { path: 'gestionPersonal', component: GestionPersonalComponent },
@@ -116,8 +116,8 @@ const routes: Routes = [
     NgxPaginationModule, //for Pagination
   ],
   providers: [UsuarioService, GestionPersonalService, GestionPreguntasService, CompanyService, PerfilUsuarioService, AuditoriaService, CitaService, DatePipe, { /* Needed for gallery */
-        provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig
-    }], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
+    provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig
+  }], //LOS SERVICIOS DEBERAN SER COLOCADOS EN PROVIDERS
   bootstrap: [AppComponent]
 })
 export class AppModule { }

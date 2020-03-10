@@ -5,29 +5,83 @@
         <div class="modal-header">
           <h5 class="modal-title">Modify Company</h5>
         </div>
-        <div class="modal-body">
+        <form (ngSubmit)="modificarCompany()" #modifyCompanyForm="ngForm">
           <div class="modal-body">
             <div class="form-group">
-              <input type="text" class="form-control" id="cif_company" name="cif_company" [(ngModel)]="company.cif_company" placeholder="CIF" />
+              <label class="formLabel">
+                <b>CIF</b>
+              </label>
+              <input type="text" class="form-control" id="cif_company" name="cif_company" [(ngModel)]="company.cif_company" placeholder="CIF" required pattern="^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$" maxlength="100" #cif="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="cif.invalid && (cif.dirty || cif.touched)">
+                <div *ngIf="cif.errors.required">
+                  CIF is required
+                </div>
+                <div *ngIf="cif.errors.pattern">
+                  CIF pattern
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="business_name_company" name="business_name_company" [(ngModel)]="company.business_name_company" placeholder="Business Name" />
+              <label class="formLabel">
+                <b>Business Name Company</b>
+              </label>
+              <input type="text" class="form-control" id="business_name_company" name="business_name_company" [(ngModel)]="company.business_name_company" placeholder="Business Name" required maxlength="9" #business_name="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="business_name.invalid && (business_name.dirty || business_name.touched)">
+                <div *ngIf="business_name.errors.required">
+                  Business Name is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="adress_company" name="adress_company" [(ngModel)]="company.adress_company" placeholder="Adress" />
+              <label class="formLabel">
+                <b>Adress</b>
+              </label>
+              <input type="text" class="form-control" id="adress_company" name="adress_company" [(ngModel)]="company.adress_company" placeholder="Adress" required maxlength="100" #adress_company="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="adress_company.invalid && (adress_company.dirty || adress_company.touched)">
+                <div *ngIf="adress_company.errors.required">
+                  Adress Company is required
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="email_company" name="email_company" [(ngModel)]="company.email_company" placeholder="Email" />
+              <label class="formLabel">
+                <b>E-mail</b>
+              </label>
+              <input type="text" class="form-control" id="email_company" name="email_company" [(ngModel)]="company.email_company" placeholder="Email" required email maxlength="100" #email="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <div *ngIf="email.errors.required">
+                  Email is required
+                </div>
+                <div *ngIf="email.errors.email">
+                  The email must have a correct format
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="phone_company" name="phone_company" [(ngModel)]="company.phone_company" placeholder="Phone" />
+              <label class="formLabel">
+                <b>Phone</b>
+              </label>
+              <input type="text" class="form-control" id="phone_company" name="phone_company" [(ngModel)]="company.phone_company" placeholder="Phone" required pattern="^(\+34|0034|34)?[6|7|8|9][0-9]{8}$" maxlength="12" #phone="ngModel" />
+              <!-- Error name div-->
+              <div class="alert alert-danger" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                <div *ngIf="phone.errors.required">
+                  Phone is required
+                </div>
+                <div *ngIf="phone.errors.pattern">
+                  The phone must have spanish format
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button (click)="modificarCompany()" type="button" class="btn btn-warning">Save Changes</button>
-          <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+          <div class="modal-footer">
+            <input type="submit" class="btnSubmit btn btn-warning float-right rounded font-weight-bold" value="Save" [disabled]="!modifyCompanyForm.form.valid" />
+            <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 export class ReportComponent {
 
-  listaInformes: any [] = [];
+  listaInformes: any[] = [];
   usuario: Usuario;
 
   /* Paginacion */
@@ -55,7 +55,7 @@ export class ReportComponent {
     }
   }
 
-  downloadFile(route_report){
-    window.open("http://localhost:8080/api/report/"+route_report, "_blank");
+  downloadFile(route_report) {
+    window.open("http://localhost:8080/api/report/" + route_report, "_blank");
   }
 }

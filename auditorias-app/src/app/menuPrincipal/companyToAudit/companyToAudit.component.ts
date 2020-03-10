@@ -17,7 +17,7 @@ export class CompanyToAuditComponent implements OnInit {
 
   private empresa: Empresa = new Empresa();
 
-  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit:ModalCompanyToAudit,private gestionPersonalComponent: GestionPersonalComponent) { //Este metodo constructor inicializa de forma normal
+  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit: ModalCompanyToAudit, private gestionPersonalComponent: GestionPersonalComponent) { //Este metodo constructor inicializa de forma normal
   }
 
   ngOnInit() {
@@ -26,10 +26,10 @@ export class CompanyToAuditComponent implements OnInit {
   public create(): void {
     this.companyService.create(this.empresa).subscribe(
       response => {
-        Swal.fire('Empresa Registrada', `La creacion de la nueva empresa ha sido un exito`, 'success');
+        Swal.fire('Company registered', `The creation of the new company has been a success`, 'success');
         this.cerrarModal();
       }, err => {
-        Swal.fire('Error', `El registro ha fallado, vuelva a intentarlo`, 'error');
+        Swal.fire('Error', `Register failed, try again later`, 'error');
       }
     )
   }

@@ -46,7 +46,7 @@ export class CitaMostrarComponent implements OnInit {
   p: number = 1;
 
   constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent, private modalModifyCita: ModalModifyCita,
-  private modalModifyMessage: ModalModifyMessage) {
+    private modalModifyMessage: ModalModifyMessage) {
     this.usuario = authService.usuario;
     this.message = new Message();
     this.messageClicked = new Message();
@@ -104,7 +104,7 @@ export class CitaMostrarComponent implements OnInit {
   ngOnChanges() { //Este componente es cuando se inicia el evento
     this.updateMessages();
     this.mostrarFotos();
-    this.p=1;
+    this.p = 1;
   }
 
   modifyAppointment() {
@@ -116,18 +116,18 @@ export class CitaMostrarComponent implements OnInit {
     this.message.id_user = this.usuario.id;
     this.citaService.postMessage(this.message).subscribe(
       response => {
-        Swal.fire('Mensaje Creado', `El mensaje ha sido creado`, 'success');
+        Swal.fire('Message Created', `Message has been created`, 'success');
         this.message = new Message();
         this.updateMessages();
       }, err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error', `Error al crear el mensaje, vuelva a intentarlo`, 'error');
+          Swal.fire('Error', `Error creating the message, try again later`, 'error');
         }
       });
   }
 
   deleteMessage(message: Message) {
-    if (confirm("¿Esta seguro de que desea eliminar el mensaje?")) {
+    if (confirm("Are you sure you want to remove the message?")) {
       this.citaService.deleteMessage(message.id_message).subscribe(
         response => {
           Swal.fire('Message Removed', `The message has been removed successfully`, 'success');
@@ -135,7 +135,7 @@ export class CitaMostrarComponent implements OnInit {
           this.updateMessages();
         }, err => {
           if (err.status == 400 || err.status == 401) {
-            Swal.fire('Error', `Error al crear el mensaje, vuelva a intentarlo`, 'error');
+            Swal.fire('Error', `Error removing the message, try again later`, 'error');
           }
         });
     }
@@ -151,14 +151,14 @@ export class CitaMostrarComponent implements OnInit {
       response => {
         this.messagesList = response;
       }, err => {
-        Swal.fire('Error', `Error al retirar los mensajes`, 'error');
+        Swal.fire('Error', `Error updating messages`, 'error');
       });
   }
 
   seleccionarFoto(event) {
     this.fotoSeleccionada = event.target.files[0];
     if (this.fotoSeleccionada.type.indexOf('image') < 0) { /* Si no se encuentra es un -1 */
-      Swal.fire('Error seleccionar imagen: ', 'El archivo debe ser del tipo imagen', 'error');
+      Swal.fire('Error selecting image: ', 'File must be image type', 'error');
       this.fotoSeleccionada = null;
       this.previewUrl = null;
     }
@@ -171,16 +171,19 @@ export class CitaMostrarComponent implements OnInit {
 
   subirFoto() {
     if (!this.fotoSeleccionada) {
-      Swal.fire('Error Upload: ', 'Debe seleccionar una foto', 'error');
+      Swal.fire('Error Upload: ', 'You should select a photo', 'error');
     } else {
       this.citaService.subirFoto(this.fotoSeleccionada, this.cita.id_appointment, this.textoEvidencia)
         .subscribe(mensaje => {
-          Swal.fire('La foto se ha subido completamente', 'La foto se ha subido con exito', 'success');
+          Swal.fire('Photo has been uploaded', 'Photo succesfully updated', 'success');
           this.mostrarFotos();
           this.fotoSeleccionada = null;
           this.previewUrl = null;
           this.textoEvidencia = "";
-        });
+        }, error => {
+          Swal.fire('Photo hasn\'t been uploaded', 'Photo failed to load, maximum size allowed 10MB', 'error');
+        }
+        );
     }
   }
 
@@ -197,16 +200,16 @@ export class CitaMostrarComponent implements OnInit {
   }
 
   cerrarCita() {
-    if (confirm("¿Está seguro de cerrar la cita? Tras el cierre no se podrá añadir información adicional")) {
+    if (confirm("Are you sure you want to close Appointment? You won't be able to add information")) {
       this.citaService.cerrarCita(this.cita.id_appointment).subscribe(
         response => {
-          Swal.fire('Cita cerrada correctamente', 'La cita ha sido cerrada correctamente', 'success');
+          Swal.fire('Appointment close', 'Appointment successfully closed', 'success');
           this.auditoriasComponent.actualizarListaCitas();
           this.cerrarModal();
         }
       ), err => {
         if (err.status == 400 || err.status == 401) {
-          Swal.fire('Error al cerrar la cita', 'Vuelva a intentarlo', 'error');
+          Swal.fire('Error closing appointment', 'Try again later', 'error');
         }
       };
     }

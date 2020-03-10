@@ -2,6 +2,8 @@ package com.auditorias.springboot.backend.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,7 +51,7 @@ public class AssetRestController {
 	 * Modify an audit asset
 	 */
 	@PutMapping("/assets/{id}")
-	public boolean updateAuditAsset(@RequestBody Audit_Asset auditAsset, @PathVariable Long id) {
+	public boolean updateAuditAsset(@Valid @RequestBody Audit_Asset auditAsset, @PathVariable Long id) {
 		assetMapper.updateAuditAsset(auditAsset);
 		return true;
 	}
@@ -74,7 +76,7 @@ public class AssetRestController {
 	 * Modify an audit threat
 	 */
 	@PutMapping("/threats/{id}")
-	public boolean updateAuditThreat(@RequestBody Audit_Threat auditThreat, @PathVariable Long id) {
+	public boolean updateAuditThreat(@Valid @RequestBody Audit_Threat auditThreat, @PathVariable Long id) {
 		assetMapper.updateAuditThreat(auditThreat);
 		return true;
 	}
@@ -84,8 +86,8 @@ public class AssetRestController {
 	 */
 	@PostMapping("/type")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean createType(@RequestBody Audit_Type audit_type) { // Como viene en formato JSON es necesario
-																	// convertirlo
+	public boolean createType(@Valid @RequestBody Audit_Type audit_type) { // Como viene en formato JSON es necesario
+		// convertirlo
 		assetMapper.insertAuditType(audit_type); // Esto habria que revisarlo, parece que MYBATIS no puede devolver una
 													// clase
 		return true;
@@ -103,7 +105,7 @@ public class AssetRestController {
 	 * Modify an audit type
 	 */
 	@PutMapping("/type/{id}")
-	public boolean updateAuditType(@RequestBody Audit_Type auditType, @PathVariable Long id) {
+	public boolean updateAuditType(@Valid @RequestBody Audit_Type auditType, @PathVariable Long id) {
 		assetMapper.updateAuditType(auditType);
 		return true;
 	}

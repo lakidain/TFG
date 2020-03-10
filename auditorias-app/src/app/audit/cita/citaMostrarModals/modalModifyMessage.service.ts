@@ -14,7 +14,7 @@ export class ModalModifyMessage {
 
   constructor(private http: HttpClient) { }
 
-  abrirModal(){
+  abrirModal() {
     this.modal = true;
   }
 
@@ -22,7 +22,7 @@ export class ModalModifyMessage {
     this.modal = false;
   }
 
-  updateMessage(message: Message):Observable<any>{
+  updateMessage(message: Message): Observable<any> {
     return this.http.put<any>(this.urlEndPoint + "/" + message.id_message, message, { headers: this.httpHeaders })
   }
 }

@@ -47,6 +47,6 @@ export class ModalQuestionnaire {
   }
 
   updateAnswers(answers: any): Observable<any> {
-    return this.http.put<any>(this.urlEndPointQuestionnaire,  answers, { headers: this.httpHeaders });
+    return this.http.put<any>(this.urlEndPointQuestionnaire, answers, { headers: this.httpHeaders });
   }
 }

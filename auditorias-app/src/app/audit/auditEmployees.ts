@@ -1,4 +1,4 @@
-export class Audit_Employees{
+export class Audit_Employees {
   id_audit_employees: number;
   id_audit: number;
   id_user: number;
