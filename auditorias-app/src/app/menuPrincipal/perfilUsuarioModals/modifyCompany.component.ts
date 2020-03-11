@@ -18,7 +18,7 @@ export class CompanyModifyComponent {
 
   @Input() company: Empresa;
 
-  constructor(private modalModifyCompany: ModalModifyCompany, private perfilUsuarioComponent: PerfilUsuarioComponent) {
+  constructor(public modalModifyCompany: ModalModifyCompany, public perfilUsuarioComponent: PerfilUsuarioComponent) {
   }
 
   modificarCompany() {

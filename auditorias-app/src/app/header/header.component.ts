@@ -19,7 +19,7 @@ declare var navBarHide: Function;
 export class HeaderComponent {
   title: string = 'Upaudit'
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
 
   }
 

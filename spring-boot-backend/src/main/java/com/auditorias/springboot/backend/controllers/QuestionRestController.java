@@ -23,7 +23,7 @@ import com.auditorias.springboot.backend.mapper.QuestionMapper;
 import com.auditorias.springboot.backend.mapper.VulnerabilityMapper;
 import com.auditorias.springboot.backend.model.Audit_Question;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200","*" })
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class QuestionRestController {

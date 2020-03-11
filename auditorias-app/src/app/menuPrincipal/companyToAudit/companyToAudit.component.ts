@@ -15,9 +15,9 @@ import Swal from 'sweetalert2'
 
 export class CompanyToAuditComponent implements OnInit {
 
-  private empresa: Empresa = new Empresa();
+  public empresa: Empresa = new Empresa();
 
-  constructor(private companyService: CompanyService, private router: Router, private modalCompanyToAudit: ModalCompanyToAudit, private gestionPersonalComponent: GestionPersonalComponent) { //Este metodo constructor inicializa de forma normal
+  constructor(public companyService: CompanyService, public router: Router, public modalCompanyToAudit: ModalCompanyToAudit, public gestionPersonalComponent: GestionPersonalComponent) { //Este metodo constructor inicializa de forma normal
   }
 
   ngOnInit() {

@@ -21,7 +21,7 @@ export class EmployeeAddComponent {
   /* Employees of this company */
   employees: Usuario[];
 
-  constructor(private modalEmployee: ModalEmployee, private auditoriasComponent: AuditoriasComponent) {
+  constructor(public modalEmployee: ModalEmployee, public auditoriasComponent: AuditoriasComponent) {
     this.dtoRegistro = new DtoRegistro();
   }
 

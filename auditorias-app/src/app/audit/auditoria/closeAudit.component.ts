@@ -28,7 +28,7 @@ export class CloseAuditComponent {
   answers: DtoCloseAudit[] = [];
 
 
-  constructor(private modalCloseAudit: ModalCloseAudit, private auditoriasComponent: AuditoriasComponent, private router: Router) {
+  constructor(public modalCloseAudit: ModalCloseAudit, public auditoriasComponent: AuditoriasComponent, public router: Router) {
     this.auditClose = new Audit;
   }
 

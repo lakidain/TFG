@@ -35,7 +35,7 @@ export class PerfilUsuarioComponent {
   /* Parameter for the company change */
   seleccionEmpresa: number;
 
-  constructor(private authService: AuthService, private perfilUsuarioService: PerfilUsuarioService, private usuarioService: UsuarioService, private router: Router, private modalModifyCompany: ModalModifyCompany) { //Este metodo constructor inicializa de forma normal
+  constructor(public authService: AuthService, public perfilUsuarioService: PerfilUsuarioService, public usuarioService: UsuarioService, public router: Router, public modalModifyCompany: ModalModifyCompany) { //Este metodo constructor inicializa de forma normal
     this.usuario = authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
     this.empresaModify = new Empresa;
   }

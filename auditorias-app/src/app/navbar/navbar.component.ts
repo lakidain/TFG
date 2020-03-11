@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 
 export class NavbarComponent {
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
 
   }
 }

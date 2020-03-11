@@ -18,9 +18,9 @@ import { CitaService } from './cita.service';
 export class CitaCreationComponent {
 
   @Input() audit: DtoAuditList;
-  private cita: Cita;
+  public cita: Cita;
 
-  constructor(private modalCrearCita: ModalCrearCita, private citaService: CitaService, private router: Router, private auditoriasComponent: AuditoriasComponent) {
+  constructor(public modalCrearCita: ModalCrearCita, public citaService: CitaService, public router: Router, public auditoriasComponent: AuditoriasComponent) {
   }
 
   ngOnInit() { //Este componente es cuando se inicia el evento

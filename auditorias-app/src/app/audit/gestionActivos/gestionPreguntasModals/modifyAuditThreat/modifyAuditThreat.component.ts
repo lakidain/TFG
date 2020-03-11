@@ -15,7 +15,7 @@ export class AuditThreatModifyComponent {
 
   @Input() auditThreat: AuditThreat;
 
-  constructor(private modalModifyAuditThreat: ModalModifyAuditThreat, private gestionPreguntas: GestionPreguntas) { }
+  constructor(public modalModifyAuditThreat: ModalModifyAuditThreat, public gestionPreguntas: GestionPreguntas) { }
 
   modificarAuditThreat() {
     this.modalModifyAuditThreat.updateAuditThreat(this.auditThreat).subscribe(

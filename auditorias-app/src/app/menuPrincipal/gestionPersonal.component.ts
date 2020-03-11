@@ -50,7 +50,7 @@ export class GestionPersonalComponent {
   pageEmployees: number = 1;
   pageAudits: number = 1;
 
-  constructor(private authService: AuthService, private gestionPersonalService: GestionPersonalService, private usuarioService: UsuarioService, private router: Router, private modalCompanyToAudit: ModalCompanyToAudit, private modalModifyAudit: ModalModifyAudit) { //Este metodo constructor inicializa de forma normal
+  constructor(public authService: AuthService, public gestionPersonalService: GestionPersonalService, public usuarioService: UsuarioService, public router: Router, public modalCompanyToAudit: ModalCompanyToAudit, public modalModifyAudit: ModalModifyAudit) { //Este metodo constructor inicializa de forma normal
     this.usuario = authService.usuario; //Y este tambien es valido, se puede hacer de las dos formas
     this.auditModify = new DtoAuditList();
   }

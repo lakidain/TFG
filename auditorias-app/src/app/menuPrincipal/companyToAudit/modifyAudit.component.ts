@@ -20,7 +20,7 @@ export class AuditModifyComponent {
 
   modifiedAudit: Audit;
 
-  constructor(private modalModifyAudit: ModalModifyAudit, private gestionPersonalComponent: GestionPersonalComponent) {
+  constructor(public modalModifyAudit: ModalModifyAudit, public gestionPersonalComponent: GestionPersonalComponent) {
     this.modifiedAudit = new Audit();
   }
 

@@ -15,7 +15,7 @@ export class AuditTypeModifyComponent {
 
   @Input() auditType: AuditType;
 
-  constructor(private modalModifyAuditType: ModalModifyAuditType, private gestionPreguntas: GestionPreguntas) { }
+  constructor(public modalModifyAuditType: ModalModifyAuditType, public gestionPreguntas: GestionPreguntas) { }
 
   modificarAuditType() {
     this.modalModifyAuditType.updateAuditType(this.auditType).subscribe(

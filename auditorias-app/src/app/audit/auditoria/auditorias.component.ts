@@ -67,7 +67,7 @@ export class AuditoriasComponent {
   pageAppointment: number = 1;
   pageEmployees: number = 1;
 
-  constructor(private authService: AuthService, private auditoriaService: AuditoriaService, private citaService: CitaService, private modalMostrarCita: ModalMostrarCita, private modalCrearCita: ModalCrearCita, private modalEmployee: ModalEmployee, private datePipe: DatePipe, private modalQuestionnaire: ModalQuestionnaire, private modalCloseAudit: ModalCloseAudit) {
+  constructor(public authService: AuthService, public auditoriaService: AuditoriaService, public citaService: CitaService, public modalMostrarCita: ModalMostrarCita, public modalCrearCita: ModalCrearCita, public modalEmployee: ModalEmployee, public datePipe: DatePipe, public modalQuestionnaire: ModalQuestionnaire, public modalCloseAudit: ModalCloseAudit) {
     this.usuario = authService.usuario;
     this.auditEmployees = [];
     this.questionnaireList = [];

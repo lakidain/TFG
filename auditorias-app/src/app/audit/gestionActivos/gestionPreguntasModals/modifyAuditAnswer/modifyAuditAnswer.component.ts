@@ -15,7 +15,7 @@ export class AuditAnswerModifyComponent {
 
   @Input() auditAnswer: AuditAnswer;
 
-  constructor(private modalModifyAuditAnswer: ModalModifyAuditAnswer, private gestionPreguntas: GestionPreguntas) { }
+  constructor(public modalModifyAuditAnswer: ModalModifyAuditAnswer, public gestionPreguntas: GestionPreguntas) { }
 
   modificarAuditAnswer() {
     this.modalModifyAuditAnswer.updateAuditAnswer(this.auditAnswer).subscribe(

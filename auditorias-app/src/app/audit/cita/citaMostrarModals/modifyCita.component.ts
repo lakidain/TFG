@@ -15,7 +15,7 @@ export class CitaModifyComponent {
 
   @Input() cita: Cita;
 
-  constructor(private modalModifyCita: ModalModifyCita, private auditoriasComponent: AuditoriasComponent) { }
+  constructor(public modalModifyCita: ModalModifyCita, public auditoriasComponent: AuditoriasComponent) { }
 
   modificarCita() {
     this.modalModifyCita.updateAppointment(this.cita).subscribe(

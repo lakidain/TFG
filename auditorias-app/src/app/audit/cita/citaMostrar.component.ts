@@ -45,8 +45,8 @@ export class CitaMostrarComponent implements OnInit {
   /* Pagination */
   p: number = 1;
 
-  constructor(private authService: AuthService, private modalMostrarCita: ModalMostrarCita, private citaService: CitaService, private auditoriasComponent: AuditoriasComponent, private modalModifyCita: ModalModifyCita,
-    private modalModifyMessage: ModalModifyMessage) {
+  constructor(public authService: AuthService, public modalMostrarCita: ModalMostrarCita, public citaService: CitaService, public auditoriasComponent: AuditoriasComponent, public modalModifyCita: ModalModifyCita,
+    public modalModifyMessage: ModalModifyMessage) {
     this.usuario = authService.usuario;
     this.message = new Message();
     this.messageClicked = new Message();

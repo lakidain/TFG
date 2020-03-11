@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   usuario: Usuario;
 
-  constructor(private authService: AuthService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  constructor(public authService: AuthService, public router: Router) { //Este metodo constructor inicializa de forma normal
     this.usuario = new Usuario(); //Y este tambien es valido, se puede hacer de las dos formas
   }
 

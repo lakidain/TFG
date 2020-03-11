@@ -13,7 +13,7 @@ export class AppComponent {
   curso: string = 'Curso Spring 5 con Angular 8';
   profesor: string = 'Ander';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
 
   }
 }

@@ -16,7 +16,7 @@ export class MessageModifyComponent {
 
   @Input() message: Message;
 
-  constructor(private modalModifyMessage: ModalModifyMessage, private auditoriasComponent: AuditoriasComponent, private citaMostrarComponent: CitaMostrarComponent) {
+  constructor(public modalModifyMessage: ModalModifyMessage, public auditoriasComponent: AuditoriasComponent, public citaMostrarComponent: CitaMostrarComponent) {
   }
 
   modificarMessage() {

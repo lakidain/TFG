@@ -17,7 +17,7 @@ import com.auditorias.springboot.backend.dto.DtoQuestionnaireAnswers;
 import com.auditorias.springboot.backend.mapper.QuestionnaireMapper;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200","*" })
 @RestController
 @RequestMapping("/api")
 public class QuestionnaireRestController {

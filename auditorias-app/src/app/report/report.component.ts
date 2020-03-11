@@ -19,7 +19,7 @@ export class ReportComponent {
   /* Paginacion */
   page: number = 1;
 
-  constructor(private reportService: ReportService, private authService: AuthService) {
+  constructor(public reportService: ReportService, public authService: AuthService) {
     this.usuario = authService.usuario;
   }
 

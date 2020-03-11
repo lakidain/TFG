@@ -87,9 +87,9 @@ export class GestionPreguntas {
   pageThreats: number = 1;
   pageQuestions: number = 1;
 
-  constructor(private gestionPersonalService: GestionPersonalService, private gestionPreguntasService: GestionPreguntasService, private authService: AuthService, private modalModifyAuditType: ModalModifyAuditType,
-    private modalModifyAuditThreat: ModalModifyAuditThreat, private modalModifyAuditAsset: ModalModifyAuditAsset, private modalModifyAuditAnswer: ModalModifyAuditAnswer, private modalModifyAuditQuestion: ModalModifyAuditQuestion,
-    private modalModifyAuditVulnerability: ModalModifyAuditVulnerability) {
+  constructor(public gestionPersonalService: GestionPersonalService, public gestionPreguntasService: GestionPreguntasService, public authService: AuthService, public modalModifyAuditType: ModalModifyAuditType,
+    public modalModifyAuditThreat: ModalModifyAuditThreat, public modalModifyAuditAsset: ModalModifyAuditAsset, public modalModifyAuditAnswer: ModalModifyAuditAnswer, public modalModifyAuditQuestion: ModalModifyAuditQuestion,
+    public modalModifyAuditVulnerability: ModalModifyAuditVulnerability) {
     this.auditType = new AuditType();
     this.auditAsset = new AuditAsset();
     this.dtoAssetCreation = new DtoAssetCreation();

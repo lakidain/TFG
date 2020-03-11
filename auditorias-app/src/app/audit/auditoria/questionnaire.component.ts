@@ -36,7 +36,7 @@ export class Questionnaire {
 
   /* Lista con la relacion entre todas las tablas*/
 
-  constructor(private authService: AuthService, private modalQuestionnaire: ModalQuestionnaire) {
+  constructor(public authService: AuthService, public modalQuestionnaire: ModalQuestionnaire) {
     this.usuario = authService.usuario;
   }
 

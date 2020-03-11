@@ -13,9 +13,9 @@ import { Router } from '@angular/router'
 
 export class RegistroComponent implements OnInit {
 
-  private dtoRegistro: DtoRegistro = new DtoRegistro();
+  public dtoRegistro: DtoRegistro = new DtoRegistro();
 
-  constructor(private usuarioService: UsuarioService, private router: Router) { //Este metodo constructor inicializa de forma normal
+  constructor(public usuarioService: UsuarioService, public router: Router) { //Este metodo constructor inicializa de forma normal
   }
 
   ngOnInit() {

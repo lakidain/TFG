@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auditorias.springboot.backend.dto.DtoReport;
 import com.auditorias.springboot.backend.mapper.ReportMapper;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200","*" })
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class ReportRestController {
