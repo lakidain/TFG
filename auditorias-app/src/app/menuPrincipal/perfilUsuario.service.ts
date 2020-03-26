@@ -5,11 +5,13 @@ import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
 
+import { URL_BACKEND } from '../config/config';
+
 @Injectable() //El decorador indica que funcion cumple, injectable simboliza que va a ser servicio (modelo de negocio)
 export class PerfilUsuarioService {
 
-  private urlEndPointEmpresas: string = 'http://localhost:8080/api/empresasAuditing';
-  private urlEndPointGetCompany: string = 'http://localhost:8080/api/empresa';
+  private urlEndPointEmpresas: string = URL_BACKEND + '/api/empresasAuditing';
+  private urlEndPointGetCompany: string = URL_BACKEND + '/api/empresa';
 
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get
 

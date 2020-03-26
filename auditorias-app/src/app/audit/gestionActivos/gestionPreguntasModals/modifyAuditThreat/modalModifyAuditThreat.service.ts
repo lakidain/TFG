@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuditThreat } from '../../../AuditThreat';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 
+import { URL_BACKEND } from '../../../../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +13,7 @@ export class ModalModifyAuditThreat {
 
   modal: boolean = false;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private urlEndPoint: string = 'http://localhost:8080/api/threats';
+  private urlEndPoint: string = URL_BACKEND + '/api/threats';
 
   constructor(private http: HttpClient) { }
 

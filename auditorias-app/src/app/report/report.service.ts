@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 
+import { URL_BACKEND } from '../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,11 +11,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 export class ReportService {
 
   /* urlEndPoints*/
-  private urlEndPointReportAuditorBoss: string = 'http://localhost:8080/api/reportAuditorBoss';
-  private urlEndPointReportAuditedBoss: string = 'http://localhost:8080/api/reportAuditedBoss';
-  private urlEndPointAuditorReports: string = 'http://localhost:8080/api/reportAuditor';
-  private urlEndPointAuditedReports: string = 'http://localhost:8080/api/reportAudited';
-  private urlEndPointDownloadReport: string = 'http://localhost:8080/api/report';
+  private urlEndPointReportAuditorBoss: string = URL_BACKEND + '/api/reportAuditorBoss';
+  private urlEndPointReportAuditedBoss: string = URL_BACKEND + '/api/reportAuditedBoss';
+  private urlEndPointAuditorReports: string = URL_BACKEND + '/api/reportAuditor';
+  private urlEndPointAuditedReports: string = URL_BACKEND + '/api/reportAudited';
+  private urlEndPointDownloadReport: string = URL_BACKEND + '/api/report';
 
   constructor(private http: HttpClient) { }
 

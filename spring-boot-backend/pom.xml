@@ -20,6 +20,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- AWS STORAGE-->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.327</version>
+		</dependency>
+		<!-- PDF FILES CREATION -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itextpdf</artifactId>

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Usuario } from './usuario';
+
+import { URL_BACKEND } from '../../config/config';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +16,7 @@ export class AuthService {
   private _usuario: Usuario;
   private _token: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
   public get usuario(): Usuario { //Metodo getter
     if (this._usuario != null) {
@@ -35,7 +39,7 @@ export class AuthService {
   }
 
   login(usuario: Usuario): Observable<any> {
-    const urlEndPoint = 'http://localhost:8080/oauth/token';
+    const urlEndPoint = URL_BACKEND + '/oauth/token';
 
     const credenciales = btoa('angularapp' + ':' + '12345');
 
@@ -98,5 +102,11 @@ export class AuthService {
     this._token = null;
     this._usuario = null;
     sessionStorage.clear();
+    this.router.navigate(['/index']);
+
+    setTimeout(() => {
+      window.location.reload();
+    }
+      , 500);
   }
 }

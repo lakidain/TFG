@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalMostrarCita } from './modalMostrarCita.service';
 import { Gallery } from './Gallery';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { Cita } from './cita';
 import { Message } from './message';
 import { AuditoriasComponent } from '../auditoria/auditorias.component';
@@ -11,12 +11,14 @@ import { ModalModifyCita } from './citaMostrarModals/modalModifyCita.service';
 import { ModalModifyMessage } from './citaMostrarModals/modalModifyMessage.service';
 
 /* Servicios */
-import { AuthService } from 'src/app/usuario/login/auth.service';
+import { AuthService } from 'src/app/Usuario/login/auth.service';
 import { CitaService } from './cita.service';
 import Swal from 'sweetalert2';
 
 /* Gallery */
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+
+import { URL_BACKEND } from '../../config/config';
 
 @Component({
   selector: 'app-citaMostrar',
@@ -33,7 +35,7 @@ export class CitaMostrarComponent implements OnInit {
   gallery: Gallery[];
   textoEvidencia: string;
   previewUrl: any = null;
-  private fotoSeleccionada: File; /* Si no vamos a usar un atributo en la vista lo dejamos privado, si lo necesitamos en la vista publico*/
+  public fotoSeleccionada: File; /* Si no vamos a usar un atributo en la vista lo dejamos privado, si lo necesitamos en la vista publico*/
 
   /* Gallery config */
   galleryOptions: NgxGalleryOptions[];
@@ -193,7 +195,7 @@ export class CitaMostrarComponent implements OnInit {
         this.gallery = galeria;
         if (galeria.length > 0) {
           this.galleryImages = galeria.map(foto => {
-            return { small: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, medium: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, big: "http://localhost:8080/api/uploads/img/" + foto.photo_gallery, description: foto.description_gallery };
+            return { small: URL_BACKEND + "/api/uploads/img/" + foto.photo_gallery, medium: URL_BACKEND + "/api/uploads/img/" + foto.photo_gallery, big: URL_BACKEND + "/api/uploads/img/" + foto.photo_gallery, description: foto.description_gallery };
           });
         }
       });

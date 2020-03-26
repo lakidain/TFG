@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     this.authService.login(this.usuario).subscribe(response => { //this.router.navigate(['/menu']) //Para navegar cuando devuelve el objeto creado te redirige al menu
-      console.log(response);
 
       this.authService.guardarUsuario(response.access_token);
       this.authService.guardarToken(response.access_token);

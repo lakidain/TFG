@@ -43,7 +43,7 @@ public class QuestionnaireRestController {
 	 */
 	@PostMapping("/questionnaire")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean createThreat(@RequestBody List<DtoQuestionnaireAnswers> answers) {
+	public boolean createQuestionnaire(@RequestBody List<DtoQuestionnaireAnswers> answers) {
 		/* En primer lugar creamos el cuestionario */
 		questionnaireMapper.createQuestionnaire(answers.get(0).getId_user(), answers.get(0).getId_audit(),
 				answers.get(0).getId_asset());

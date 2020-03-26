@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 //Cuando creas un componente es necesario importarlo aqui
+import { LoginComponent } from './Usuario/login/login.component';
+import { RegistroComponent } from './Usuario/registro/registro.component';
 import { IndexComponent } from './index/index.component';
 import { MenuComponent } from './menuPrincipal/menu.component';
 import { ReportComponent } from './report/report.component';
@@ -34,14 +36,11 @@ import { CompanyToAuditComponent } from './menuPrincipal/companyToAudit/companyT
 import { AuditModifyComponent } from './menuPrincipal/companyToAudit/modifyAudit.component';
 import { PerfilUsuarioComponent } from './menuPrincipal/perfilUsuario.component';
 import { CompanyModifyComponent } from './menuPrincipal/perfilUsuarioModals/modifyCompany.component';
-import { LoginComponent } from './usuario/login/login.component';
-import { RegistroComponent } from './usuario/registro/registro.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 
 /* DECLARACION DE SERVICIOS*/
-import { UsuarioService } from './usuario/login/usuario.service';
+import { UsuarioService } from './Usuario/login/usuario.service';
 import { GestionPersonalService } from './menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './audit/gestionActivos/gestionPreguntas.service';
 import { CompanyService } from './empresa/company.service';
@@ -76,13 +75,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-    IndexComponent,
     LoginComponent,
     RegistroComponent,
+    AppComponent,
+    IndexComponent,
     HeaderComponent,
     NavbarComponent,
-    FooterComponent,
     MenuComponent,
     ReportComponent,
     AuditoriasComponent,

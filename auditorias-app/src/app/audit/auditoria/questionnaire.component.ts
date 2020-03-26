@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalQuestionnaire } from './modalQuestionnaire.service';
 import { Audit } from '../Audit';
 import { AuditQuestion } from '../auditQuestion';
-import { AuthService } from '../../usuario/login/auth.service';
+import { AuthService } from '../../Usuario/login/auth.service';
 import { AuditAsset } from '../auditAsset';
 import { DtoQuestionnaire } from '../../dto/dtoQuestionnaire';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import Swal from 'sweetalert2';
 
 @Component({

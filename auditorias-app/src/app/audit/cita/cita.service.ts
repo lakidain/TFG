@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cita } from './cita';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { Message } from './message';
 import { Gallery } from './gallery';
 import { DtoAuditList } from '../../dto/dtoAuditList';
@@ -10,17 +10,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 import Swal from 'sweetalert2';
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable() //El decorador indica que funcion cumple, injectable simboliza que va a ser servicio (modelo de negocio)
 export class CitaService {
 
-  private urlEndPointCitaCreate: string = 'http://localhost:8080/api/cita';
-  private urlEndPointAppointmentsList: string = 'http://localhost:8080/api/allCitas';
-  private urlEndPointAppointmentsRelatedList: string = 'http://localhost:8080/api/allCitasRelated';
-  private urlEndPointAuditAppointmentsList: string = 'http://localhost:8080/api/auditCitas';
-  private urlEndPointPostMessage: string = 'http://localhost:8080/api/message';
-  private urlEndPointGetMessages: string = 'http://localhost:8080/api/message';
-  private urlEndPointUpload: string = 'http://localhost:8080/api/cita';
-  private urlEndPointGetGallery: string = 'http://localhost:8080/api/uploads/gallery';
+  private urlEndPointCitaCreate: string = URL_BACKEND + '/api/cita';
+  private urlEndPointAppointmentsList: string = URL_BACKEND + '/api/allCitas';
+  private urlEndPointAppointmentsRelatedList: string = URL_BACKEND + '/api/allCitasRelated';
+  private urlEndPointAuditAppointmentsList: string = URL_BACKEND + '/api/auditCitas';
+  private urlEndPointPostMessage: string = URL_BACKEND + '/api/message';
+  private urlEndPointGetMessages: string = URL_BACKEND + '/api/message';
+  private urlEndPointUpload: string = URL_BACKEND + '/api/cita';
+  private urlEndPointGetGallery: string = URL_BACKEND + '/api/uploads/gallery';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get

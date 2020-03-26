@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../usuario/login/usuario';
+import { Usuario } from '../Usuario/login/usuario';
 import { Empresa } from '../empresa/empresa';
 import { Audit } from '../audit/audit';
 import { AuditType } from '../audit/auditType';
@@ -8,8 +8,8 @@ import { DtoAuditList } from '../dto/dtoAuditList';
 import Swal from 'sweetalert2'
 
 import { GestionPersonalService } from './gestionPersonal.service';
-import { UsuarioService } from '../usuario/login/usuario.service';
-import { AuthService } from '../usuario/login/auth.service';
+import { UsuarioService } from '../Usuario/login/usuario.service';
+import { AuthService } from '../Usuario/login/auth.service';
 
 /* Modals import */
 import { ModalCompanyToAudit } from './companyToAudit/modalCompanyToAudit.service';

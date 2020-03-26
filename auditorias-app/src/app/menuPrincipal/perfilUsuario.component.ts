@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
-import { Usuario } from '../usuario/login/usuario';
+import { Usuario } from '../Usuario/login/usuario';
 import { Empresa } from '../empresa/Empresa';
 import { DtoPassword } from '../dto/dtoPassword';
 
 import { PerfilUsuarioService } from './perfilUsuario.service';
-import { UsuarioService } from '../usuario/login/usuario.service';
-import { AuthService } from '../usuario/login/auth.service';
+import { UsuarioService } from '../Usuario/login/usuario.service';
+import { AuthService } from '../Usuario/login/auth.service';
 
 /* Modals */
 import { ModalModifyCompany } from './perfilUsuarioModals/modalModifyCompany.service';

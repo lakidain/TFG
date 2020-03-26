@@ -1,8 +1,10 @@
 package com.auditorias.springboot.backend.controllers;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,6 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.auditorias.springboot.backend.dto.DtoCloseAudit;
 import com.auditorias.springboot.backend.dto.DtoPdfShowResult;
 import com.auditorias.springboot.backend.mapper.AuditMapper;
@@ -94,7 +104,6 @@ public class ResultRestController {
 	@GetMapping("/resultAnswers") // Para generar el endpoint
 	public boolean prepareClose(@RequestBody List<DtoCloseAudit> params) {
 		for (int i = 0; i < params.size(); i++) {
-			System.out.print("Saludos, tengo el id" + params.get(i).getId_audit());
 		}
 		return true;
 	}
@@ -162,31 +171,31 @@ public class ResultRestController {
 		Document document = new Document();
 		try {
 			String nombreArchivo = UUID.randomUUID().toString();
-			Path rutaArchivo = Paths.get("results").resolve(nombreArchivo).toAbsolutePath();
+			Path rutaArchivo = Paths.get("").resolve(nombreArchivo).toAbsolutePath();
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(rutaArchivo.toString() + ".pdf"));
 			document.open();
 			/* Portada */
 
 			/* Adding Header */
-			Path rutaUpaudit = Paths.get("resources").resolve("upaudit.jpg").toAbsolutePath();
+			/*Path rutaUpaudit = Paths.get("src/main/resources").resolve("upaudit.jpg").toAbsolutePath();
 			PdfContentByte canvas = writer.getDirectContentUnder();
 			Image image = Image.getInstance(rutaUpaudit.toString());
 			image.scaleAbsolute(312, 130);
 			float x = (PageSize.A4.getWidth() - image.getScaledWidth()) / 2;
 			image.setAbsolutePosition(x, 100);
-			canvas.addImage(image);
+			canvas.addImage(image);*/
 
 			/* Adding index image */
-			Path rutaIndex = Paths.get("resources").resolve("index.jpg").toAbsolutePath();
+			/*Path rutaIndex = Paths.get("").resolve("/index.jpg").toAbsolutePath();
 			PdfContentByte canvasIndex = writer.getDirectContentUnder();
 			Image imageIndex = Image.getInstance(rutaIndex.toString());
 			imageIndex.scaleAbsolute(626, 507);
 			float xIndex = (PageSize.A4.getWidth() - imageIndex.getScaledWidth()) / 2;
 			float yIndex = (PageSize.A4.getHeight() - imageIndex.getScaledHeight()) / 2;
 			imageIndex.setAbsolutePosition(xIndex, yIndex + 100);
-			canvasIndex.addImage(imageIndex);
+			canvasIndex.addImage(imageIndex);*/
 
-			document.newPage();
+			//document.newPage();
 
 			/* Pagina de Presentación */
 
@@ -362,6 +371,16 @@ public class ResultRestController {
 			document.close();
 			writer.close();
 
+			/* Subimos a AWS el fichero */
+			AWSCredentials credentials = new BasicAWSCredentials("Access Key","Secret Access Key");
+			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3").withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+
+		    String bucketPath = "upaudit/pdf";
+		    InputStream is = new FileInputStream(rutaArchivo.toString() + ".pdf");
+		    ObjectMetadata meta = new ObjectMetadata();
+		    meta.setContentLength(is.available());
+		    s3Client.putObject(new PutObjectRequest(bucketPath,nombreArchivo+".pdf", is, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			
 			/* Guardamos en BD la ruta del informe PDF */
 			resultMapper.saveReport(results.get(0).getId_audit(), nombreArchivo);
 

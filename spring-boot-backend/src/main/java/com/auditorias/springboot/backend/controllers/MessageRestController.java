@@ -53,7 +53,7 @@ public class MessageRestController {
 	/* Delete Message */
 	@DeleteMapping("/message/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public boolean deleteEmployeeFromAppointment(@PathVariable Long id) {
+	public boolean deleteMessage(@PathVariable Long id) {
 		messageMapper.deleteMessage(id);
 		return true;
 	}

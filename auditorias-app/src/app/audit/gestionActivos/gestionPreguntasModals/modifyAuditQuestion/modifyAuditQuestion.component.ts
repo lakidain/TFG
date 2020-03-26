@@ -17,7 +17,7 @@ export class AuditQuestionModifyComponent {
 
   constructor(public modalModifyAuditQuestion: ModalModifyAuditQuestion, public gestionPreguntas: GestionPreguntas) { }
 
-  modificarAuditAsset() {
+  modificarAuditQuestion() {
     this.modalModifyAuditQuestion.updateAuditQuestion(this.auditQuestion).subscribe(
       response => {
         Swal.fire('Question updated', 'Question correct update', 'success');

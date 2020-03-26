@@ -68,7 +68,7 @@ public class QuestionRestController {
 	 */
 	@PostMapping("/questions")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean createThreat(@RequestParam("threatVulnerability") Long threatVulnerability,
+	public boolean createQuestion(@RequestParam("threatVulnerability") Long threatVulnerability,
 			@RequestParam("newVulnerability") String newVulnerability, @RequestParam("newQuestion") String newQuestion,
 			@RequestParam("newFirstAnswer") String newFirstAnswer,
 			@RequestParam("newSecondAnswer") String newSecondAnswer,

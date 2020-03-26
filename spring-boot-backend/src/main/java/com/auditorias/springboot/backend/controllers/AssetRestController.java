@@ -76,7 +76,7 @@ public class AssetRestController {
 	 * Modify an audit threat
 	 */
 	@PutMapping("/threats/{id}")
-	public boolean updateAuditThreat(@Valid @RequestBody Audit_Threat auditThreat, @PathVariable Long id) {
+	public boolean modificarAuditThreat(@Valid @RequestBody Audit_Threat auditThreat, @PathVariable Long id) {
 		assetMapper.updateAuditThreat(auditThreat);
 		return true;
 	}

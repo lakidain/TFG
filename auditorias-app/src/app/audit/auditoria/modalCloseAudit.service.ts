@@ -5,6 +5,8 @@ import { AuditQuestion } from '../auditQuestion';
 import { DtoQuestionnaire } from '../../dto/dtoQuestionnaire';
 import { DtoCloseAudit } from '../../dto/dtoCloseAudit';
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +16,10 @@ export class ModalCloseAudit {
   modal: boolean = false;
 
   /* urlEndPoints*/
-  private urlEndPointCheckAnsweredQuestionnaire: string = 'http://localhost:8080/api/checkAnswered';
-  private urlEndPointThreatsAndVulnerabilities: string = 'http://localhost:8080/api/prepareClose';
-  private urlEndPointPostResults: string = 'http://localhost:8080/api/result';
-  private urlEndPointAnswers: string = 'http://localhost:8080/api/auditAnswers';
+  private urlEndPointCheckAnsweredQuestionnaire: string = URL_BACKEND + '/api/checkAnswered';
+  private urlEndPointThreatsAndVulnerabilities: string = URL_BACKEND + '/api/prepareClose';
+  private urlEndPointPostResults: string = URL_BACKEND + '/api/result';
+  private urlEndPointAnswers: string = URL_BACKEND + '/api/auditAnswers';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

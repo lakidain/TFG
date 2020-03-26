@@ -192,7 +192,7 @@ public class UsuarioRestController {
 	/* Change roles associated with an audit */
 	@PutMapping("/clientesAssociate/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public boolean updatePassword(@RequestBody Audit_Employees auditEmployees, @PathVariable Long id) {
+	public boolean updateRoles(@RequestBody Audit_Employees auditEmployees, @PathVariable Long id) {
 		/* The method matches is used to compare the equality of both passwords */
 		usuarioMapper.updateEmployeesAssociated(auditEmployees);
 		return true;

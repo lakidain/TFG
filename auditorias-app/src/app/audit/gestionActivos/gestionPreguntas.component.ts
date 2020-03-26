@@ -12,7 +12,7 @@ import { AuditQuestion } from '../auditQuestion';
 
 import { GestionPersonalService } from '../../menuPrincipal/gestionPersonal.service';
 import { GestionPreguntasService } from './gestionPreguntas.service';
-import { AuthService } from '../../usuario/login/auth.service';
+import { AuthService } from '../../Usuario/login/auth.service';
 
 /* Import Modals */
 import { ModalModifyAuditType } from './gestionPreguntasModals/modifyAuditType/modalModifyAuditType.service';

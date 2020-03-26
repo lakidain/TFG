@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Audit } from '../audit';
 import { DtoAuditList } from '../../dto/dtoAuditList';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { Cita } from '../cita/cita';
 import { DtoAuditEmployee } from '../../dto/dtoAuditEmployee';
 import { Audit_Employees } from '../auditEmployees';
 import { AuditAsset } from '../auditAsset';
 
 /* Services */
-import { AuthService } from 'src/app/usuario/login/auth.service';
+import { AuthService } from 'src/app/Usuario/login/auth.service';
 import { AuditoriaService } from './auditorias.service';
 import { CitaService } from '../cita/cita.service';
 

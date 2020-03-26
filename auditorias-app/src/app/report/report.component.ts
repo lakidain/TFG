@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ReportService } from './report.service';
-import { AuthService } from '../usuario/login/auth.service';
-import { Usuario } from '../usuario/login/usuario';
+import { AuthService } from '../Usuario/login/auth.service';
+import { Usuario } from '../Usuario/login/usuario';
 import Swal from 'sweetalert2';
+
+import { URL_BACKEND } from '../config/config';
 
 @Component({
   selector: 'app-report',
@@ -56,6 +58,6 @@ export class ReportComponent {
   }
 
   downloadFile(route_report) {
-    window.open("http://localhost:8080/api/report/" + route_report, "_blank");
+    window.open(URL_BACKEND + "/api/report/" + route_report, "_blank");
   }
 }

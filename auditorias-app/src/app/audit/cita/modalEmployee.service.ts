@@ -1,8 +1,10 @@
 import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { Injectable } from '@angular/core';
 import { DtoRegistro } from '../../dto/dtoRegistro';
+
+import { URL_BACKEND } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,8 @@ import { DtoRegistro } from '../../dto/dtoRegistro';
 export class ModalEmployee {
 
   modal: boolean = false;
-  private urlEndPointCreateEmployee: string = 'http://localhost:8080/api/clientes';
-  private urlEndPointAssociateEmployee: string = 'http://localhost:8080/api/clientesAssociate';
+  private urlEndPointCreateEmployee: string = URL_BACKEND + '/api/clientes';
+  private urlEndPointAssociateEmployee: string = URL_BACKEND + '/api/clientesAssociate';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

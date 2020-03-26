@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DtoAuditList } from '../../dto/dtoAuditList';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { DtoAuditEmployee } from '../../dto/dtoAuditEmployee';
 import { AuditAsset } from '../auditAsset';
 import { Audit_Employees } from '../auditEmployees';
@@ -8,18 +8,20 @@ import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable() //El decorador indica que funcion cumple, injectable simboliza que va a ser servicio (modelo de negocio)
 export class AuditoriaService {
 
-  private urlEndPointAuditList: string = 'http://localhost:8080/api/audit';
-  private urlEndPointAuditRelated: string = 'http://localhost:8080/api/auditAudited';
-  private urlEndPointAuditEmployees: string = 'http://localhost:8080/api/clientesAssociate';
-  private urlEndPointAuditAssets: string = 'http://localhost:8080/api/auditAssets';
-  private urlEndPointAppointmentAssets: string = 'http://localhost:8080/api/cita';
+  private urlEndPointAuditList: string = URL_BACKEND + '/api/audit';
+  private urlEndPointAuditRelated: string = URL_BACKEND + '/api/auditAudited';
+  private urlEndPointAuditEmployees: string = URL_BACKEND + '/api/clientesAssociate';
+  private urlEndPointAuditAssets: string = URL_BACKEND + '/api/auditAssets';
+  private urlEndPointAppointmentAssets: string = URL_BACKEND + '/api/cita';
 
   /* Check Credentials */
-  private urlEndPointCheckQuestionnaireCredentials: string = 'http://localhost:8080/api/questionnaireCredentials';
-  private urlEndPointCheckAppointmentCredentials: string = 'http://localhost:8080/api/appointmentCredentials';
+  private urlEndPointCheckQuestionnaireCredentials: string = URL_BACKEND + '/api/questionnaireCredentials';
+  private urlEndPointCheckAppointmentCredentials: string = URL_BACKEND + '/api/appointmentCredentials';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get

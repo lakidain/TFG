@@ -1,5 +1,7 @@
 package com.auditorias.springboot.backend.controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -30,11 +32,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Gallery;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
+@CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
+															// se
 //realizan al navegador, desde aqui podemos controlar todo
 //(metodos, direcciones)
 @RestController // Como no va a tener vista
@@ -59,7 +69,7 @@ public class CitaRestController {
 	public List<Cita> getAllCitas(@PathVariable Long id) {
 		return citaMapper.getAllCitas(id);
 	}
-	
+
 	/* Get Appointments related for an employee of an audited company */
 	@GetMapping("/allCitasRelated/{id}") // Para generar el endpoint
 	public List<Cita> getAllCitasRelated(@PathVariable Long id) {
@@ -79,10 +89,15 @@ public class CitaRestController {
 
 		if (!archivo.isEmpty()) {
 			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
-			Path rutaArchivo = Paths.get("citasUploads").resolve(nombreArchivo).toAbsolutePath();
+
+			Path rutaArchivo = Paths.get("").resolve(nombreArchivo).toAbsolutePath();
 
 			try {
 				Files.copy(archivo.getInputStream(), rutaArchivo);
+				File file = convertMultiPartToFile(archivo);
+				uploadFileTos3bucket(nombreArchivo, file);
+
+
 			} catch (IOException e) {
 				response.put("mensaje", "Error al subir la imagen" + nombreArchivo);
 				e.printStackTrace();
@@ -97,12 +112,11 @@ public class CitaRestController {
 
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-		Path rutaArchivo = Paths.get("citasUploads").resolve(nombreFoto).toAbsolutePath();
 
 		Resource recurso = null;
 
 		try {
-			recurso = new UrlResource(rutaArchivo.toUri());
+			recurso = new UrlResource("https://upaudit.s3.eu-west-3.amazonaws.com/images/" + nombreFoto);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,7 +153,7 @@ public class CitaRestController {
 	/* Delete Appointment */
 	@DeleteMapping("/cita/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public boolean deleteEmployeeFromAppointment(@PathVariable Long id) {
+	public boolean deleteAppointment(@PathVariable Long id) {
 		citaMapper.deleteAppointment(id);
 		return true;
 	}
@@ -153,5 +167,22 @@ public class CitaRestController {
 		} else {
 			return false;
 		}
+	}
+
+	private File convertMultiPartToFile(MultipartFile file) throws IOException {
+		File convFile = new File(file.getOriginalFilename());
+		FileOutputStream fos = new FileOutputStream(convFile);
+		fos.write(file.getBytes());
+		fos.close();
+		return convFile;
+	}
+
+	private void uploadFileTos3bucket(String fileName, File file) {
+		AWSCredentials credentials = new BasicAWSCredentials("Access Key ID",
+				"Secret Access Key");
+		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3").withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+		String bucketPath = "upaudit/images";
+		
+		s3Client.putObject(new PutObjectRequest(bucketPath, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
 	}
 }

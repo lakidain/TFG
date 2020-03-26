@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../usuario/login/auth.service';
-import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { AuthService } from '../Usuario/login/auth.service';
 
 /* Javascript function import */
 import '../../assets/javascript/navbarhide.js';
@@ -19,14 +17,12 @@ declare var navBarHide: Function;
 export class HeaderComponent {
   title: string = 'Upaudit'
 
-  constructor(public authService: AuthService, public router: Router) {
+  constructor(public authService: AuthService) {
 
   }
 
   logout(): void {
     this.authService.logout();
-    Swal.fire('Logout', 'Goodbye, we hope you have a good day!', 'success');
-    this.router.navigate(['/index']);
   }
 
   /* Hide Menu */

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { ModalModifyCompany } from './modalModifyCompany.service';
 import { DtoAuditList } from '../../dto/dtoAuditList';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 import { Empresa } from '../../empresa/empresa';
 
 @Component({

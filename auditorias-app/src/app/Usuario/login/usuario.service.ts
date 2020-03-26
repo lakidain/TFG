@@ -6,13 +6,15 @@ import { of, Observable } from 'rxjs'; //Podemos importar varias cosas a la vez
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 //import {map} from '...' Importacion necesaria para hacer de la otra forma la peticion a la url del get
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable() //El decorador indica que funcion cumple, injectable simboliza que va a ser servicio (modelo de negocio)
 export class UsuarioService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/usuario'
-  private urlEndPointEnable: string = 'http://localhost:8080/api/usuarioEnable'
-  private urlEndPointChangePassword: string = 'http://localhost:8080/api/usuarioPassword';
-  private urlEndPointChangeCompany: string = 'http://localhost:8080/api/usuarioCompany';
+  private urlEndPoint: string = URL_BACKEND + '/api/usuario'
+  private urlEndPointEnable: string = URL_BACKEND + '/api/usuarioEnable'
+  private urlEndPointChangePassword: string = URL_BACKEND + '/api/usuarioPassword';
+  private urlEndPointChangeCompany: string = URL_BACKEND + '/api/usuarioCompany';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private http: HttpClient) { } //Definimos en el constructor el inyectable que vamos a usar para consumir el metodo get

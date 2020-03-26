@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { ModalModifyAudit } from './modalModifyAudit.service';
 import { DtoAuditList } from '../../dto/dtoAuditList';
-import { Usuario } from '../../usuario/login/usuario';
+import { Usuario } from '../../Usuario/login/usuario';
 
 @Component({
   selector: 'app-AuditModify',

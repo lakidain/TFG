@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos im
 import { AuditQuestion } from '../auditQuestion';
 import { DtoQuestionnaire } from '../../dto/dtoQuestionnaire';
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,9 +14,9 @@ export class ModalQuestionnaire {
   modal: boolean = false;
 
   /* urlEndPoints*/
-  private urlEndPointQuestionsList: string = 'http://localhost:8080/api/questions';
-  private urlEndPointAnswersList: string = 'http://localhost:8080/api/answers';
-  private urlEndPointQuestionnaire: string = 'http://localhost:8080/api/questionnaire';
+  private urlEndPointQuestionsList: string = URL_BACKEND + '/api/questions';
+  private urlEndPointAnswersList: string = URL_BACKEND + '/api/answers';
+  private urlEndPointQuestionnaire: string = URL_BACKEND + '/api/questionnaire';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

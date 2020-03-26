@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuditType } from '../../../AuditType';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 
+import { URL_BACKEND } from '../../../../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +13,7 @@ export class ModalModifyAuditType {
 
   modal: boolean = false;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private urlEndPoint: string = 'http://localhost:8080/api/type'
+  private urlEndPoint: string = URL_BACKEND + '/api/type'
 
   constructor(private http: HttpClient) { }
 

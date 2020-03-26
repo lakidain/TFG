@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-03-2020 a las 17:08:08
+-- Tiempo de generación: 11-03-2020 a las 09:36:18
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_springboot_backend`
 --
-CREATE DATABASE IF NOT EXISTS `db_springboot_backend` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `db_springboot_backend`;
 
 -- --------------------------------------------------------
 
@@ -825,7 +823,7 @@ ALTER TABLE `asi_users_rols`
 -- AUTO_INCREMENT de la tabla `asi_appointment`
 --
 ALTER TABLE `asi_appointment`
-  MODIFY `id_appointment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_appointment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_appointments_gallery`
@@ -843,7 +841,7 @@ ALTER TABLE `asi_audit`
 -- AUTO_INCREMENT de la tabla `asi_audit_answers`
 --
 ALTER TABLE `asi_audit_answers`
-  MODIFY `id_audit_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_audit_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_assets`
@@ -861,19 +859,19 @@ ALTER TABLE `asi_audit_assets_threats`
 -- AUTO_INCREMENT de la tabla `asi_audit_employees`
 --
 ALTER TABLE `asi_audit_employees`
-  MODIFY `id_audit_employees` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_audit_employees` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_questions`
 --
 ALTER TABLE `asi_audit_questions`
-  MODIFY `id_audit_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_audit_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_questions_answers`
 --
 ALTER TABLE `asi_audit_questions_answers`
-  MODIFY `id_audit_question_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_audit_question_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_reports`
@@ -897,7 +895,7 @@ ALTER TABLE `asi_audit_threats`
 -- AUTO_INCREMENT de la tabla `asi_audit_threat_vulnerabilities_questions`
 --
 ALTER TABLE `asi_audit_threat_vulnerabilities_questions`
-  MODIFY `id_audit_threat_vulnerability_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_audit_threat_vulnerability_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_audit_types`
@@ -915,19 +913,19 @@ ALTER TABLE `asi_audit_types_assets`
 -- AUTO_INCREMENT de la tabla `asi_audit_vulnerabilities`
 --
 ALTER TABLE `asi_audit_vulnerabilities`
-  MODIFY `id_audit_vulnerability` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_audit_vulnerability` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_companies`
 --
 ALTER TABLE `asi_companies`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_messages`
 --
 ALTER TABLE `asi_messages`
-  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asi_questionnaire`

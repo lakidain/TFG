@@ -10,20 +10,22 @@ import { AuditAnswer } from '../auditAnswer';
 import { AuditQuestion } from '../auditQuestion';
 import { DtoAssetCreation } from '../../dto/dtoAssetCreation';
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable()
 export class GestionPreguntasService {
 
-  private urlEndPointAuditAssets: string = 'http://localhost:8080/api/assets';
-  private urlEndPointThreatsRelatedToAsset: string = 'http://localhost:8080/api/assetThreats';
-  private urlEndPointCreateAuditType: string = 'http://localhost:8080/api/type';
-  private urlEndPointAssetsRelatedToType: string = 'http://localhost:8080/api/typeAssets';
-  private urlEndPointAuditThreats: string = 'http://localhost:8080/api/threats';
-  private urlEndPointAuditVulnerability: string = 'http://localhost:8080/api/vulnerabilities';
-  private urlEndPointAuditQuestions: string = 'http://localhost:8080/api/questions';
-  private urlEndPointAuditDeleteQuestionsRelation: string = 'http://localhost:8080/api/questionsRelation';
-  private urlEndPointAuditAnswers: string = 'http://localhost:8080/api/answers';
-  private urlEndPointQuestionsRelatedToThreat: string = 'http://localhost:8080/api/threatQuestions';
-  private urlEndPointAnswersRelatedToQuestion: string = 'http://localhost:8080/api/questionAnswers';
+  private urlEndPointAuditAssets: string = URL_BACKEND + '/api/assets';
+  private urlEndPointThreatsRelatedToAsset: string = URL_BACKEND + '/api/assetThreats';
+  private urlEndPointCreateAuditType: string = URL_BACKEND + '/api/type';
+  private urlEndPointAssetsRelatedToType: string = URL_BACKEND + '/api/typeAssets';
+  private urlEndPointAuditThreats: string = URL_BACKEND + '/api/threats';
+  private urlEndPointAuditVulnerability: string = URL_BACKEND + '/api/vulnerabilities';
+  private urlEndPointAuditQuestions: string = URL_BACKEND + '/api/questions';
+  private urlEndPointAuditDeleteQuestionsRelation: string = URL_BACKEND + '/api/questionsRelation';
+  private urlEndPointAuditAnswers: string = URL_BACKEND + '/api/answers';
+  private urlEndPointQuestionsRelatedToThreat: string = URL_BACKEND + '/api/threatQuestions';
+  private urlEndPointAnswersRelatedToQuestion: string = URL_BACKEND + '/api/questionAnswers';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

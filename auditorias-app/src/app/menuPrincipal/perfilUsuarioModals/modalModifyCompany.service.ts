@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Empresa } from '../../empresa/empresa';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //Necesitamos importar este paquete para conectarnos a la api
 
+import { URL_BACKEND } from '../../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +13,7 @@ export class ModalModifyCompany {
 
   modal: boolean = false;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private urlEndPoint: string = 'http://localhost:8080/api/empresa';
+  private urlEndPoint: string = URL_BACKEND + '/api/empresa';
 
   constructor(private http: HttpClient) { }
 

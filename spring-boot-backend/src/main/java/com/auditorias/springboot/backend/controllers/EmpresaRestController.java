@@ -38,7 +38,7 @@ public class EmpresaRestController {
 	
 	/* Modify a Company */
 	@PutMapping("/empresa/{id}")
-	public boolean updateMessage(@Valid @RequestBody Empresa empresa, @PathVariable Long id){
+	public boolean updateCompany(@Valid @RequestBody Empresa empresa, @PathVariable Long id){
 		empresaMapper.updateEmpresa(empresa);
 		return true;
 	}
