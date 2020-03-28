@@ -13,6 +13,7 @@ import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
+import com.auditorias.springboot.backend.model.Audit_Type_Asset;
 
 @Mapper
 public interface AssetMapper {
@@ -53,7 +54,7 @@ public interface AssetMapper {
 	
 	/* Check Association between audit type and audit asset */
 	@Select("select * from asi_audit_types_assets where id_audit_type=#{id_audit_type} and id_audit_asset=#{id_audit_asset}")
-	List checkAssociationTypeAsset(Long id_audit_type, Long id_audit_asset);
+	List<Audit_Type_Asset> checkAssociationTypeAsset(Long id_audit_type, Long id_audit_asset);
 	
 	/* For a concrete type returns assets and threats associated */
 	@Select("select asi_audit_assets_threats.id_audit_asset,asi_audit_assets_threats.id_audit_threat from "
@@ -71,7 +72,7 @@ public interface AssetMapper {
 	
 	/* Check if an asset is already created in asi_audit_assets_threats */
 	@Select("select * from asi_audit_assets_threats where id_audit_asset=#{id_audit_asset}")
-	List findAssetInAssetThreat(Long id_audit_asset);
+	List<Audit_Asset_Threat> findAssetInAssetThreat(Long id_audit_asset);
 	
 	/*
 	 * Create an audit type

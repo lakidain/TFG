@@ -64,7 +64,7 @@ public interface UsuarioMapper {
 	List<DtoAuditEmployee> getEmployeesAssociated(Long id_audit);
 
 	@Select("select * from asi_audit_employees where id_audit=#{id_audit} and id_user=#{id_user}")
-	List checkAssociation(Long id_audit, Long id_user);
+	List<Audit_Employees> checkAssociation(Long id_audit, Long id_user);
 	
 	@Update("update asi_audit_employees set appointment_permit_audit_employees=#{appointment_permit_audit_employees},questionnaire_permit_audit_employees=#{questionnaire_permit_audit_employees},report_permit_audit_employees=#{report_permit_audit_employees} where id_audit_employees=#{id_audit_employees}")
 	void updateEmployeesAssociated(Audit_Employees auditEmployees);

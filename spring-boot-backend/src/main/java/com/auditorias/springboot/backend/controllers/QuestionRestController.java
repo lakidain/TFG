@@ -83,6 +83,12 @@ public class QuestionRestController {
 			@RequestParam("existingNewFourthAnswer") Long existingNewFourthAnswer,
 			@RequestParam("existingNewFifthtAnswer") Long existingNewFifthtAnswer) throws Exception {
 
+		Long createdQuestion=(long) 0;
+		
+		if(existingQuestion!=0) {
+			createdQuestion = existingQuestion;
+		}
+		
 		/* Para cada parametro que llega se debera crear */
 		if (!("".contentEquals(newVulnerability))) { /* Just need to create the threat if it's new */
 			vulnerabilityMapper.insertVulnerability(newVulnerability);
@@ -95,7 +101,7 @@ public class QuestionRestController {
 										 */
 			if (!("".contentEquals(newQuestion))) { /* Just need to create the threat if it's new */
 				questionMapper.insertQuestion(newQuestion);
-				existingQuestion = questionMapper.findQuestion(newQuestion).get(0).getId_audit_question();
+				createdQuestion = questionMapper.findQuestion(newQuestion).get(0).getId_audit_question();
 			}
 			if (!("".contentEquals(newFirstAnswer))) { /* Just need to create the threat if it's new */
 				answerMapper.insertAnswer(newFirstAnswer);
@@ -118,24 +124,20 @@ public class QuestionRestController {
 				existingNewFifthtAnswer = answerMapper.findAnswer(newFifthAnswer).get(0).getId_audit_answer();
 			}
 		}
-		/* For each Answer we should associate it with the question */
-		if (threatVulnerability == 0 || existingVulnerability == 0 || existingQuestion == 0) {
-			throw new Exception("Parameters Needed");
-		}
 
 		if (questionMapper
-				.checkAssociationVulnerabilityQuestion(threatVulnerability, existingVulnerability, existingQuestion)
+				.checkAssociationVulnerabilityQuestion(threatVulnerability, existingVulnerability, createdQuestion)
 				.size() == 0) {
-			questionMapper.associateVulnerabilityQuestion(threatVulnerability, existingVulnerability, existingQuestion);
+			questionMapper.associateVulnerabilityQuestion(threatVulnerability, existingVulnerability, createdQuestion);
 		} else {
 			throw new Exception("Relation already existing");
 		}
 		if (existingQuestion == 0) {
-			answerMapper.associateQuestionAnswer(existingQuestion, existingNewFirstAnswer, 1);
-			answerMapper.associateQuestionAnswer(existingQuestion, existingNewSecondAnswer, 2);
-			answerMapper.associateQuestionAnswer(existingQuestion, existingNewThirdAnswer, 3);
-			answerMapper.associateQuestionAnswer(existingQuestion, existingNewFourthAnswer, 4);
-			answerMapper.associateQuestionAnswer(existingQuestion, existingNewFifthtAnswer, 5);
+			answerMapper.associateQuestionAnswer(createdQuestion, existingNewFirstAnswer, 1);
+			answerMapper.associateQuestionAnswer(createdQuestion, existingNewSecondAnswer, 2);
+			answerMapper.associateQuestionAnswer(createdQuestion, existingNewThirdAnswer, 3);
+			answerMapper.associateQuestionAnswer(createdQuestion, existingNewFourthAnswer, 4);
+			answerMapper.associateQuestionAnswer(createdQuestion, existingNewFifthtAnswer, 5);
 		}
 		return true;
 	}

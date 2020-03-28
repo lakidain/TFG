@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.auditorias.springboot.backend.model.Audit_Question;
+import com.auditorias.springboot.backend.model.Audit_Threat_Vulnerability_Question;
 
 @Mapper
 public interface QuestionMapper {
@@ -31,7 +32,7 @@ public interface QuestionMapper {
 			+ "where id_audit_threat=#{threatVulnerability} "
 			+ "and id_audit_vulnerability=#{existingVulnerability} "
 			+ "and id_audit_question=#{existingQuestion} ")
-	List checkAssociationVulnerabilityQuestion(Long threatVulnerability,Long existingVulnerability,Long existingQuestion);
+	List<Audit_Threat_Vulnerability_Question> checkAssociationVulnerabilityQuestion(Long threatVulnerability,Long existingVulnerability,Long existingQuestion);
 	
 	/*
 	 * Create a question

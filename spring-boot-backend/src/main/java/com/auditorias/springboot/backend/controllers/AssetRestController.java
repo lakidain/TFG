@@ -24,9 +24,10 @@ import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
-													// realizan al navegador, desde aqui podemos controlar todo
-													// (metodos, direcciones)
+@CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
+															// se
+// realizan al navegador, desde aqui podemos controlar todo
+// (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class AssetRestController {
@@ -197,7 +198,7 @@ public class AssetRestController {
 		}
 
 		if (assetMapper.findAssetInAssetThreat(assetThreat).size() == 0) {
-			assetMapper.associateAssetThreat(assetThreat, null);
+			assetMapper.associateAssetThreat(assetThreat, Long.valueOf(0));
 		}
 
 		/*
@@ -207,13 +208,10 @@ public class AssetRestController {
 		List<Audit_Type> lista = assetMapper.findAllTypes();
 
 		for (int i = 0; i < lista.size(); i++) {
-			System.out.println("Soy el tipo" + lista.get(i).getId_audit_type());
 			List<Audit_Asset_Threat> relatedList = assetMapper.findTypeAssetThreats(lista.get(i).getId_audit_type());
 			int contieneAsset = 0;
 			int contieneThreat = 0;
 			for (int j = 0; j < relatedList.size(); j++) {
-				System.out.println("Mirando la relacion: " + relatedList.get(j).getId_audit_asset() + " - "
-						+ relatedList.get(j).getId_audit_threat());
 				if (relatedList.get(j).getId_audit_asset() == assetThreat) {
 					contieneAsset = 1;
 				}

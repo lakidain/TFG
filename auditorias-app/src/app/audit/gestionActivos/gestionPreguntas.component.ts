@@ -346,6 +346,7 @@ export class GestionPreguntas {
       this.existingNewFirstAnswer, this.existingNewSecondAnswer, this.existingNewThirdAnswer, this.existingNewFourthAnswer, this.existingNewFifthtAnswer).subscribe(response => {
         Swal.fire('Success creating question', 'Question has been created succesfully', 'success');
         this.updateQuestionsAndAnswers();
+        this.updateVulnerabilities();
         this.updateQuestionsRelatedToThreat();
       }, err => {
         if (err.status == 400 || err.status == 401 || err.status == 500) {
