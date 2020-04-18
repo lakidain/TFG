@@ -24,9 +24,13 @@ import com.auditorias.springboot.backend.mapper.UsuarioMapper;
 import com.auditorias.springboot.backend.model.Audit;
 import com.auditorias.springboot.backend.model.Audit_Type;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
-// realizan al navegador, desde aqui podemos controlar todo
-// (metodos, direcciones)
+/**
+ * API Rest controller for audits
+ */
+
+@CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
+															// se realizan al navegador, desde aqui podemos controlar
+															// todo (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class AuditRestController {
@@ -41,7 +45,7 @@ public class AuditRestController {
 		this.usuarioMapper = usuarioMapper;
 	}
 
-	/*
+	/**
 	 * Search a List of the Audits assigned to a worker
 	 */
 	@GetMapping("/audit/{id}")
@@ -59,15 +63,17 @@ public class AuditRestController {
 			element.setId_company_audited(lista.get(i).getId_company_audited());
 			element.setId_company_auditing(lista.get(i).getId_company_auditing());
 			element.setId_user_manager(lista.get(i).getId_user_manager());
-			element.setName_audit_type(auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
-			element.setName_company(empresaMapper.getCompanyName(lista.get(i).getId_company_audited()).get(0).getName_company());
+			element.setName_audit_type(
+					auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
+			element.setName_company(
+					empresaMapper.getCompanyName(lista.get(i).getId_company_audited()).get(0).getName_company());
 			auditList.add(element);
 		}
 
 		return auditList;
 	}
-	
-	/*
+
+	/**
 	 * Search a List of the Audits related to an employee for an audited company
 	 */
 	@GetMapping("/auditAudited/{id}")
@@ -85,15 +91,17 @@ public class AuditRestController {
 			element.setId_company_audited(lista.get(i).getId_company_audited());
 			element.setId_company_auditing(lista.get(i).getId_company_auditing());
 			element.setId_user_manager(lista.get(i).getId_user_manager());
-			element.setName_audit_type(auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
-			element.setName_company(empresaMapper.getCompanyName(lista.get(i).getId_company_auditing()).get(0).getName_company());
+			element.setName_audit_type(
+					auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
+			element.setName_company(
+					empresaMapper.getCompanyName(lista.get(i).getId_company_auditing()).get(0).getName_company());
 			auditList.add(element);
 		}
 
 		return auditList;
 	}
-	
-	/*
+
+	/**
 	 * Search a List of the Audits assigned to a worker
 	 */
 	@GetMapping("/auditCompany/{id}")
@@ -111,9 +119,12 @@ public class AuditRestController {
 			element.setId_company_audited(lista.get(i).getId_company_audited());
 			element.setId_company_auditing(lista.get(i).getId_company_auditing());
 			element.setId_user_manager(lista.get(i).getId_user_manager());
-			element.setName_user_manager(usuarioMapper.getUsuario(lista.get(i).getId_user_manager()).get(0).getName_user());
-			element.setName_audit_type(auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
-			element.setName_company(empresaMapper.getCompanyName(lista.get(i).getId_company_audited()).get(0).getName_company());
+			element.setName_user_manager(
+					usuarioMapper.getUsuario(lista.get(i).getId_user_manager()).get(0).getName_user());
+			element.setName_audit_type(
+					auditMapper.getNameType(lista.get(i).getId_audit_type()).get(0).getName_audit_type());
+			element.setName_company(
+					empresaMapper.getCompanyName(lista.get(i).getId_company_audited()).get(0).getName_company());
 			auditList.add(element);
 		}
 
@@ -130,7 +141,7 @@ public class AuditRestController {
 		return auditMapper.findAuditTypes();
 	}
 
-	/*
+	/**
 	 * Create Audit
 	 */
 	@PostMapping("/audit")
@@ -139,21 +150,27 @@ public class AuditRestController {
 		auditMapper.insert(audit); // Esto habria que revisarlo, parece que MYBATIS no puede devolver una clase
 		return true;
 	}
-	
-	/* Add Employee Associated with an appointment */
+
+	/**
+	 * Add Employee Associated with an appointment
+	 */
 	@PostMapping("/addAuditEmployee")
 	public boolean addAuditEmployee() {
 		return true;
 	}
-	
-	/* Modify an Audit */
+
+	/**
+	 * Modify an Audit
+	 */
 	@PutMapping("/audit/{id}")
-	public boolean updateAudit(@Valid @RequestBody Audit audit, @PathVariable Long id){
+	public boolean updateAudit(@Valid @RequestBody Audit audit, @PathVariable Long id) {
 		auditMapper.updateAudit(audit);
 		return true;
 	}
-	
-	/* Delete Audit */
+
+	/**
+	 * Delete Audit
+	 */
 	@DeleteMapping("/audit/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public boolean deleteAudit(@PathVariable Long id) {

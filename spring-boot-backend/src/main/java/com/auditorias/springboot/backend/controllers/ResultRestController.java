@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +54,10 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" })
+/**
+ * API Rest controller for results
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class ResultRestController {
@@ -69,13 +73,19 @@ public class ResultRestController {
 	private int pesoProbabilidadFracasoSeguridad = 5;
 	private int pesoNivelImpacto = 5;
 	private int pesoRequerimientosInformación = 5;
+	
+	/* Amazon Credentials */
+	@Value("${amazon.accessKey}")
+	private String accessKey;
+	@Value("${amazon.secretKey}")
+	private String secretKey;
 
 	private ResultRestController(ResultMapper resultMapper, AuditMapper auditMapper) {
 		this.resultMapper = resultMapper;
 		this.auditMapper = auditMapper;
 	}
 
-	/*
+	/**
 	 * Returns a boolean checking if enough questionnaires has been completed
 	 */
 	@GetMapping("/checkAnswered/{id}") // Para generar el endpoint
@@ -90,7 +100,7 @@ public class ResultRestController {
 		}
 	}
 
-	/*
+	/**
 	 * Returns a boolean checking if enough questionnaires has been completed
 	 */
 	@GetMapping("/prepareClose/{id}") // Para generar el endpoint
@@ -98,7 +108,7 @@ public class ResultRestController {
 		return resultMapper.prepareClose(id);
 	}
 
-	/*
+	/**
 	 * Returns a boolean checking if enough questionnaires has been completed
 	 */
 	@GetMapping("/resultAnswers") // Para generar el endpoint
@@ -108,7 +118,7 @@ public class ResultRestController {
 		return true;
 	}
 
-	/*
+	/**
 	 * Saving results on DB and generating report
 	 */
 	@PostMapping("/result")
@@ -177,25 +187,27 @@ public class ResultRestController {
 			/* Portada */
 
 			/* Adding Header */
-			/*Path rutaUpaudit = Paths.get("src/main/resources").resolve("upaudit.jpg").toAbsolutePath();
-			PdfContentByte canvas = writer.getDirectContentUnder();
-			Image image = Image.getInstance(rutaUpaudit.toString());
-			image.scaleAbsolute(312, 130);
-			float x = (PageSize.A4.getWidth() - image.getScaledWidth()) / 2;
-			image.setAbsolutePosition(x, 100);
-			canvas.addImage(image);*/
+			/*
+			 * Path rutaUpaudit =
+			 * Paths.get("src/main/resources").resolve("upaudit.jpg").toAbsolutePath();
+			 * PdfContentByte canvas = writer.getDirectContentUnder(); Image image =
+			 * Image.getInstance(rutaUpaudit.toString()); image.scaleAbsolute(312, 130);
+			 * float x = (PageSize.A4.getWidth() - image.getScaledWidth()) / 2;
+			 * image.setAbsolutePosition(x, 100); canvas.addImage(image);
+			 */
 
 			/* Adding index image */
-			/*Path rutaIndex = Paths.get("").resolve("/index.jpg").toAbsolutePath();
-			PdfContentByte canvasIndex = writer.getDirectContentUnder();
-			Image imageIndex = Image.getInstance(rutaIndex.toString());
-			imageIndex.scaleAbsolute(626, 507);
-			float xIndex = (PageSize.A4.getWidth() - imageIndex.getScaledWidth()) / 2;
-			float yIndex = (PageSize.A4.getHeight() - imageIndex.getScaledHeight()) / 2;
-			imageIndex.setAbsolutePosition(xIndex, yIndex + 100);
-			canvasIndex.addImage(imageIndex);*/
+			/*
+			 * Path rutaIndex = Paths.get("").resolve("/index.jpg").toAbsolutePath();
+			 * PdfContentByte canvasIndex = writer.getDirectContentUnder(); Image imageIndex
+			 * = Image.getInstance(rutaIndex.toString()); imageIndex.scaleAbsolute(626,
+			 * 507); float xIndex = (PageSize.A4.getWidth() - imageIndex.getScaledWidth()) /
+			 * 2; float yIndex = (PageSize.A4.getHeight() - imageIndex.getScaledHeight()) /
+			 * 2; imageIndex.setAbsolutePosition(xIndex, yIndex + 100);
+			 * canvasIndex.addImage(imageIndex);
+			 */
 
-			//document.newPage();
+			// document.newPage();
 
 			/* Pagina de Presentación */
 
@@ -372,15 +384,18 @@ public class ResultRestController {
 			writer.close();
 
 			/* Subimos a AWS el fichero */
-			AWSCredentials credentials = new BasicAWSCredentials("Access Key","Secret Access Key");
-			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3").withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+			AWSCredentials credentials = new BasicAWSCredentials(accessKey,
+					secretKey);
+			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
+					.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
-		    String bucketPath = "upaudit/pdf";
-		    InputStream is = new FileInputStream(rutaArchivo.toString() + ".pdf");
-		    ObjectMetadata meta = new ObjectMetadata();
-		    meta.setContentLength(is.available());
-		    s3Client.putObject(new PutObjectRequest(bucketPath,nombreArchivo+".pdf", is, meta).withCannedAcl(CannedAccessControlList.PublicRead));
-			
+			String bucketPath = "upaudit/pdf";
+			InputStream is = new FileInputStream(rutaArchivo.toString() + ".pdf");
+			ObjectMetadata meta = new ObjectMetadata();
+			meta.setContentLength(is.available());
+			s3Client.putObject(new PutObjectRequest(bucketPath, nombreArchivo + ".pdf", is, meta)
+					.withCannedAcl(CannedAccessControlList.PublicRead));
+
 			/* Guardamos en BD la ruta del informe PDF */
 			resultMapper.saveReport(results.get(0).getId_audit(), nombreArchivo);
 

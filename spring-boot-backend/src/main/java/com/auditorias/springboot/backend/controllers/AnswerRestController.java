@@ -17,9 +17,13 @@ import com.auditorias.springboot.backend.mapper.AnswerMapper;
 import com.auditorias.springboot.backend.model.Audit;
 import com.auditorias.springboot.backend.model.Audit_Answer;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
-													// realizan al navegador, desde aqui podemos controlar todo
-													// (metodos, direcciones)
+/**
+ * API Rest controller for answers
+ *
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
+															// se realizan al navegador, desde aqui podemos controlar
+															// todo (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class AnswerRestController {
@@ -30,24 +34,30 @@ public class AnswerRestController {
 		this.answerMapper = answerMapper;
 	}
 
-	/*
-	 * Returns a List with all the questions
+	/**
+	 * Returns a List with all the answers
+	 * 
+	 * @return {@link List}<{@link Audit_Answer}>
 	 */
 	@GetMapping("/answers") // Para generar el endpoint
-	public List<Audit_Answer> getAllThreats() {
+	public List<Audit_Answer> getAllAnswers() {
 		return answerMapper.findAllAnswers();
 	}
 
-	/*
+	/**
 	 * Returns a List with all the questions
+	 * 
+	 * @return {@link List}<{@link DtoQuestionnaire}>
 	 */
 	@GetMapping("/answers/{id}") // Para generar el endpoint
 	public List<DtoQuestionnaire> getAssetAnswers(@PathVariable Long id) {
 		return answerMapper.getAssetAnswers(id).stream().distinct().collect(Collectors.toList()); // Removing duplicates
 	}
 
-	/*
+	/**
 	 * Returns a List with all the answers for a concrete Audit
+	 * 
+	 * @return {@link List}<{@link DtoAuditQuestionsAnswers}>
 	 */
 	@GetMapping("/auditAnswers/{id_audit}/{id_audit_threat}/{id_audit_vulnerability}") // Para generar el endpoint
 	public List<DtoAuditQuestionsAnswers> getAuditAnswers(@PathVariable Long id_audit,
@@ -55,13 +65,21 @@ public class AnswerRestController {
 		return answerMapper.getAuditAnswers(id_audit, id_audit_threat, id_audit_vulnerability);
 	}
 
-	/* Returns a list with all the answers related to a question */
+	/**
+	 * Returns a list with all the answers related to a question
+	 * 
+	 * @return {@link List}<{@link Audit_Answer}>
+	 */
 	@GetMapping("/questionAnswers/{id_audit_question}") // Para generar el endpoint
 	public List<Audit_Answer> getAnswersRelatedToQuestion(@PathVariable Long id_audit_question) {
 		return answerMapper.getAnswersRelatedToQuestion(id_audit_question);
 	}
 
-	/* Modify an Answer */
+	/**
+	 * Modify an Answer
+	 * 
+	 * @return {@link Boolean}
+	 */
 	@PutMapping("/answers/{id}")
 	public boolean updateAnswer(@RequestBody Audit_Answer answer, @PathVariable Long id) {
 		answerMapper.updateAnswer(answer);

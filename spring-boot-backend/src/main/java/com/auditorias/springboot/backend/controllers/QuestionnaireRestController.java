@@ -17,7 +17,10 @@ import com.auditorias.springboot.backend.dto.DtoQuestionnaireAnswers;
 import com.auditorias.springboot.backend.mapper.QuestionnaireMapper;
 import com.auditorias.springboot.backend.model.Questionnaire_Answers;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" })
+/**
+ * API Rest controller for questionnaires
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class QuestionnaireRestController {
@@ -28,9 +31,9 @@ public class QuestionnaireRestController {
 		this.questionnaireMapper = questionnaireMapper;
 	}
 
-	/*
+	/**
 	 * Returns a List with the Questions Answered by a person for a concrete
-	 * Questionnaire
+	 * questionnaire
 	 */
 	@GetMapping("/questionnaire/{id_audit}/{id_user}/{id_asset}")
 	public List<Questionnaire_Answers> getAnsweredQuestionnaire(@PathVariable Long id_audit, @PathVariable Long id_user,
@@ -38,7 +41,7 @@ public class QuestionnaireRestController {
 		return questionnaireMapper.getAnsweredQuestionnaire(id_audit, id_user, id_asset);
 	}
 
-	/*
+	/**
 	 * Creation of a Question with Answers
 	 */
 	@PostMapping("/questionnaire")
@@ -61,7 +64,9 @@ public class QuestionnaireRestController {
 		return true;
 	}
 
-	/* Modify a Questionnaire */
+	/**
+	 * Modify a Questionnaire
+	 */
 	@PutMapping("/questionnaire")
 	public boolean updateQuestionnaire(@RequestBody List<DtoQuestionnaireAnswers> answers) {
 		Long questionnaire_id = questionnaireMapper.findQuestionnaire(answers.get(0).getId_user(),
@@ -79,7 +84,9 @@ public class QuestionnaireRestController {
 		return true;
 	}
 
-	/* Check Questionnaire Credentials */
+	/**
+	 * Check Questionnaire Credentials
+	 */
 	@GetMapping("/questionnaireCredentials/{id_audit}/{id_user}") // Para generar el endpoint
 	public boolean checkAppointmentCredentials(@PathVariable Long id_audit, @PathVariable Long id_user) {
 		if (questionnaireMapper.checkQuestionnaireCredentials(id_audit, id_user).get(0)

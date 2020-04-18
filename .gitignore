@@ -5,3 +5,4 @@ auditorias-app/package.json
 auditorias-app/dist
 *.jpg
 *.png
+spring-boot-backend/src/main/resources/application.properties

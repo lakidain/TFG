@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auditorias.springboot.backend.mapper.ThreatMapper;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" }) // CrossOrigin es un porotocolo para comunicar peticiones que se
-													// realizan al navegador, desde aqui podemos controlar todo
-													// (metodos, direcciones)
+/**
+ * API Rest controller for threats
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
+															// se realizan al navegador, desde aqui podemos controlar
+															// todo (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class ThreatRestController {
@@ -24,7 +27,7 @@ public class ThreatRestController {
 		this.threatMapper = threatMapper;
 	}
 
-	/*
+	/**
 	 * Returns a List with all the questions
 	 */
 	@GetMapping("/threats/{id}") // Para generar el endpoint

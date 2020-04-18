@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -43,20 +44,32 @@ import com.auditorias.springboot.backend.mapper.CitaMapper;
 import com.auditorias.springboot.backend.model.Cita;
 import com.auditorias.springboot.backend.model.Gallery;
 
+/**
+ * API Rest controller for appointments
+ */
+
 @CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
-															// se
-//realizan al navegador, desde aqui podemos controlar todo
-//(metodos, direcciones)
+															// se realizan al navegador, desde aqui podemos controlar
+															// todo (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class CitaRestController {
 
 	private CitaMapper citaMapper;
+	
+	/* Amazon Credentials */
+	@Value("${amazon.accessKey}")
+	private String accessKey;
+	@Value("${amazon.secretKey}")
+	private String secretKey;
 
 	public CitaRestController(CitaMapper citaMapper) {
 		this.citaMapper = citaMapper;
 	}
 
+	/**
+	 * Create an Appointment
+	 */
 	@PostMapping("/cita")
 	@ResponseStatus(HttpStatus.CREATED)
 	public boolean create(@Valid @RequestBody Cita cita) { // Como viene en formato JSON es necesario convertirlo
@@ -64,24 +77,33 @@ public class CitaRestController {
 		return true;
 	}
 
-	/* Returns a List of all Appointments a person manages */
+	/**
+	 * Returns a List of all Appointments a person manages
+	 */
 	@GetMapping("/allCitas/{id}") // Para generar el endpoint
 	public List<Cita> getAllCitas(@PathVariable Long id) {
 		return citaMapper.getAllCitas(id);
 	}
 
-	/* Get Appointments related for an employee of an audited company */
+	/**
+	 * Get Appointments related for an employee of an audited company
+	 */
 	@GetMapping("/allCitasRelated/{id}") // Para generar el endpoint
 	public List<Cita> getAllCitasRelated(@PathVariable Long id) {
 		return citaMapper.getAllCitasRelated(id);
 	}
 
-	/* Returns a List of appointments associated with a concrete audit */
+	/**
+	 * Returns a List of appointments associated with a concrete audit
+	 */
 	@GetMapping("/auditCitas/{id}") // Para generar el endpoint
 	public List<Cita> getAuditCitas(@PathVariable Long id) {
 		return citaMapper.getAuditCitas(id);
 	}
 
+	/**
+	 * Let uploads a File
+	 */
 	@PostMapping("/cita/uploads")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id,
 			@RequestParam("description_gallery") String description_gallery) {
@@ -97,7 +119,6 @@ public class CitaRestController {
 				File file = convertMultiPartToFile(archivo);
 				uploadFileTos3bucket(nombreArchivo, file);
 
-
 			} catch (IOException e) {
 				response.put("mensaje", "Error al subir la imagen" + nombreArchivo);
 				e.printStackTrace();
@@ -110,6 +131,9 @@ public class CitaRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+	/**
+	 * Prepare a photo be viewed with the name
+	 */
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
 
@@ -136,21 +160,27 @@ public class CitaRestController {
 		return citaMapper.getGalleryCita(id);
 	}
 
-	/* Close an open Appointment */
+	/**
+	 * Close an open Appointment
+	 */
 	@PutMapping("citaUpdate/{id}")
 	public boolean updateCita(@RequestBody Cita cita, @PathVariable Long id) {
 		citaMapper.updateCita(cita);
 		return true;
 	}
 
-	/* Close an open Appointment */
+	/**
+	 * Close an open Appointment
+	 */
 	@PutMapping("cita/{id}")
 	public boolean changeCitaState(@PathVariable Long id) {
 		citaMapper.changeCitaState(id);
 		return true;
 	}
 
-	/* Delete Appointment */
+	/**
+	 * Delete Appointment
+	 */
 	@DeleteMapping("/cita/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public boolean deleteAppointment(@PathVariable Long id) {
@@ -158,7 +188,9 @@ public class CitaRestController {
 		return true;
 	}
 
-	/* Check Appointment Credentials */
+	/**
+	 * Check Appointment Credentials
+	 */
 	@GetMapping("/appointmentCredentials/{id_audit}/{id_user}") // Para generar el endpoint
 	public boolean checkAppointmentCredentials(@PathVariable Long id_audit, @PathVariable Long id_user) {
 		if (citaMapper.checkAppointmentCredentials(id_audit, id_user).get(0)
@@ -169,6 +201,11 @@ public class CitaRestController {
 		}
 	}
 
+	/**
+	 * Let a MuiltpartFile be converted to File
+	 * 
+	 * @throws IOException
+	 */
 	private File convertMultiPartToFile(MultipartFile file) throws IOException {
 		File convFile = new File(file.getOriginalFilename());
 		FileOutputStream fos = new FileOutputStream(convFile);
@@ -177,12 +214,17 @@ public class CitaRestController {
 		return convFile;
 	}
 
+	/**
+	 * Upload file to s3 bucket
+	 */
 	private void uploadFileTos3bucket(String fileName, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials("Access Key ID",
-				"Secret Access Key");
-		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3").withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey,
+				secretKey);
+		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
+				.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 		String bucketPath = "upaudit/images";
-		
-		s3Client.putObject(new PutObjectRequest(bucketPath, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
+
+		s3Client.putObject(
+				new PutObjectRequest(bucketPath, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
 	}
 }

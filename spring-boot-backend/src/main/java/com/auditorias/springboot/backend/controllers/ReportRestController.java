@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.CacheControl;
@@ -29,18 +30,27 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.auditorias.springboot.backend.dto.DtoReport;
 import com.auditorias.springboot.backend.mapper.ReportMapper;
 
+/**
+ * API Rest controller for reports
+ */
 @CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class ReportRestController {
 
 	private ReportMapper reportMapper;
+	
+	/* Amazon Credentials */
+	@Value("${amazon.accessKey}")
+	private String accessKey;
+	@Value("${amazon.secretKey}")
+	private String secretKey;
 
 	public ReportRestController(ReportMapper reportMapper) {
 		this.reportMapper = reportMapper;
 	}
 
-	/*
+	/**
 	 * Returns a List with all the reports associated with AuditorBoss company
 	 */
 	@GetMapping("/reportAuditorBoss/{id}") // Para generar el endpoint
@@ -48,7 +58,7 @@ public class ReportRestController {
 		return reportMapper.reportAuditorBoss(id);
 	}
 
-	/*
+	/**
 	 * Returns a List with all the reports associated with AuditedBoss company
 	 */
 	@GetMapping("/reportAuditedBoss/{id}") // Para generar el endpoint
@@ -56,7 +66,7 @@ public class ReportRestController {
 		return reportMapper.reportAuditedBoss(id);
 	}
 
-	/*
+	/**
 	 * Returns a List with all the reports associated with an Auditor
 	 */
 	@GetMapping("/reportAuditor/{id}") // Para generar el endpoint
@@ -64,40 +74,44 @@ public class ReportRestController {
 		return reportMapper.reportAuditor(id);
 	}
 
-	/*
+	/**
 	 * Returns a List with all the reports associated with an employee from an
-	 * Audited company
+	 * audited company
 	 */
 	@GetMapping("/reportAudited/{id}") // Para generar el endpoint
 	public List<DtoReport> reportAudited(@PathVariable Long id) {
 		return reportMapper.reportAudited(id);
 	}
 
+	/**
+	 * Let a report be downloaded
+	 */
 	@GetMapping("/report/{nombreArchivo}")
 	public ResponseEntity<Resource> download(@PathVariable String nombreArchivo) throws IOException {
-		
-		/* 
-	 	Path rutaArchivo = Paths.get("results").resolve(nombreArchivo).toAbsolutePath();
 
-		File file = new File(rutaArchivo.toString() + ".pdf");
+		/*
+		 * Path rutaArchivo =
+		 * Paths.get("results").resolve(nombreArchivo).toAbsolutePath();
+		 * 
+		 * File file = new File(rutaArchivo.toString() + ".pdf");
+		 * 
+		 * HttpHeaders headers = new HttpHeaders(); headers.add("Cache-Control",
+		 * "no-cache, no-store, must-revalidate"); headers.add("Pragma", "no-cache");
+		 * headers.add("Expires", "0");
+		 * 
+		 * InputStreamResource resource = new InputStreamResource(new
+		 * FileInputStream(file));
+		 * 
+		 * return ResponseEntity.ok().headers(headers).contentLength(file.length())
+		 * .contentType(MediaType.parseMediaType("application/pdf")).body(resource);
+		 */
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
-
-		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-
-		return ResponseEntity.ok().headers(headers).contentLength(file.length())
-				.contentType(MediaType.parseMediaType("application/pdf")).body(resource);*/
-
-		AWSCredentials credentials = new BasicAWSCredentials("Access Key ID",
-				"Secret Access Key");
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey,
+				secretKey);
 		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
 				.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
-		S3Object object = s3Client.getObject("upaudit/pdf",
-				nombreArchivo + ".pdf");
+		S3Object object = s3Client.getObject("upaudit/pdf", nombreArchivo + ".pdf");
 		S3ObjectInputStream s3is = object.getObjectContent();
 
 		return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_PDF)

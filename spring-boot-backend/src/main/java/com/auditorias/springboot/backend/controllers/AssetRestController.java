@@ -19,15 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auditorias.springboot.backend.dto.DtoAssetCreation;
 import com.auditorias.springboot.backend.mapper.AssetMapper;
+import com.auditorias.springboot.backend.model.Audit_Answer;
 import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
 import com.auditorias.springboot.backend.model.Audit_Threat;
 import com.auditorias.springboot.backend.model.Audit_Type;
 
+/**
+ * API Rest controller for assets
+ *
+ */
 @CrossOrigin(origins = { "http://localhost:4200", "*" }) // CrossOrigin es un porotocolo para comunicar peticiones que
-															// se
-// realizan al navegador, desde aqui podemos controlar todo
-// (metodos, direcciones)
+															// se realizan al navegador, desde aqui podemos controlar
+															// todo (metodos, direcciones)
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class AssetRestController {
@@ -39,17 +43,19 @@ public class AssetRestController {
 	}
 
 	/**
-	 * Returns
+	 * Returns a List with all the assets
 	 * 
-	 * @link Audit_Type
+	 * @return {@link List}<{@link Audit_Asset}>
 	 */
 	@GetMapping("/assets") // Para generar el endpoint
 	public List<Audit_Asset> getAllAssets() {
 		return assetMapper.findAllAssets();
 	}
 
-	/*
+	/**
 	 * Modify an audit asset
+	 * 
+	 * @return {@link Boolean}
 	 */
 	@PutMapping("/assets/{id}")
 	public boolean updateAuditAsset(@Valid @RequestBody Audit_Asset auditAsset, @PathVariable Long id) {
@@ -57,24 +63,30 @@ public class AssetRestController {
 		return true;
 	}
 
-	/*
+	/**
 	 * Get Threat List related to an Asset
+	 * 
+	 * @return {@link List}<{@link Audit_Threat}>
 	 */
 	@GetMapping("assetThreats/{id}")
 	public List<Audit_Threat> assetThreats(@PathVariable Long id) {
 		return assetMapper.assetThreats(id);
 	}
 
-	/*
+	/**
 	 * Returns a List with all the threats
+	 * 
+	 * @return {@link List}<{@link Audit_Threat}>
 	 */
 	@GetMapping("/threats") // Para generar el endpoint
 	public List<Audit_Threat> getAllThreats() {
 		return assetMapper.findAllThreats();
 	}
 
-	/*
+	/**
 	 * Modify an audit threat
+	 * 
+	 * @return {@link Boolean}
 	 */
 	@PutMapping("/threats/{id}")
 	public boolean modificarAuditThreat(@Valid @RequestBody Audit_Threat auditThreat, @PathVariable Long id) {
@@ -94,7 +106,7 @@ public class AssetRestController {
 		return true;
 	}
 
-	/*
+	/**
 	 * Get Assets List related to a type
 	 */
 	@GetMapping("typeAssets/{id}")
@@ -102,7 +114,7 @@ public class AssetRestController {
 		return assetMapper.typeAssets(id);
 	}
 
-	/*
+	/**
 	 * Modify an audit type
 	 */
 	@PutMapping("/type/{id}")
@@ -243,7 +255,7 @@ public class AssetRestController {
 		return true;
 	}
 
-	/*
+	/**
 	 * Get Assets List for an audit
 	 */
 	@GetMapping("auditAssets/{id}")

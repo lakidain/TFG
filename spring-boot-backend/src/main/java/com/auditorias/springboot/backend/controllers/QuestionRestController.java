@@ -23,7 +23,10 @@ import com.auditorias.springboot.backend.mapper.QuestionMapper;
 import com.auditorias.springboot.backend.mapper.VulnerabilityMapper;
 import com.auditorias.springboot.backend.model.Audit_Question;
 
-@CrossOrigin(origins = { "http://localhost:4200","*" })
+/**
+ * API Rest controller for questions
+ */
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController // Como no va a tener vista
 @RequestMapping("/api") // Aqui nos generara la url
 public class QuestionRestController {
@@ -39,7 +42,7 @@ public class QuestionRestController {
 		this.vulnerabilityMapper = vulnerabilityMapper;
 	}
 
-	/*
+	/**
 	 * Returns a List with all the questions
 	 */
 	@GetMapping("/questions") // Para generar el endpoint
@@ -47,7 +50,7 @@ public class QuestionRestController {
 		return questionMapper.findAllQuestions();
 	}
 
-	/*
+	/**
 	 * Returns a List with all the questions for an asset related
 	 */
 	@GetMapping("/questions/{id}") // Para generar el endpoint
@@ -55,7 +58,7 @@ public class QuestionRestController {
 		return questionMapper.getQuestionsWithAsset(id);
 	}
 
-	/*
+	/**
 	 * Returns a list with all the questions and vulnerabilities related to a threat
 	 */
 	@GetMapping("/threatQuestions/{id_audit_threat}") // Para generar el endpoint
@@ -63,7 +66,7 @@ public class QuestionRestController {
 		return answerMapper.getQuestionsRelatedToThreat(id_audit_threat);
 	}
 
-	/*
+	/**
 	 * Creation of a Question with Answers
 	 */
 	@PostMapping("/questions")
@@ -83,12 +86,12 @@ public class QuestionRestController {
 			@RequestParam("existingNewFourthAnswer") Long existingNewFourthAnswer,
 			@RequestParam("existingNewFifthtAnswer") Long existingNewFifthtAnswer) throws Exception {
 
-		Long createdQuestion=(long) 0;
-		
-		if(existingQuestion!=0) {
+		Long createdQuestion = (long) 0;
+
+		if (existingQuestion != 0) {
 			createdQuestion = existingQuestion;
 		}
-		
+
 		/* Para cada parametro que llega se debera crear */
 		if (!("".contentEquals(newVulnerability))) { /* Just need to create the threat if it's new */
 			vulnerabilityMapper.insertVulnerability(newVulnerability);
@@ -142,14 +145,18 @@ public class QuestionRestController {
 		return true;
 	}
 
-	/* Modify a Question */
+	/**
+	 * Modify a Question
+	 */
 	@PutMapping("/questions/{id}")
 	public boolean updateQuestion(@Valid @RequestBody Audit_Question answer, @PathVariable Long id) {
 		questionMapper.updateQuestion(answer);
 		return true;
 	}
 
-	/* Delete a Question Relation */
+	/**
+	 * Delete a Question Relation
+	 */
 	@DeleteMapping("/questionsRelation/{id_audit_threat}/{id_audit_vulnerability}/{id_audit_question}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public boolean deleteQuestionRelation(@PathVariable Long id_audit_threat, @PathVariable Long id_audit_vulnerability,

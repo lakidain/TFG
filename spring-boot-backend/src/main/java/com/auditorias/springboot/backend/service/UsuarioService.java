@@ -18,29 +18,29 @@ import com.auditorias.springboot.backend.mapper.UsuarioMapper;
 import com.auditorias.springboot.backend.model.Usuario;
 
 @Service
-public class UsuarioService implements UserDetailsService{
-	
+public class UsuarioService implements UserDetailsService {
+
 	private Logger logger = org.slf4j.LoggerFactory.getLogger(UsuarioService.class);
 	@Autowired
-	private UsuarioMapper usuarioMapper ;
-	
+	private UsuarioMapper usuarioMapper;
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioMapper.findByUsername(username).get(0);
-		
-		if(usuario==null) {
+
+		if (usuario == null) {
 			logger.error("Error en el login: no existe el usuario" + username + "en el sistema!");
-			throw new UsernameNotFoundException("Error en el login: no existe el usuario" + username + "en el sistema!");
+			throw new UsernameNotFoundException(
+					"Error en el login: no existe el usuario" + username + "en el sistema!");
 		}
-		
-		List<GrantedAuthority> authorities = usuarioMapper.findRole(username)
-				.stream()
+
+		List<GrantedAuthority> authorities = usuarioMapper.findRole(username).stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName()))
-				.peek(authority -> logger.info("Role: " + authority.getAuthority()))
-				.collect(Collectors.toList());
-		
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
+				.peek(authority -> logger.info("Role: " + authority.getAuthority())).collect(Collectors.toList());
+
+		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
+				authorities);
 	}
 
 }
