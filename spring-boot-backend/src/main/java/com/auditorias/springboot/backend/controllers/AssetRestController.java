@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auditorias.springboot.backend.dto.DtoAssetCreation;
 import com.auditorias.springboot.backend.mapper.AssetMapper;
-import com.auditorias.springboot.backend.model.Audit_Answer;
 import com.auditorias.springboot.backend.model.Audit_Asset;
 import com.auditorias.springboot.backend.model.Audit_Asset_Threat;
 import com.auditorias.springboot.backend.model.Audit_Threat;
