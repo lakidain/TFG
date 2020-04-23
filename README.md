@@ -46,7 +46,7 @@ heroku addons:create jawsdb
 heroku config:get JAWSDB_URL
 ```
 On the last step you will get your DB connection settings.
-##### 3. Preparing application.properties
+##### 4. Preparing application.properties
 Theres is an application.properties on the project. You have to change the following parameters
 - spring.datasource.url=Obtained with JAWSDB_URL
 - spring.datasource.username=Obtained with JAWSDB_URL
@@ -56,7 +56,7 @@ Theres is an application.properties on the project. You have to change the follo
 - amazon.bucketRegion=Look for the link of your region. Paris is eu-west-3
 - amazon.bucketName=Name of the bucket create on Amazon S3
 
-##### 4. Deploy backend
+##### 5. Deploy backend
 Use following commands
 ```
 .\mvnw clean package
