@@ -47,7 +47,7 @@ Theres is an application.properties on the project. You have to change the follo
 - amazon.bucketRegion=Look for the link of your region. Paris is eu-west-3
 - amazon.bucketName=Name of the bucket create on Amazon S3
 
-### 4. Deploy backend
+##### 4. Deploy backend
 Use following commands
 ```
 .\mvnw clean package
