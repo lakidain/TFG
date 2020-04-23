@@ -46,5 +46,25 @@ Theres is an application.properties on the project. You have to change the follo
 - amazon.secretKey=Obtained when creating Amazon S3 user
 - amazon.bucketRegion=Look for the link of your region. Paris is eu-west-3
 - amazon.bucketName=Name of the bucket create on Amazon S3
+
+### 4. Deploy backend
+Use following commands
+```
+.\mvnw clean package
+heroku jar:deploy
+```
 ___
 #### Deploying Front-End
+Realizando el desarrollo desde el IDE Atom y teniendo la terminal de comandos abierta realizar
+```
+ng build --prod
+```
+Esto creara una nueva carpeta dist que contiene todo el código en javascript. Abrimos dist y creamos la carpeta public, introduciendo todo el contenido a su interior.
+El siguiente paso sería crear una cuenta de Firebase y crear un nuevo proyecto. Volvemos a Atom e introducimos lo siguiente en el terminal (estando en la carpeta dist)
+```
+npm install -g firebase-tools
+firebase login
+firebase init
+firebase use --add
+firebase deploy
+```
