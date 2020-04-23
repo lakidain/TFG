@@ -2,7 +2,7 @@
 ## Introduction 
 Welcome to the repository for my end of degree project. Here you will find an app (Front-end based on Angular and back-end on Spring Boot) to audit companies. Auditors can audit companies with questionnaires, manage audited company employees. <br />
 The webpage can be found on https://app-upaudit.firebaseapp.com/index <br />
-And you can find me on [Linkedin](https://www.linkedin.com/in/anderlakidain/) or [Github](https://github.com/lakidain)
+You can find me on [Linkedin](https://www.linkedin.com/in/anderlakidain/) or [Github](https://github.com/lakidain) and ask me any doubt
 ![Technologies](https://miro.medium.com/max/785/1*I9paH_iKTmSeYs1HzRzuag.png)
 
 ---
