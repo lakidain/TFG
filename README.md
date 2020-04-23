@@ -65,12 +65,12 @@ heroku jar:deploy
 Using the url, username and password you can connect to the database using for example Phpmyadmin and load data.
 ___
 #### Deploying Front-End
-Realizando el desarrollo desde el IDE Atom y teniendo la terminal de comandos abierta realizar
+Programming on Atom IDE and having the command prompt open execute
 ```
 ng build --prod
 ```
-Esto creara una nueva carpeta dist que contiene todo el código en javascript. Abrimos dist y creamos la carpeta public, introduciendo todo el contenido a su interior.
-El siguiente paso sería crear una cuenta de Firebase y crear un nuevo proyecto. Volvemos a Atom e introducimos lo siguiente en el terminal (estando en la carpeta dist)
+This will create a new dist folder wich contains javascript code. Open dist and create a public folder, putting all on this folder.
+Next step will be creating a Firebase account and creating a new project. We come back to Atom and introduce the next commands on prompt (been on dist folder)
 ```
 npm install -g firebase-tools
 firebase login
