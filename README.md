@@ -13,6 +13,14 @@ And you can find me on [Linkedin](https://www.linkedin.com/in/anderlakidain/) or
 - [Database](https://github.com/lakidain/TFG/tree/master/Resources): Prepared **Mysql** database filled with all the data needed to test the deploy
 
 ---
+### Webpage access
+On the database provided you can use the following username-password to enter the application
+Audit Boss: 18273634A-qwerty
+Audit Employee: 39405948Z-qwerty
+Client Boss: 65746353Y-qwerty
+Admin: 11111111Z-123456
+
+---
 
 ### How to deploy
 Here I describe the steps to deploy the solution like I did, it's not the only way, for example you can use an EC2 Amazon Web Service machine.
@@ -53,6 +61,7 @@ Use following commands
 .\mvnw clean package
 heroku jar:deploy
 ```
+Using the url, username and password you can connect to the database using for example Phpmyadmin and load data.
 ___
 #### Deploying Front-End
 Realizando el desarrollo desde el IDE Atom y teniendo la terminal de comandos abierta realizar
