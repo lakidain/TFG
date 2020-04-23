@@ -13,12 +13,13 @@ And you can find me on [Linkedin](https://www.linkedin.com/in/anderlakidain/) or
 - [Database](https://github.com/lakidain/TFG/tree/master/Resources): Prepared **Mysql** database filled with all the data needed to test the deploy
 
 ---
+
 ### Webpage access
 On the database provided you can use the following username-password to enter the application
-Audit Boss: 18273634A-qwerty
-Audit Employee: 39405948Z-qwerty
-Client Boss: 65746353Y-qwerty
-Admin: 11111111Z-123456
+- **Audit Boss**: 18273634A-qwerty
+- **Audit Employee**: 39405948Z-qwerty
+- **Client Boss**: 65746353Y-qwerty
+- **Admin**: 11111111Z-123456
 
 ---
 
