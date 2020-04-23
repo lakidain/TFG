@@ -33,12 +33,16 @@ import com.auditorias.springboot.backend.mapper.ReportMapper;
 public class ReportRestController {
 
 	private ReportMapper reportMapper;
-	
+
 	/* Amazon Credentials */
 	@Value("${amazon.accessKey}")
 	private String accessKey;
 	@Value("${amazon.secretKey}")
 	private String secretKey;
+	@Value("${amazon.bucketRegion}")
+	private String bucketRegion;
+	@Value("${amazon.bucketName}")
+	private String bucketName;
 
 	public ReportRestController(ReportMapper reportMapper) {
 		this.reportMapper = reportMapper;
@@ -100,12 +104,11 @@ public class ReportRestController {
 		 * .contentType(MediaType.parseMediaType("application/pdf")).body(resource);
 		 */
 
-		AWSCredentials credentials = new BasicAWSCredentials(accessKey,
-				secretKey);
-		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(bucketRegion)
 				.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
-		S3Object object = s3Client.getObject("upaudit/pdf", nombreArchivo + ".pdf");
+		S3Object object = s3Client.getObject(bucketName + "/pdf", nombreArchivo + ".pdf");
 		S3ObjectInputStream s3is = object.getObjectContent();
 
 		return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_PDF)

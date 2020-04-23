@@ -56,12 +56,16 @@ import com.auditorias.springboot.backend.model.Gallery;
 public class CitaRestController {
 
 	private CitaMapper citaMapper;
-	
+
 	/* Amazon Credentials */
 	@Value("${amazon.accessKey}")
 	private String accessKey;
 	@Value("${amazon.secretKey}")
 	private String secretKey;
+	@Value("${amazon.bucketRegion}")
+	private String bucketRegion;
+	@Value("${amazon.bucketName}")
+	private String bucketName;
 
 	public CitaRestController(CitaMapper citaMapper) {
 		this.citaMapper = citaMapper;
@@ -218,11 +222,10 @@ public class CitaRestController {
 	 * Upload file to s3 bucket
 	 */
 	private void uploadFileTos3bucket(String fileName, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials(accessKey,
-				secretKey);
-		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(bucketRegion)
 				.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
-		String bucketPath = "upaudit/images";
+		String bucketPath = bucketName + "/images";
 
 		s3Client.putObject(
 				new PutObjectRequest(bucketPath, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));

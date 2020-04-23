@@ -70,12 +70,16 @@ public class ResultRestController {
 	private int pesoProbabilidadFracasoSeguridad = 5;
 	private int pesoNivelImpacto = 5;
 	private int pesoRequerimientosInformación = 5;
-	
+
 	/* Amazon Credentials */
 	@Value("${amazon.accessKey}")
 	private String accessKey;
 	@Value("${amazon.secretKey}")
 	private String secretKey;
+	@Value("${amazon.bucketRegion}")
+	private String bucketRegion;
+	@Value("${amazon.bucketName}")
+	private String bucketName;
 
 	private ResultRestController(ResultMapper resultMapper, AuditMapper auditMapper) {
 		this.resultMapper = resultMapper;
@@ -381,12 +385,11 @@ public class ResultRestController {
 			writer.close();
 
 			/* Subimos a AWS el fichero */
-			AWSCredentials credentials = new BasicAWSCredentials(accessKey,
-					secretKey);
-			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-3")
+			AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(bucketRegion)
 					.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
-			String bucketPath = "upaudit/pdf";
+			String bucketPath = bucketName + "/pdf";
 			InputStream is = new FileInputStream(rutaArchivo.toString() + ".pdf");
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(is.available());
