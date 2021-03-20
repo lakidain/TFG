@@ -1,4 +1,5 @@
 # End of degree project
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 ## Introduction 
 Welcome to the repository for my end of degree project. Here you will find an app (Front-end based on Angular and back-end on Spring Boot) to audit companies. Auditors can audit companies with questionnaires, manage audited company employees. <br />
 The webpage can be found on https://app-upaudit.firebaseapp.com/index <br />
